@@ -1,0 +1,20 @@
+install.packages('tidyverse')
+install.packages('mclm')
+install.packages('here')
+install.packages('kableExtra')
+install.packages('readr')
+install.packages("stringr")
+library('tidyverse')
+library('mclm')
+library('here')
+library('kableExtra')
+library(readr)
+library(stringr)
+file_path <- here("merged_allchapters.csv")
+# Read the CSV file
+data <- read_csv(file_path)
+
+# Preprocess the "Plain_text" column
+data$Plain_text <- tolower(data$Plain_text)
+flist <- freqlist(data$Plain_text, as_text = TRUE)
+print(flist, n = 20)
