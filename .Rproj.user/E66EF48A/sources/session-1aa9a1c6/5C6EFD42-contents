@@ -1,0 +1,28 @@
+install.packages("tm")
+install.packages('tidyverse')
+install.packages('mclm')
+install.packages('here')
+
+# Load required packages
+library(tm)
+library(tidyverse)
+library(mclm)
+library(here)
+
+# Read the CSV file
+data <- read.csv("C:/Users/dawn/Desktop/KUL/readings/ma thesis/code&data/dawn/merged_allchapters.csv", stringsAsFactors = FALSE)
+
+# Extract unique values from the "Plain_text" column
+unique_texts <- unique(data$Plain_text)
+
+# Create a corpus from the unique values
+flist_target <- Corpus(VectorSource(unique_texts))
+
+# Convert the corpus to lowercase
+flist_target <- tm_map(flist_target, content_transformer(tolower))
+
+# Remove punctuation
+flist_target <- tm_map(flist_target, removePunctuation)
+
+flist_target <- freqlist(as.character(flist_target[[1]]), re_token_splitter = "\\s+")
+print(flist_target)
