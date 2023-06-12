@@ -10,11 +10,36 @@ library('here')
 library('kableExtra')
 library(readr)
 library(stringr)
-file_path <- here("merged_allchapters.csv")
+fpath_target <- here("geotext_indianregion.csv")
+fpath_ref <- here("wholebooktext.csv")
 # Read the CSV file
-data <- read_csv(file_path)
+data_target <- read_csv(fpath_target)
+data_ref <- read_csv(fpath_ref)
+
 
 # Preprocess the "Plain_text" column
-data$Plain_text <- tolower(data$Plain_text)
-flist <- freqlist(data$Plain_text, as_text = TRUE)
-print(flist, n = 20)
+data_target$Text <- tolower(data_target$Text)
+data_ref$Text <- tolower(data_ref$Text)
+flist_target <- freqlist(data_target$Text, as_text = TRUE) %>% print()
+flist_ref <- freqlist(data_ref$Text, as_text = TRUE) %>% print()
+
+# calculate scores
+scores_kw <- assoc_scores(flist_target, flist_ref)
+
+# print scores, sorted by PMI
+print(scores_kw, sort_order = "PMI")
+print(scores_kw, sort_order = "G_signed")
+
+top_scores_kw <- scores_kw %>% 
+  filter(PMI >= 2 & G_signed >= 2)
+
+# print top_scores_kw, sorted by PMI
+top_scores_kw %>%
+  print(sort_order = "PMI")
+
+# print top_scores_kw, sorted by G_signed
+top_scores_kw %>%
+  print(sort_order = "G_signed")
+
+coocs <- data_ref %>% 
+  surf_cooc("(?xi)  ^ india $")
