@@ -41,5 +41,16 @@ top_scores_kw %>%
 top_scores_kw %>%
   print(sort_order = "G_signed")
 
-coocs <- data_ref %>% 
-  surf_cooc("(?xi)  ^ india $")
+
+corpus_folder <- here("geotext_whole.csv")
+fnames_geo <- get_fnames(corpus_folder) %>% 
+  keep_re("[.]csv")
+coocs <- surf_cooc(data_ref$Text, "(?xi)  ^ india $")
+coocs$target_freqlist
+coocs$ref_freqlist
+
+# calculate scores
+scores_colloc <- assoc_scores(coocs)
+
+# print scores, sorted by PMI
+print(scores_colloc, sort_order = "PMI")
