@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Keyword and Collocation analysis on India-related text of Natural History</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="paper_quarto_files/libs/clipboard/clipboard.min.js"></script>
+<script src="paper_quarto_files/libs/quarto-html/quarto.js"></script>
+<script src="paper_quarto_files/libs/quarto-html/popper.min.js"></script>
+<script src="paper_quarto_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="paper_quarto_files/libs/quarto-html/anchor.min.js"></script>
+<link href="paper_quarto_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="paper_quarto_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="paper_quarto_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="paper_quarto_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="paper_quarto_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+<script src="paper_quarto_files/libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="paper_quarto_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Keyword and Collocation analysis on India-related text of Natural History</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<section id="research-question" class="level1">
+<h1>1. Research Question</h1>
+<p>Natural History by Pliny the Elder is considered the very first encyclopedia in modern history. It not only showcased the actual merchant exchange of the Roman Empire, but also manifested the spatial imagination of Pliny the Elder and the referenced scholarships of that time.</p>
+</section>
+<section id="corpus-description" class="level1">
+<h1>2. Corpus Description</h1>
+<p>As there is a digitized and name entities annotated full text available on <a href="https://topostext.org/work/148" title="Check Natural History on ToposText">ToposText project</a>, I scraped the full text and exported them in .txt as a corpus, and also exported those with geographical location annotations, which considered as geographically related texts as a sub corpus.</p>
+<p>(statistics)</p>
+</section>
+<section id="data-preparation" class="level1">
+<h1>3. Data Preparation</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">'tidyverse'</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">'mclm'</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">'here'</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">'kableExtra'</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>corpus_folder <span class="ot">&lt;-</span> <span class="fu">here</span>(<span class="st">"NH_wholetext"</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>fnames_wholetext <span class="ot">&lt;-</span> <span class="fu">get_fnames</span>(corpus_folder) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">keep_re</span>(<span class="st">"[.]txt"</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(fnames_wholetext, <span class="dv">10</span>, <span class="at">hide_path =</span> corpus_folder)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>corpus_folder <span class="ot">&lt;-</span>  <span class="fu">here</span>(<span class="st">"NH_geotext_india"</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>fnames_indiatext <span class="ot">&lt;-</span> <span class="fu">get_fnames</span>(corpus_folder) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">keep_re</span>(<span class="st">"[.]txt"</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(fnames_indiatext, <span class="dv">10</span>, <span class="at">hide_path =</span> corpus_folder)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="keyword-analysis-on-india-related-texts" class="level1">
+<h1>4. Keyword Analysis on India-related texts</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># build frequency list for target corpus</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>flist_target <span class="ot">&lt;-</span> fnames_indiatext <span class="sc">%&gt;%</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">freqlist</span>(</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">re_token_splitter =</span> r<span class="st">"--[(?xi)    \s+   ]--"</span>, <span class="co"># whitespace as token splitter</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">re_token_transf_in =</span> <span class="st">"[[:punct:]]"</span>, <span class="co"># Match punctuation marks</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">token_transf_out =</span> <span class="st">""</span> <span class="co"># Replace punctuation marks with an empty string</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Frequency list (types in list: 5719, tokens in list: 34662)
+rank  type abs_freq nrm_freq
+---- ----- -------- --------
+   1   the     2913  840.402
+   2    of     1561  450.349
+   3   and     1216  350.816
+   4    is      920  265.420
+   5    in      891  257.054
+   6     a      799  230.512
+   7    to      750  216.375
+   8  that      617  178.005
+   9    it      533  153.771
+  10   are      378  109.053
+  11    as      334   96.359
+  12    by      316   91.166
+  13 which      313   90.301
+  14  from      261   75.299
+  15  with      261   75.299
+  16   for      256   73.856
+  17  they      235   67.798
+  18    on      208   60.008
+  19  also      190   54.815
+  20  this      190   54.815
+...</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># build frequency list for reference corpus</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>flist_ref <span class="ot">&lt;-</span> fnames_wholetext <span class="sc">%&gt;%</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">freqlist</span>(<span class="at">re_token_splitter =</span> r<span class="st">"--[(?xi)    \s+   ]--"</span>, <span class="co"># whitespace as token splitter</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">re_token_transf_in =</span> <span class="st">"[[:punct:]]"</span>, <span class="co"># Match punctuation marks</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">token_transf_out =</span> <span class="st">""</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Frequency list (types in list: 31319, tokens in list: 709792)
+rank  type abs_freq nrm_freq
+---- ----- -------- --------
+   1   the    57502  810.125
+   2    of    31007  436.846
+   3   and    24884  350.582
+   4    in    17365  244.649
+   5     a    17288  243.564
+   6    is    16741  235.858
+   7    to    14461  203.736
+   8    it    12089  170.318
+   9  that    10032  141.337
+  10   for     7949  111.991
+  11  with     7760  109.328
+  12    by     7120  100.311
+  13   are     6852   96.535
+  14    as     6209   87.476
+  15  from     4944   69.654
+  16 which     4841   68.203
+  17  also     4605   64.878
+  18    on     4448   62.666
+  19  they     4244   59.792
+  20  this     4031   56.791
+...</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate scores</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>scores_kw <span class="ot">&lt;-</span> <span class="fu">assoc_scores</span>(flist_target, flist_ref)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>top_scores_kw <span class="ot">&lt;-</span> scores_kw <span class="sc">%&gt;%</span> </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(PMI <span class="sc">&gt;=</span> <span class="dv">2</span> <span class="sc">&amp;</span> G_signed <span class="sc">&gt;=</span> <span class="dv">2</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># print top_scores_kw, sorted by PMI</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>top_scores_kw <span class="sc">%&gt;%</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">sort_order =</span> <span class="st">"PMI"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Association scores (types in list: 203, sort order criterion: PMI)
+           type   a   PMI G_signed|    b   c      d dir  exp_a DP_rows
+ 1        india 169 3.425  584.909|34493 169 709623   1 15.737   0.005
+ 2       ganges  22 3.425   76.061|34640  22 709770   1  2.049   0.001
+ 3       beryls  13 3.425   44.942|34649  13 709779   1  1.211   0.000
+ 4 ichthyophagi   7 3.425   24.199|34655   7 709785   1  0.652   0.000
+ 5  megasthenes   7 3.425   24.199|34655   7 709785   1  0.652   0.000
+ 6     obsidian   6 3.425   20.742|34656   6 709786   1  0.559   0.000
+ 7     bdellium   5 3.425   17.285|34657   5 709787   1  0.466   0.000
+ 8       agates   4 3.425   13.828|34658   4 709788   1  0.372   0.000
+ 9     callaina   4 3.425   13.828|34658   4 709788   1  0.372   0.000
+10 condensation   4 3.425   13.828|34658   4 709788   1  0.372   0.000
+11        gerra   4 3.425   13.828|34658   4 709788   1  0.372   0.000
+12      jomanes   4 3.425   13.828|34658   4 709788   1  0.372   0.000
+13       nonius   4 3.425   13.828|34658   4 709788   1  0.372   0.000
+14       prasii   4 3.425   13.828|34658   4 709788   1  0.372   0.000
+15         alia   3 3.425   10.371|34659   3 709789   1  0.279   0.000
+16    carnelian   3 3.425   10.371|34659   3 709789   1  0.279   0.000
+17       cophes   3 3.425   10.371|34659   3 709789   1  0.279   0.000
+18      hypasis   3 3.425   10.371|34659   3 709789   1  0.279   0.000
+19  merchandize   3 3.425   10.371|34659   3 709789   1  0.279   0.000
+20   peppertree   3 3.425   10.371|34659   3 709789   1  0.279   0.000
+...
+&lt;number of extra columns to the right: 7&gt;</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># print top_scores_kw, sorted by G_signed</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>top_scores_kw <span class="sc">%&gt;%</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">sort_order =</span> <span class="st">"G_signed"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Association scores (types in list: 203, sort order criterion: G_signed)
+          type   a   PMI G_signed|    b   c      d dir  exp_a DP_rows
+ 1       india 169 3.425  584.909|34493 169 709623   1 15.737   0.005
+ 2     hundred  81 2.277  140.123|34581 278 709514   1 16.715   0.002
+ 3       amber  32 2.933   84.695|34630  58 709734   1  4.190   0.001
+ 4      indian  36 2.617   78.670|34626  90 709702   1  5.867   0.001
+ 5      ganges  22 3.425   76.061|34640  22 709770   1  2.049   0.001
+ 6      arabia  37 2.277   63.970|34625 127 709665   1  7.636   0.001
+ 7    thousand  30 2.461   59.126|34632  87 709705   1  5.448   0.001
+ 8       glass  24 2.617   52.441|34638  60 709732   1  3.911   0.001
+ 9   elephants  27 2.411   51.416|34635  82 709710   1  5.075   0.001
+10 rockcrystal  19 2.891   49.083|34643  36 709756   1  2.561   0.000
+11      beryls  13 3.425   44.942|34649  13 709779   1  1.211   0.000
+12      thence  23 2.409   43.727|34639  70 709722   1  4.330   0.001
+13     indians  14 2.875   35.811|34648  27 709765   1  1.909   0.000
+14       indus  13 2.840   32.577|34649  26 709766   1  1.816   0.000
+15    ethiopia  18 2.328   32.301|34644  59 709733   1  3.585   0.000
+16       tribe  16 2.402   30.273|34646  49 709743   1  3.026   0.000
+17      pepper  17 2.283   29.532|34645  58 709734   1  3.492   0.000
+18      lustre  10 2.889   25.791|34652  19 709773   1  1.350   0.000
+19   smaragdus  11 2.714   25.545|34651  25 709767   1  1.676   0.000
+20       gates  13 2.397   24.508|34649  40 709752   1  2.468   0.000
+...
+&lt;number of extra columns to the right: 7&gt;</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>top_scores_kw <span class="sc">%&gt;%</span> <span class="co"># also valid for top_scores_colloc</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(type, a, PMI, G_signed) <span class="sc">%&gt;%</span> <span class="co"># select 4 columns</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(PMI)) <span class="sc">%&gt;%</span>             <span class="co"># sort by PMI (descending) </span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">30</span>) <span class="sc">%&gt;%</span>                       <span class="co"># select top 30 rows</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Type"</span>, <span class="st">"Frequency"</span>, <span class="st">"PMI"</span>, r<span class="st">"(Signed $G^2$)"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_minimal</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scroll_box</span>(<span class="at">height =</span> <span class="st">"400px"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:400px; "><table class=" lightable-minimal" style="font-family: &quot;Trebuchet MS&quot;, verdana, sans-serif; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> Type </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> Frequency </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> PMI </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> Signed $G^2$ </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> india </td>
+   <td style="text-align:right;"> 169 </td>
+   <td style="text-align:right;"> 3.424756 </td>
+   <td style="text-align:right;"> 584.908519 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ganges </td>
+   <td style="text-align:right;"> 22 </td>
+   <td style="text-align:right;"> 3.424756 </td>
+   <td style="text-align:right;"> 76.061287 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> beryls </td>
+   <td style="text-align:right;"> 13 </td>
+   <td style="text-align:right;"> 3.424756 </td>
+   <td style="text-align:right;"> 44.942393 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ichthyophagi </td>
+   <td style="text-align:right;"> 7 </td>
+   <td style="text-align:right;"> 3.424756 </td>
+   <td style="text-align:right;"> 24.198705 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> megasthenes </td>
+   <td style="text-align:right;"> 7 </td>
+   <td style="text-align:right;"> 3.424756 </td>
+   <td style="text-align:right;"> 24.198705 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> obsidian </td>
+   <td style="text-align:right;"> 6 </td>
+   <td style="text-align:right;"> 3.424756 </td>
+   <td style="text-align:right;"> 20.741598 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> bdellium </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 3.424756 </td>
+   <td style="text-align:right;"> 17.284540 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> agates </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 3.424756 </td>
+   <td style="text-align:right;"> 13.827533 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> callaina </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 3.424756 </td>
+   <td style="text-align:right;"> 13.827533 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> condensation </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 3.424756 </td>
+   <td style="text-align:right;"> 13.827533 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> gerra </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 3.424756 </td>
+   <td style="text-align:right;"> 13.827533 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> jomanes </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 3.424756 </td>
+   <td style="text-align:right;"> 13.827533 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> nonius </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 3.424756 </td>
+   <td style="text-align:right;"> 13.827533 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> prasii </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 3.424756 </td>
+   <td style="text-align:right;"> 13.827533 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> alia </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 3.424756 </td>
+   <td style="text-align:right;"> 10.370575 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> carnelian </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 3.424756 </td>
+   <td style="text-align:right;"> 10.370575 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> cophes </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 3.424756 </td>
+   <td style="text-align:right;"> 10.370575 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> hypasis </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 3.424756 </td>
+   <td style="text-align:right;"> 10.370575 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> merchandize </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 3.424756 </td>
+   <td style="text-align:right;"> 10.370575 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> peppertree </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 3.424756 </td>
+   <td style="text-align:right;"> 10.370575 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> sacae </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 3.424756 </td>
+   <td style="text-align:right;"> 10.370575 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> sandastros </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 3.424756 </td>
+   <td style="text-align:right;"> 10.370575 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> thornbush </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 3.424756 </td>
+   <td style="text-align:right;"> 10.370575 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> agate </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 3.287252 </td>
+   <td style="text-align:right;"> 16.084626 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> amethysts </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 3.287252 </td>
+   <td style="text-align:right;"> 16.084626 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> mart </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 3.287252 </td>
+   <td style="text-align:right;"> 16.084626 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> aloe </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 3.254831 </td>
+   <td style="text-align:right;"> 12.647927 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> arii </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 3.254831 </td>
+   <td style="text-align:right;"> 12.647927 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> exudation </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 3.254831 </td>
+   <td style="text-align:right;"> 12.647927 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> expeditions </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 3.202364 </td>
+   <td style="text-align:right;"> 9.222978 </td>
+  </tr>
+</tbody>
+</table></div>
+
+</div>
+</div>
+</section>
+<section id="collocation-analysis-on-india-in-the-whole-corpus" class="level1">
+<h1>5. Collocation Analysis on “India” in the whole corpus</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>coocs <span class="ot">&lt;-</span> fnames_wholetext <span class="sc">%&gt;%</span> </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">surf_cooc</span>(<span class="st">"(?xi)  ^ india $"</span>, </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">re_token_splitter =</span> r<span class="st">"--[(?xi)    \s+   ]--"</span>, <span class="co"># whitespace as token splitter</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">re_token_transf_in =</span> <span class="st">"[[:punct:]]"</span>, <span class="co"># Match punctuation marks</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">token_transf_out =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in strsplit(newlines, re_token_splitter[[1]], perl = perl): input
+string 1 is invalid UTF-8
+
+Warning in strsplit(newlines, re_token_splitter[[1]], perl = perl): input
+string 1 is invalid UTF-8
+
+Warning in strsplit(newlines, re_token_splitter[[1]], perl = perl): input
+string 1 is invalid UTF-8
+
+Warning in strsplit(newlines, re_token_splitter[[1]], perl = perl): input
+string 1 is invalid UTF-8
+
+Warning in strsplit(newlines, re_token_splitter[[1]], perl = perl): input
+string 1 is invalid UTF-8
+
+Warning in strsplit(newlines, re_token_splitter[[1]], perl = perl): input
+string 1 is invalid UTF-8
+
+Warning in strsplit(newlines, re_token_splitter[[1]], perl = perl): input
+string 1 is invalid UTF-8
+
+Warning in strsplit(newlines, re_token_splitter[[1]], perl = perl): input
+string 1 is invalid UTF-8
+
+Warning in strsplit(newlines, re_token_splitter[[1]], perl = perl): input
+string 1 is invalid UTF-8
+
+Warning in strsplit(newlines, re_token_splitter[[1]], perl = perl): input
+string 1 is invalid UTF-8
+
+Warning in strsplit(newlines, re_token_splitter[[1]], perl = perl): input
+string 1 is invalid UTF-8
+
+Warning in strsplit(newlines, re_token_splitter[[1]], perl = perl): input
+string 1 is invalid UTF-8
+
+Warning in strsplit(newlines, re_token_splitter[[1]], perl = perl): input
+string 1 is invalid UTF-8
+
+Warning in strsplit(newlines, re_token_splitter[[1]], perl = perl): input
+string 1 is invalid UTF-8
+
+Warning in strsplit(newlines, re_token_splitter[[1]], perl = perl): input
+string 1 is invalid UTF-8
+
+Warning in strsplit(newlines, re_token_splitter[[1]], perl = perl): input
+string 1 is invalid UTF-8
+
+Warning in strsplit(newlines, re_token_splitter[[1]], perl = perl): input
+string 1 is invalid UTF-8
+
+Warning in strsplit(newlines, re_token_splitter[[1]], perl = perl): input
+string 1 is invalid UTF-8</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>coocs<span class="sc">$</span>target_freqlist</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Frequency list (types in list: 376, tokens in list: 1013)
+rank   type abs_freq nrm_freq
+---- ------ -------- --------
+   1    the       80  789.733
+   2     of       71  700.888
+   3     in       60  592.300
+   4     is       44  434.353
+   5    and       40  394.867
+   6   from       26  256.663
+   7      a       25  246.792
+   8     to       25  246.792
+   9    are       19  187.562
+  10   that       19  187.562
+  11   also       14  138.203
+  12     it       11  108.588
+  13  there       10   98.717
+  14 arabia        9   88.845
+  15    for        9   88.845
+  16  found        9   88.845
+  17  where        8   78.973
+  18  which        8   78.973
+  19  those        7   69.102
+  20     as        6   59.230
+...</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>coocs<span class="sc">$</span>ref_freqlist</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Frequency list (types in list: 31204, tokens in list: 703969)
+rank  type abs_freq nrm_freq
+---- ----- -------- --------
+   1   the    56925  808.629
+   2    of    30659  435.516
+   3   and    24632  349.902
+   4    in    17151  243.633
+   5     a    17119  243.178
+   6    is    16537  234.911
+   7    to    14328  203.532
+   8    it    11969  170.022
+   9  that     9925  140.986
+  10   for     7870  111.795
+  11  with     7698  109.351
+  12    by     7043  100.047
+  13   are     6760   96.027
+  14    as     6141   87.234
+  15  from     4892   69.492
+  16 which     4806   68.270
+  17  also     4551   64.648
+  18    on     4403   62.545
+  19  they     4208   59.775
+  20  this     3991   56.693
+...</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate scores</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>scores_colloc <span class="ot">&lt;-</span> <span class="fu">assoc_scores</span>(coocs)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>top_scores_colloc <span class="ot">&lt;-</span> scores_colloc <span class="sc">%&gt;%</span> </span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(PMI <span class="sc">&gt;=</span> <span class="dv">2</span> <span class="sc">&amp;</span> G_signed <span class="sc">&gt;=</span> <span class="dv">2</span>)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co"># print top_scores_colloc, sorted by PMI</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>top_scores_colloc <span class="sc">%&gt;%</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">sort_order =</span> <span class="st">"PMI"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Association scores (types in list: 23, sort order criterion: PMI)
+       type a   PMI G_signed|   b   c      d dir exp_a DP_rows RR_rows
+ 1 boundary 3 6.220   20.284|1010  25 703944   1 0.040   0.003  83.392
+ 2 imported 6 5.919   37.988|1007  63 703906   1 0.099   0.006  66.184
+ 3   arabia 9 5.624   53.239|1004 118 703851   1 0.182   0.009  53.004
+ 4 ethiopia 3 5.145   15.723|1010  56 703913   1 0.085   0.003  37.229
+ 5     west 3 4.300   12.273|1010 103 703866   1 0.152   0.003  20.241
+ 6     east 3 4.220   11.955|1010 109 703860   1 0.161   0.003  19.127
+ 7   occurs 3 4.208   11.904|1010 110 703859   1 0.162   0.003  18.953
+ 8 produces 4 4.148   15.559|1009 153 703816   1 0.226   0.004  18.168
+ 9    south 3 4.121   11.558|1010 117 703852   1 0.172   0.003  17.819
+10      set 3 3.715    9.963|1010 156 703813   1 0.228   0.003  13.364
+11  nations 3 3.688    9.858|1010 159 703810   1 0.233   0.003  13.112
+12  produce 3 3.577    9.428|1010 172 703797   1 0.251   0.003  12.121
+13    where 8 3.557   24.976|1005 465 703504   1 0.680   0.007  11.956
+14    mount 3 3.536    9.272|1010 177 703792   1 0.259   0.003  11.779
+15 opposite 3 3.528    9.242|1010 178 703791   1 0.260   0.003  11.712
+16    parts 4 3.278   11.059|1009 283 703686   1 0.412   0.004   9.822
+17   beyond 3 3.273    8.273|1010 213 703756   1 0.310   0.003   9.788
+18    found 9 3.193   23.962|1004 676 703293   1 0.984   0.008   9.252
+19   except 3 2.951    7.081|1010 267 703702   1 0.388   0.003   7.808
+20 although 4 2.746    8.458|1009 411 703558   1 0.596   0.003   6.763
+...
+&lt;number of extra columns to the right: 6&gt;</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># print top_scores_colloc, sorted by G_signed</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>top_scores_colloc <span class="sc">%&gt;%</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">sort_order =</span> <span class="st">"G_signed"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Association scores (types in list: 23, sort order criterion: G_signed)
+       type a   PMI G_signed|   b   c      d dir exp_a DP_rows RR_rows
+ 1   arabia 9 5.624   53.239|1004 118 703851   1 0.182   0.009  53.004
+ 2 imported 6 5.919   37.988|1007  63 703906   1 0.099   0.006  66.184
+ 3    where 8 3.557   24.976|1005 465 703504   1 0.680   0.007  11.956
+ 4    found 9 3.193   23.962|1004 676 703293   1 0.984   0.008   9.252
+ 5 boundary 3 6.220   20.284|1010  25 703944   1 0.040   0.003  83.392
+ 6 ethiopia 3 5.145   15.723|1010  56 703913   1 0.085   0.003  37.229
+ 7 produces 4 4.148   15.559|1009 153 703816   1 0.226   0.004  18.168
+ 8     west 3 4.300   12.273|1010 103 703866   1 0.152   0.003  20.241
+ 9     east 3 4.220   11.955|1010 109 703860   1 0.161   0.003  19.127
+10   occurs 3 4.208   11.904|1010 110 703859   1 0.162   0.003  18.953
+11    south 3 4.121   11.558|1010 117 703852   1 0.172   0.003  17.819
+12    parts 4 3.278   11.059|1009 283 703686   1 0.412   0.004   9.822
+13      set 3 3.715    9.963|1010 156 703813   1 0.228   0.003  13.364
+14  nations 3 3.688    9.858|1010 159 703810   1 0.233   0.003  13.112
+15  produce 3 3.577    9.428|1010 172 703797   1 0.251   0.003  12.121
+16    mount 3 3.536    9.272|1010 177 703792   1 0.259   0.003  11.779
+17 opposite 3 3.528    9.242|1010 178 703791   1 0.260   0.003  11.712
+18 although 4 2.746    8.458|1009 411 703558   1 0.596   0.003   6.763
+19   beyond 3 3.273    8.273|1010 213 703756   1 0.310   0.003   9.788
+20   except 3 2.951    7.081|1010 267 703702   1 0.388   0.003   7.808
+...
+&lt;number of extra columns to the right: 6&gt;</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>top_scores_colloc <span class="sc">%&gt;%</span> <span class="co"># also valid for top_scores_kw</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(type, a, PMI, G_signed) <span class="sc">%&gt;%</span> <span class="co"># select 4 columns</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(G_signed)) <span class="sc">%&gt;%</span>        <span class="co"># sort by G_signed (descending)  </span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">30</span>) <span class="sc">%&gt;%</span>                       <span class="co"># select top 30 rows</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Type"</span>, <span class="st">"Frequency"</span>, <span class="st">"PMI"</span>, r<span class="st">"(Signed $G^2$)"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_minimal</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scroll_box</span>(<span class="at">height =</span> <span class="st">"400px"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:400px; "><table class=" lightable-minimal" style="font-family: &quot;Trebuchet MS&quot;, verdana, sans-serif; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> Type </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> Frequency </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> PMI </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> Signed $G^2$ </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> arabia </td>
+   <td style="text-align:right;"> 9 </td>
+   <td style="text-align:right;"> 5.624049 </td>
+   <td style="text-align:right;"> 53.239157 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> imported </td>
+   <td style="text-align:right;"> 6 </td>
+   <td style="text-align:right;"> 5.919246 </td>
+   <td style="text-align:right;"> 37.988139 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> where </td>
+   <td style="text-align:right;"> 8 </td>
+   <td style="text-align:right;"> 3.557112 </td>
+   <td style="text-align:right;"> 24.976143 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> found </td>
+   <td style="text-align:right;"> 9 </td>
+   <td style="text-align:right;"> 3.192773 </td>
+   <td style="text-align:right;"> 23.961738 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> boundary </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 6.220416 </td>
+   <td style="text-align:right;"> 20.284115 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ethiopia </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 5.145128 </td>
+   <td style="text-align:right;"> 15.722642 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> produces </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 4.148188 </td>
+   <td style="text-align:right;"> 15.559341 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> west </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 4.299850 </td>
+   <td style="text-align:right;"> 12.272537 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> east </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 4.220416 </td>
+   <td style="text-align:right;"> 11.954751 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> occurs </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 4.207592 </td>
+   <td style="text-align:right;"> 11.903561 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> south </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 4.120880 </td>
+   <td style="text-align:right;"> 11.558285 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> parts </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 3.277902 </td>
+   <td style="text-align:right;"> 11.059179 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> set </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 3.714888 </td>
+   <td style="text-align:right;"> 9.962991 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> nations </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 3.687921 </td>
+   <td style="text-align:right;"> 9.858380 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> produce </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 3.576560 </td>
+   <td style="text-align:right;"> 9.428351 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> mount </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 3.535918 </td>
+   <td style="text-align:right;"> 9.272221 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> opposite </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 3.527925 </td>
+   <td style="text-align:right;"> 9.241569 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> although </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 2.745841 </td>
+   <td style="text-align:right;"> 8.458321 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> beyond </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 3.272883 </td>
+   <td style="text-align:right;"> 8.273127 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> except </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 2.950955 </td>
+   <td style="text-align:right;"> 7.080754 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> part </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 2.321275 </td>
+   <td style="text-align:right;"> 6.501187 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> year </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 2.488612 </td>
+   <td style="text-align:right;"> 5.441330 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> whole </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 2.176022 </td>
+   <td style="text-align:right;"> 4.394784 </td>
+  </tr>
+</tbody>
+</table></div>
+
+</div>
+</div>
+</section>
+<section id="conclusion" class="level1">
+<h1>6. Conclusion</h1>
+<p>Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <a href="https://quarto.org" class="uri">https://quarto.org</a>.</p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

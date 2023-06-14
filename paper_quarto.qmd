@@ -7,6 +7,29 @@ format: html
 
 Natural History by Pliny the Elder is considered the very first encyclopedia in modern history. It not only showcased the actual merchant exchange of the Roman Empire, but also manifested the spatial imagination of Pliny the Elder and the referenced scholarships of that time.
 
+```{r}
+library(ggplot2)
+library(dplyr)
+
+data <- read.csv("geotext_whole.csv")
+
+summary_data <- data %>%
+  group_by(ToposText_ID, Place_Name) %>%
+  summarise(Count = n()) %>%
+  arrange(desc(Count)) %>%
+  top_n(30, Count) %>% print()
+
+```
+
+```{r}
+ggplot(summary_data, aes(x = Count, y = reorder(Place_Name, Count))) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  labs(x = "Count", y = "Place_Name") +
+  ggtitle("Top 30 Most Referred Location Names") +
+  facet_wrap(~ Place_Name, ncol = 1, scales = "free_y") +
+  theme(axis.text.y = element_text(size = 8, hjust = 0.5))
+```
+
 # 2. Corpus Description
 
 As there is a digitized and name entities annotated full text available on [ToposText project](https://topostext.org/work/148 "Check Natural History on ToposText"), I scraped the full text and exported them in .txt as a corpus, and also exported those with geographical location annotations, which considered as geographically related texts as a sub corpus.
@@ -42,28 +65,82 @@ print(fnames_indiatext, 10, hide_path = corpus_folder)
 ```{r}
 # build frequency list for target corpus
 flist_target <- fnames_indiatext %>%
-  freqlist(re_token_splitter = r"--[(?xi)    \s+   ]--", # whitespace as token splitter
-           file_encoding     = "windows-1252") %>%
+  freqlist(
+    re_token_splitter = r"--[(?xi)    \s+   ]--", # whitespace as token splitter
+    re_token_transf_in = "[[:punct:]]", # Match punctuation marks
+    token_transf_out = "" # Replace punctuation marks with an empty string
+  ) %>%
   print()
+
 # build frequency list for reference corpus
 flist_ref <- fnames_wholetext %>%
-  freqlist(re_token_splitter = r"--[(?xi)  \s+   ]--",
-           file_encoding     = "windows-1252") %>%
+  freqlist(re_token_splitter = r"--[(?xi)    \s+   ]--", # whitespace as token splitter
+           re_token_transf_in = "[[:punct:]]", # Match punctuation marks
+           token_transf_out = "") %>%
   print()
+
+# calculate scores
+scores_kw <- assoc_scores(flist_target, flist_ref)
+
+top_scores_kw <- scores_kw %>% 
+  filter(PMI >= 2 & G_signed >= 2)
+
+# print top_scores_kw, sorted by PMI
+top_scores_kw %>%
+  print(sort_order = "PMI")
+
+# print top_scores_kw, sorted by G_signed
+top_scores_kw %>%
+  print(sort_order = "G_signed")
 ```
 
 ```{r}
-flist_target %>% 
-  as_tibble() %>% 
-  kbl(col.names = c("Rank", "Type", "Absolute", "Relative")) %>% 
-  kable_minimal(full_width = FALSE) %>% 
-  add_header_above(c(" " = 2, "Frequency" = 2)) %>% 
+top_scores_kw %>% # also valid for top_scores_colloc
+  as_tibble() %>%
+  select(type, a, PMI, G_signed) %>% # select 4 columns
+  arrange(desc(PMI)) %>%             # sort by PMI (descending) 
+  head(30) %>%                       # select top 30 rows
+  kbl(col.names = c("Type", "Frequency", "PMI", r"(Signed $G^2$)")) %>% 
+  kable_minimal() %>% 
   scroll_box(height = "400px")
 ```
 
 # 5. Collocation Analysis on "India" in the whole corpus
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+```{r}
+coocs <- fnames_wholetext %>% 
+  surf_cooc("(?xi)  ^ india $", 
+            re_token_splitter = r"--[(?xi)    \s+   ]--", # whitespace as token splitter
+            re_token_transf_in = "[[:punct:]]", # Match punctuation marks
+            token_transf_out = "")
+coocs$target_freqlist
+coocs$ref_freqlist
+
+# calculate scores
+scores_colloc <- assoc_scores(coocs)
+
+top_scores_colloc <- scores_colloc %>% 
+  filter(PMI >= 2 & G_signed >= 2)
+
+# print top_scores_colloc, sorted by PMI
+top_scores_colloc %>%
+  print(sort_order = "PMI")
+
+# print top_scores_colloc, sorted by G_signed
+top_scores_colloc %>%
+  print(sort_order = "G_signed")
+```
+
+```{r}
+top_scores_colloc %>% # also valid for top_scores_kw
+  as_tibble() %>%
+  select(type, a, PMI, G_signed) %>% # select 4 columns
+  arrange(desc(G_signed)) %>%        # sort by G_signed (descending)  
+  head(30) %>%                       # select top 30 rows
+  kbl(col.names = c("Type", "Frequency", "PMI", r"(Signed $G^2$)")) %>% 
+  kable_minimal() %>% 
+  scroll_box(height = "400px")
+```
 
 # 6. Conclusion
 
