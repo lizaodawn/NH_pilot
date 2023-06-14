@@ -2,14 +2,14 @@ install.packages('tidyverse')
 install.packages('mclm')
 install.packages('here')
 install.packages('kableExtra')
-install.packages('readr')
-install.packages("stringr")
+
+
 library('tidyverse')
 library('mclm')
 library('here')
 library('kableExtra')
-library(readr)
-library(stringr)
+
+
 fpath_target <- here("geotext_indianregion.csv")
 fpath_ref <- here("wholebooktext.csv")
 fname
@@ -50,13 +50,41 @@ top_scores_kw %>%
 
 
 
-corpus_folder <- here("geotext_whole")
-fnames_geotext <- get_fnames(corpus_folder) %>% 
+corpus_folder <- here("NH_wholetext")
+fnames_wholetext <- get_fnames(corpus_folder) %>% 
   keep_re("[.]txt")
 
-print(fnames_BASE, 10, hide_path = corpus_folder)
+print(fnames_wholetext, 10, hide_path = corpus_folder)
 
-coocs <- fnames_BASE %>% 
+corpus_folder <- here("NH_geotext_india")
+fnames_indiatext <- get_fnames(corpus_folder) %>% 
+  keep_re("[.]txt")
+
+print(fnames_indiatext, 10, hide_path = corpus_folder)
+
+# build frequency list for target corpus
+flist_target <- fnames_indiatext %>%
+  freqlist(
+    re_token_splitter = r"--[(?xi)    \s+   ]--", # whitespace as token splitter
+    re_token_transf_in = "[[:punct:]]", # Match punctuation marks
+    token_transf_out = "" # Replace punctuation marks with an empty string
+  ) %>%
+  print()
+
+# build frequency list for reference corpus
+flist_ref <- fnames_wholetext %>%
+  freqlist(re_token_splitter = r"--[(?xi)    \s+   ]--", # whitespace as token splitter
+           re_token_transf_in = "[[:punct:]]", # Match punctuation marks
+           token_transf_out = "") %>%
+  print()
+
+# calculate scores
+scores_kw <- assoc_scores(flist_target, flist_ref)
+
+# print scores, sorted by PMI
+print(scores_kw, sort_order = "PMI")
+
+coocs <- fnames_wholetext %>% 
   surf_cooc("(?xi)  ^ india $")
 coocs$target_freqlist
 coocs$ref_freqlist
@@ -69,3 +97,6 @@ print(scores_colloc, sort_order = "PMI")
 
 # print scores, sorted by G_signed
 print(scores_colloc, sort_order = "G_signed")
+
+
+

@@ -3,37 +3,68 @@ title: "Keyword and Collocation analysis on India-related text of Natural Histor
 format: html
 ---
 
-## 1. Research Question
+# 1. Research Question
 
-Natural History by Pliny the Elder is considered the very first encyclopedia in modern history. It not only showcased the actual merchant exchange of the Roman Empire, but also manifested the spatial imagination of Pliny the Elder and the referenced scholarships of that time. As it is a text containing rich research potentials,
+Natural History by Pliny the Elder is considered the very first encyclopedia in modern history. It not only showcased the actual merchant exchange of the Roman Empire, but also manifested the spatial imagination of Pliny the Elder and the referenced scholarships of that time.
 
-## 2. Corpus Description
+# 2. Corpus Description
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+As there is a digitized and name entities annotated full text available on [ToposText project](https://topostext.org/work/148 "Check Natural History on ToposText"), I scraped the full text and exported them in .txt as a corpus, and also exported those with geographical location annotations, which considered as geographically related texts as a sub corpus.
 
-## 3. Keyword Analysis on India-related texts
+(statistics)
 
-## 4. Collocation Analysis on "India" in the whole corpus
-
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
-
-## 5. Conclusion
-
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
-
-## Running Code
-
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+# 3. Data Preparation
 
 ```{r}
-1 + 1
+#| label: chunk
+#| output: false
+#| warning: false
+library('tidyverse')
+library('mclm')
+library('here')
+library('kableExtra')
+
+corpus_folder <- here("NH_wholetext")
+fnames_wholetext <- get_fnames(corpus_folder) %>% 
+  keep_re("[.]txt")
+
+print(fnames_wholetext, 10, hide_path = corpus_folder)
+
+corpus_folder <-  here("NH_geotext_india")
+fnames_indiatext <- get_fnames(corpus_folder) %>% 
+  keep_re("[.]txt")
+
+print(fnames_indiatext, 10, hide_path = corpus_folder)
 ```
 
-You can add options to executable code like this
+# 4. Keyword Analysis on India-related texts
 
 ```{r}
-#| echo: false
-2 * 2
+# build frequency list for target corpus
+flist_target <- fnames_indiatext %>%
+  freqlist(re_token_splitter = r"--[(?xi)    \s+   ]--", # whitespace as token splitter
+           file_encoding     = "windows-1252") %>%
+  print()
+# build frequency list for reference corpus
+flist_ref <- fnames_wholetext %>%
+  freqlist(re_token_splitter = r"--[(?xi)  \s+   ]--",
+           file_encoding     = "windows-1252") %>%
+  print()
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+```{r}
+flist_target %>% 
+  as_tibble() %>% 
+  kbl(col.names = c("Rank", "Type", "Absolute", "Relative")) %>% 
+  kable_minimal(full_width = FALSE) %>% 
+  add_header_above(c(" " = 2, "Frequency" = 2)) %>% 
+  scroll_box(height = "400px")
+```
+
+# 5. Collocation Analysis on "India" in the whole corpus
+
+Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+
+# 6. Conclusion
+
+Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
