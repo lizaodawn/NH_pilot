@@ -128,6 +128,60 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="research-question" class="level1">
 <h1>1. Research Question</h1>
 <p>Natural History by Pliny the Elder is considered the very first encyclopedia in modern history. It not only showcased the actual merchant exchange of the Roman Empire, but also manifested the spatial imagination of Pliny the Elder and the referenced scholarships of that time.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"geotext_whole.csv"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>summary_data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(ToposText_ID, Place_Name, Lat, Long) <span class="sc">%&gt;%</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Count =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Count)) <span class="sc">%&gt;%</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>top_20_summary_data <span class="ot">&lt;-</span> summary_data <span class="sc">%&gt;%</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">top_n</span>(<span class="dv">20</span>, Count) <span class="sc">%&gt;%</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> <span class="fu">print</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 22 × 5
+   ToposText_ID                           Place_Name   Lat  Long Count
+   &lt;chr&gt;                                  &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;
+ 1 https://topostext.org/place/406163RIta Italy       40.6 16.3    292
+ 2 https://topostext.org/place/419125PRom Rome        41.9 12.5    269
+ 3 https://topostext.org/place/271307REgy Egypt       27.1 30.7    261
+ 4 https://topostext.org/place/300740RInd India       30   74      167
+ 5 https://topostext.org/place/280400RAra Arabia      28   40      123
+ 6 https://topostext.org/place/355390RSyr Syria       35.5 39      109
+ 7 https://topostext.org/place/312301WNil Nile        30.1 31.2     85
+ 8 https://topostext.org/place/350330RCyp Cyprus      35   33       85
+ 9 https://topostext.org/place/441073LAlp Alps        44.1  7.34    82
+10 https://topostext.org/place/376145RSic Sicily      37.6 14.5     71
+# ℹ 12 more rows</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(top_20_summary_data, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(Place_Name, <span class="sc">-</span>Count), <span class="at">y =</span> Count)) <span class="sc">+</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Place Name"</span>, <span class="at">y =</span> <span class="st">"Count"</span>) <span class="sc">+</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Top 20 Place Names Mentioned"</span>) <span class="sc">+</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="paper_quarto_files/figure-html/barchart-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">leaflet</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addTiles</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addCircleMarkers</span>(</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> top_20_summary_data,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">lat =</span> <span class="sc">~</span>Lat,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">lng =</span> <span class="sc">~</span>Long,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">radius =</span> <span class="fu">sqrt</span>(top_20_summary_data<span class="sc">$</span>Count) <span class="sc">*</span> <span class="fl">0.8</span>,  <span class="co"># Adjust the scaling factor as needed</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"blue"</span>,</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">fillOpacity =</span> <span class="fl">0.6</span>,</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">popup =</span> <span class="fu">paste</span>(<span class="st">"Place Name:"</span>, top_20_summary_data<span class="sc">$</span>Place_Name, <span class="st">"&lt;br&gt;"</span>,</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"Count:"</span>, top_20_summary_data<span class="sc">$</span>Count)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> <span class="fu">print</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 <section id="corpus-description" class="level1">
 <h1>2. Corpus Description</h1>
@@ -137,102 +191,76 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="data-preparation" class="level1">
 <h1>3. Data Preparation</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">'tidyverse'</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">'mclm'</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">'here'</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">'kableExtra'</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>corpus_folder <span class="ot">&lt;-</span> <span class="fu">here</span>(<span class="st">"NH_wholetext"</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>fnames_wholetext <span class="ot">&lt;-</span> <span class="fu">get_fnames</span>(corpus_folder) <span class="sc">%&gt;%</span> </span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">keep_re</span>(<span class="st">"[.]txt"</span>)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(fnames_wholetext, <span class="dv">10</span>, <span class="at">hide_path =</span> corpus_folder)</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>corpus_folder <span class="ot">&lt;-</span>  <span class="fu">here</span>(<span class="st">"NH_geotext_india"</span>)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>fnames_indiatext <span class="ot">&lt;-</span> <span class="fu">get_fnames</span>(corpus_folder) <span class="sc">%&gt;%</span> </span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">keep_re</span>(<span class="st">"[.]txt"</span>)</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(fnames_indiatext, <span class="dv">10</span>, <span class="at">hide_path =</span> corpus_folder)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>corpus_folder <span class="ot">&lt;-</span> <span class="fu">here</span>(<span class="st">"NH_wholetext"</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>fnames_wholetext <span class="ot">&lt;-</span> <span class="fu">get_fnames</span>(corpus_folder) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">keep_re</span>(<span class="st">"[.]txt"</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(fnames_wholetext, <span class="dv">10</span>, <span class="at">hide_path =</span> corpus_folder)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Filename collection of length 3493
+           filename
+   ----------------
+ 1   1.1.1_text.txt
+ 2   1.2.1_text.txt
+ 3   1.3.1_text.txt
+ 4   1.4.1_text.txt
+ 5   1.5.1_text.txt
+ 6   1.6.1_text.txt
+ 7   1.7.1_text.txt
+ 8   1.8.1_text.txt
+ 9  10.1.1_text.txt
+10 10.10.1_text.txt
+...</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>corpus_folder <span class="ot">&lt;-</span>  <span class="fu">here</span>(<span class="st">"NH_geotext_india"</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>fnames_indiatext <span class="ot">&lt;-</span> <span class="fu">get_fnames</span>(corpus_folder) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">keep_re</span>(<span class="st">"[.]txt"</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(fnames_indiatext, <span class="dv">10</span>, <span class="at">hide_path =</span> corpus_folder)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Filename collection of length 132
+           filename
+   ----------------
+ 1 10.58.1_text.txt
+ 2 10.70.1_text.txt
+ 3 11.35.2_text.txt
+ 4 12.10.1_text.txt
+ 5 12.14.1_text.txt
+ 6 12.14.2_text.txt
+ 7 12.15.1_text.txt
+ 8 12.16.1_text.txt
+ 9 12.17.1_text.txt
+10 12.18.1_text.txt
+...</code></pre>
+</div>
 </div>
 </section>
 <section id="keyword-analysis-on-india-related-texts" class="level1">
 <h1>4. Keyword Analysis on India-related texts</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># build frequency list for target corpus</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>flist_target <span class="ot">&lt;-</span> fnames_indiatext <span class="sc">%&gt;%</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">freqlist</span>(</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">re_token_splitter =</span> r<span class="st">"--[(?xi)    \s+   ]--"</span>, <span class="co"># whitespace as token splitter</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">re_token_transf_in =</span> <span class="st">"[[:punct:]]"</span>, <span class="co"># Match punctuation marks</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">token_transf_out =</span> <span class="st">""</span> <span class="co"># Replace punctuation marks with an empty string</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Frequency list (types in list: 5719, tokens in list: 34662)
-rank  type abs_freq nrm_freq
----- ----- -------- --------
-   1   the     2913  840.402
-   2    of     1561  450.349
-   3   and     1216  350.816
-   4    is      920  265.420
-   5    in      891  257.054
-   6     a      799  230.512
-   7    to      750  216.375
-   8  that      617  178.005
-   9    it      533  153.771
-  10   are      378  109.053
-  11    as      334   96.359
-  12    by      316   91.166
-  13 which      313   90.301
-  14  from      261   75.299
-  15  with      261   75.299
-  16   for      256   73.856
-  17  they      235   67.798
-  18    on      208   60.008
-  19  also      190   54.815
-  20  this      190   54.815
-...</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># build frequency list for reference corpus</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>flist_ref <span class="ot">&lt;-</span> fnames_wholetext <span class="sc">%&gt;%</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">freqlist</span>(<span class="at">re_token_splitter =</span> r<span class="st">"--[(?xi)    \s+   ]--"</span>, <span class="co"># whitespace as token splitter</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">re_token_transf_in =</span> <span class="st">"[[:punct:]]"</span>, <span class="co"># Match punctuation marks</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">token_transf_out =</span> <span class="st">""</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Frequency list (types in list: 31319, tokens in list: 709792)
-rank  type abs_freq nrm_freq
----- ----- -------- --------
-   1   the    57502  810.125
-   2    of    31007  436.846
-   3   and    24884  350.582
-   4    in    17365  244.649
-   5     a    17288  243.564
-   6    is    16741  235.858
-   7    to    14461  203.736
-   8    it    12089  170.318
-   9  that    10032  141.337
-  10   for     7949  111.991
-  11  with     7760  109.328
-  12    by     7120  100.311
-  13   are     6852   96.535
-  14    as     6209   87.476
-  15  from     4944   69.654
-  16 which     4841   68.203
-  17  also     4605   64.878
-  18    on     4448   62.666
-  19  they     4244   59.792
-  20  this     4031   56.791
-...</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate scores</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>scores_kw <span class="ot">&lt;-</span> <span class="fu">assoc_scores</span>(flist_target, flist_ref)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>top_scores_kw <span class="ot">&lt;-</span> scores_kw <span class="sc">%&gt;%</span> </span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(PMI <span class="sc">&gt;=</span> <span class="dv">2</span> <span class="sc">&amp;</span> G_signed <span class="sc">&gt;=</span> <span class="dv">2</span>)</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># print top_scores_kw, sorted by PMI</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>top_scores_kw <span class="sc">%&gt;%</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">sort_order =</span> <span class="st">"PMI"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># build frequency list for target corpus</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>flist_target <span class="ot">&lt;-</span> fnames_indiatext <span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">freqlist</span>(</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">re_token_splitter =</span> r<span class="st">"--[(?xi)    \s+   ]--"</span>, <span class="co"># whitespace as token splitter</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">re_token_transf_in =</span> <span class="st">"[[:punct:]]"</span>, <span class="co"># Match punctuation marks</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">token_transf_out =</span> <span class="st">""</span> <span class="co"># Replace punctuation marks with an empty string</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co"># build frequency list for reference corpus</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>flist_ref <span class="ot">&lt;-</span> fnames_wholetext <span class="sc">%&gt;%</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">freqlist</span>(<span class="at">re_token_splitter =</span> r<span class="st">"--[(?xi)    \s+   ]--"</span>, <span class="co"># whitespace as token splitter</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>           <span class="at">re_token_transf_in =</span> <span class="st">"[[:punct:]]"</span>, <span class="co"># Match punctuation marks</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>           <span class="at">token_transf_out =</span> <span class="st">""</span>) </span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate scores</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>scores_kw <span class="ot">&lt;-</span> <span class="fu">assoc_scores</span>(flist_target, flist_ref)</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>top_scores_kw <span class="ot">&lt;-</span> scores_kw <span class="sc">%&gt;%</span> </span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(PMI <span class="sc">&gt;=</span> <span class="dv">2</span> <span class="sc">&amp;</span> G_signed <span class="sc">&gt;=</span> <span class="dv">2</span>)</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="co"># print top_scores_kw, sorted by PMI</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>top_scores_kw <span class="sc">%&gt;%</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">sort_order =</span> <span class="st">"PMI"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Association scores (types in list: 203, sort order criterion: PMI)
            type   a   PMI G_signed|    b   c      d dir  exp_a DP_rows
@@ -259,9 +287,9 @@ rank  type abs_freq nrm_freq
 ...
 &lt;number of extra columns to the right: 7&gt;</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># print top_scores_kw, sorted by G_signed</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>top_scores_kw <span class="sc">%&gt;%</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">sort_order =</span> <span class="st">"G_signed"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># print top_scores_kw, sorted by G_signed</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>top_scores_kw <span class="sc">%&gt;%</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">sort_order =</span> <span class="st">"G_signed"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Association scores (types in list: 203, sort order criterion: G_signed)
           type   a   PMI G_signed|    b   c      d dir  exp_a DP_rows
@@ -290,14 +318,14 @@ rank  type abs_freq nrm_freq
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>top_scores_kw <span class="sc">%&gt;%</span> <span class="co"># also valid for top_scores_colloc</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(type, a, PMI, G_signed) <span class="sc">%&gt;%</span> <span class="co"># select 4 columns</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(PMI)) <span class="sc">%&gt;%</span>             <span class="co"># sort by PMI (descending) </span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">30</span>) <span class="sc">%&gt;%</span>                       <span class="co"># select top 30 rows</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Type"</span>, <span class="st">"Frequency"</span>, <span class="st">"PMI"</span>, r<span class="st">"(Signed $G^2$)"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_minimal</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scroll_box</span>(<span class="at">height =</span> <span class="st">"400px"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>top_scores_kw <span class="sc">%&gt;%</span> <span class="co"># also valid for top_scores_colloc</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(type, a, PMI, G_signed) <span class="sc">%&gt;%</span> <span class="co"># select 4 columns</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(PMI)) <span class="sc">%&gt;%</span>             <span class="co"># sort by PMI (descending) </span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">30</span>) <span class="sc">%&gt;%</span>                       <span class="co"># select top 30 rows</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Type"</span>, <span class="st">"Frequency"</span>, <span class="st">"PMI"</span>, r<span class="st">"(Signed $G^2$)"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_minimal</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scroll_box</span>(<span class="at">height =</span> <span class="st">"400px"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:400px; "><table class=" lightable-minimal" style="font-family: &quot;Trebuchet MS&quot;, verdana, sans-serif; margin-left: auto; margin-right: auto;">
@@ -499,67 +527,12 @@ rank  type abs_freq nrm_freq
 <section id="collocation-analysis-on-india-in-the-whole-corpus" class="level1">
 <h1>5. Collocation Analysis on “India” in the whole corpus</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>coocs <span class="ot">&lt;-</span> fnames_wholetext <span class="sc">%&gt;%</span> </span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">surf_cooc</span>(<span class="st">"(?xi)  ^ india $"</span>, </span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">re_token_splitter =</span> r<span class="st">"--[(?xi)    \s+   ]--"</span>, <span class="co"># whitespace as token splitter</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">re_token_transf_in =</span> <span class="st">"[[:punct:]]"</span>, <span class="co"># Match punctuation marks</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">token_transf_out =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in strsplit(newlines, re_token_splitter[[1]], perl = perl): input
-string 1 is invalid UTF-8
-
-Warning in strsplit(newlines, re_token_splitter[[1]], perl = perl): input
-string 1 is invalid UTF-8
-
-Warning in strsplit(newlines, re_token_splitter[[1]], perl = perl): input
-string 1 is invalid UTF-8
-
-Warning in strsplit(newlines, re_token_splitter[[1]], perl = perl): input
-string 1 is invalid UTF-8
-
-Warning in strsplit(newlines, re_token_splitter[[1]], perl = perl): input
-string 1 is invalid UTF-8
-
-Warning in strsplit(newlines, re_token_splitter[[1]], perl = perl): input
-string 1 is invalid UTF-8
-
-Warning in strsplit(newlines, re_token_splitter[[1]], perl = perl): input
-string 1 is invalid UTF-8
-
-Warning in strsplit(newlines, re_token_splitter[[1]], perl = perl): input
-string 1 is invalid UTF-8
-
-Warning in strsplit(newlines, re_token_splitter[[1]], perl = perl): input
-string 1 is invalid UTF-8
-
-Warning in strsplit(newlines, re_token_splitter[[1]], perl = perl): input
-string 1 is invalid UTF-8
-
-Warning in strsplit(newlines, re_token_splitter[[1]], perl = perl): input
-string 1 is invalid UTF-8
-
-Warning in strsplit(newlines, re_token_splitter[[1]], perl = perl): input
-string 1 is invalid UTF-8
-
-Warning in strsplit(newlines, re_token_splitter[[1]], perl = perl): input
-string 1 is invalid UTF-8
-
-Warning in strsplit(newlines, re_token_splitter[[1]], perl = perl): input
-string 1 is invalid UTF-8
-
-Warning in strsplit(newlines, re_token_splitter[[1]], perl = perl): input
-string 1 is invalid UTF-8
-
-Warning in strsplit(newlines, re_token_splitter[[1]], perl = perl): input
-string 1 is invalid UTF-8
-
-Warning in strsplit(newlines, re_token_splitter[[1]], perl = perl): input
-string 1 is invalid UTF-8
-
-Warning in strsplit(newlines, re_token_splitter[[1]], perl = perl): input
-string 1 is invalid UTF-8</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>coocs<span class="sc">$</span>target_freqlist</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>coocs <span class="ot">&lt;-</span> fnames_wholetext <span class="sc">%&gt;%</span> </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">surf_cooc</span>(<span class="st">"(?xi)  ^ india $"</span>, </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">re_token_splitter =</span> r<span class="st">"--[(?xi)    \s+   ]--"</span>, <span class="co"># whitespace as token splitter</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">re_token_transf_in =</span> <span class="st">"[[:punct:]]"</span>, <span class="co"># Match punctuation marks</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">token_transf_out =</span> <span class="st">""</span>)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>coocs<span class="sc">$</span>target_freqlist</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Frequency list (types in list: 376, tokens in list: 1013)
 rank   type abs_freq nrm_freq
@@ -586,7 +559,7 @@ rank   type abs_freq nrm_freq
   20     as        6   59.230
 ...</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>coocs<span class="sc">$</span>ref_freqlist</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>coocs<span class="sc">$</span>ref_freqlist</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Frequency list (types in list: 31204, tokens in list: 703969)
 rank  type abs_freq nrm_freq
@@ -613,15 +586,15 @@ rank  type abs_freq nrm_freq
   20  this     3991   56.693
 ...</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate scores</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>scores_colloc <span class="ot">&lt;-</span> <span class="fu">assoc_scores</span>(coocs)</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>top_scores_colloc <span class="ot">&lt;-</span> scores_colloc <span class="sc">%&gt;%</span> </span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(PMI <span class="sc">&gt;=</span> <span class="dv">2</span> <span class="sc">&amp;</span> G_signed <span class="sc">&gt;=</span> <span class="dv">2</span>)</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co"># print top_scores_colloc, sorted by PMI</span></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>top_scores_colloc <span class="sc">%&gt;%</span></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">sort_order =</span> <span class="st">"PMI"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate scores</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>scores_colloc <span class="ot">&lt;-</span> <span class="fu">assoc_scores</span>(coocs)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>top_scores_colloc <span class="ot">&lt;-</span> scores_colloc <span class="sc">%&gt;%</span> </span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(PMI <span class="sc">&gt;=</span> <span class="dv">2</span> <span class="sc">&amp;</span> G_signed <span class="sc">&gt;=</span> <span class="dv">2</span>)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co"># print top_scores_colloc, sorted by PMI</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>top_scores_colloc <span class="sc">%&gt;%</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">sort_order =</span> <span class="st">"PMI"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Association scores (types in list: 23, sort order criterion: PMI)
        type a   PMI G_signed|   b   c      d dir exp_a DP_rows RR_rows
@@ -648,9 +621,9 @@ rank  type abs_freq nrm_freq
 ...
 &lt;number of extra columns to the right: 6&gt;</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># print top_scores_colloc, sorted by G_signed</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>top_scores_colloc <span class="sc">%&gt;%</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">sort_order =</span> <span class="st">"G_signed"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># print top_scores_colloc, sorted by G_signed</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>top_scores_colloc <span class="sc">%&gt;%</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">sort_order =</span> <span class="st">"G_signed"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Association scores (types in list: 23, sort order criterion: G_signed)
        type a   PMI G_signed|   b   c      d dir exp_a DP_rows RR_rows
@@ -679,14 +652,14 @@ rank  type abs_freq nrm_freq
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>top_scores_colloc <span class="sc">%&gt;%</span> <span class="co"># also valid for top_scores_kw</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(type, a, PMI, G_signed) <span class="sc">%&gt;%</span> <span class="co"># select 4 columns</span></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(G_signed)) <span class="sc">%&gt;%</span>        <span class="co"># sort by G_signed (descending)  </span></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">30</span>) <span class="sc">%&gt;%</span>                       <span class="co"># select top 30 rows</span></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Type"</span>, <span class="st">"Frequency"</span>, <span class="st">"PMI"</span>, r<span class="st">"(Signed $G^2$)"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_minimal</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scroll_box</span>(<span class="at">height =</span> <span class="st">"400px"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>top_scores_colloc <span class="sc">%&gt;%</span> <span class="co"># also valid for top_scores_kw</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(type, a, PMI, G_signed) <span class="sc">%&gt;%</span> <span class="co"># select 4 columns</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(G_signed)) <span class="sc">%&gt;%</span>        <span class="co"># sort by G_signed (descending)  </span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">30</span>) <span class="sc">%&gt;%</span>                       <span class="co"># select top 30 rows</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Type"</span>, <span class="st">"Frequency"</span>, <span class="st">"PMI"</span>, r<span class="st">"(Signed $G^2$)"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_minimal</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scroll_box</span>(<span class="at">height =</span> <span class="st">"400px"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:400px; "><table class=" lightable-minimal" style="font-family: &quot;Trebuchet MS&quot;, verdana, sans-serif; margin-left: auto; margin-right: auto;">

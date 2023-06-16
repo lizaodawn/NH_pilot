@@ -3,31 +3,64 @@ title: "Keyword and Collocation analysis on India-related text of Natural Histor
 format: html
 ---
 
+```{r setup, include=FALSE}
+library('tidyverse')
+library('mclm')
+library('here')
+library('kableExtra')
+library('dplyr')
+library('ggplot2')
+library('leaflet')
+```
+
 # 1. Research Question
 
 Natural History by Pliny the Elder is considered the very first encyclopedia in modern history. It not only showcased the actual merchant exchange of the Roman Empire, but also manifested the spatial imagination of Pliny the Elder and the referenced scholarships of that time.
 
 ```{r}
-library(ggplot2)
-library(dplyr)
-
+#| label: table
+#| warning: false
 data <- read.csv("geotext_whole.csv")
 
 summary_data <- data %>%
-  group_by(ToposText_ID, Place_Name) %>%
+  group_by(ToposText_ID, Place_Name, Lat, Long) %>%
   summarise(Count = n()) %>%
   arrange(desc(Count)) %>%
-  top_n(30, Count) %>% print()
+  ungroup()
+
+top_20_summary_data <- summary_data %>%
+  top_n(20, Count) %>%
+  ungroup() %>% print()
 
 ```
 
 ```{r}
-ggplot(summary_data, aes(x = Count, y = reorder(Place_Name, Count))) +
-  geom_bar(stat = "identity", fill = "steelblue") +
-  labs(x = "Count", y = "Place_Name") +
-  ggtitle("Top 30 Most Referred Location Names") +
-  facet_wrap(~ Place_Name, ncol = 1, scales = "free_y") +
-  theme(axis.text.y = element_text(size = 8, hjust = 0.5))
+#| label: barchart
+#| warning: false
+ggplot(top_20_summary_data, aes(x = reorder(Place_Name, -Count), y = Count)) +
+  geom_bar(stat = "identity") +
+  labs(x = "Place Name", y = "Count") +
+  ggtitle("Top 20 Place Names Mentioned") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+```{r}
+#| label: map
+#| warning: false
+m <- leaflet() %>%
+  addTiles() %>%
+  addCircleMarkers(
+    data = top_20_summary_data,
+    lat = ~Lat,
+    lng = ~Long,
+    radius = sqrt(top_20_summary_data$Count) * 0.8,  # Adjust the scaling factor as needed
+    color = "blue",
+    fill = TRUE,
+    fillOpacity = 0.6,
+    popup = paste("Place Name:", top_20_summary_data$Place_Name, "<br>",
+                  "Count:", top_20_summary_data$Count)
+  ) %>% print()
+
 ```
 
 # 2. Corpus Description
@@ -39,13 +72,8 @@ As there is a digitized and name entities annotated full text available on [Topo
 # 3. Data Preparation
 
 ```{r}
-#| label: chunk
-#| output: false
+#| label: corpus
 #| warning: false
-library('tidyverse')
-library('mclm')
-library('here')
-library('kableExtra')
 
 corpus_folder <- here("NH_wholetext")
 fnames_wholetext <- get_fnames(corpus_folder) %>% 
@@ -63,21 +91,22 @@ print(fnames_indiatext, 10, hide_path = corpus_folder)
 # 4. Keyword Analysis on India-related texts
 
 ```{r}
+#| label: keyword
+#| warning: false
+
 # build frequency list for target corpus
 flist_target <- fnames_indiatext %>%
   freqlist(
     re_token_splitter = r"--[(?xi)    \s+   ]--", # whitespace as token splitter
     re_token_transf_in = "[[:punct:]]", # Match punctuation marks
     token_transf_out = "" # Replace punctuation marks with an empty string
-  ) %>%
-  print()
+  )
 
 # build frequency list for reference corpus
 flist_ref <- fnames_wholetext %>%
   freqlist(re_token_splitter = r"--[(?xi)    \s+   ]--", # whitespace as token splitter
            re_token_transf_in = "[[:punct:]]", # Match punctuation marks
-           token_transf_out = "") %>%
-  print()
+           token_transf_out = "") 
 
 # calculate scores
 scores_kw <- assoc_scores(flist_target, flist_ref)
@@ -95,6 +124,9 @@ top_scores_kw %>%
 ```
 
 ```{r}
+#| label: top30keyword
+#| warning: false
+
 top_scores_kw %>% # also valid for top_scores_colloc
   as_tibble() %>%
   select(type, a, PMI, G_signed) %>% # select 4 columns
@@ -108,6 +140,9 @@ top_scores_kw %>% # also valid for top_scores_colloc
 # 5. Collocation Analysis on "India" in the whole corpus
 
 ```{r}
+#| label: collocation
+#| warning: false
+
 coocs <- fnames_wholetext %>% 
   surf_cooc("(?xi)  ^ india $", 
             re_token_splitter = r"--[(?xi)    \s+   ]--", # whitespace as token splitter
@@ -132,6 +167,8 @@ top_scores_colloc %>%
 ```
 
 ```{r}
+#| label: top30collocatioin
+#| warning: false
 top_scores_colloc %>% # also valid for top_scores_kw
   as_tibble() %>%
   select(type, a, PMI, G_signed) %>% # select 4 columns

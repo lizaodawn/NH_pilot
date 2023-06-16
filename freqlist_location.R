@@ -2,29 +2,54 @@ install.packages('tidyverse')
 install.packages('mclm')
 install.packages('here')
 install.packages('kableExtra')
+install.packages("leaflet")
 
 
 library('tidyverse')
 library('mclm')
 library('here')
 library('kableExtra')
-library(ggplot2)
-library(dplyr)
+library('ggplot2')
+library('dplyr')
+library('leaflet')
 
 data <- read.csv("geotext_whole.csv")
 
 summary_data <- data %>%
-  group_by(ToposText_ID, Place_Name) %>%
+  group_by(ToposText_ID, Place_Name, Lat, Long) %>%
   summarise(Count = n()) %>%
   arrange(desc(Count)) %>%
-  top_n(10, Count) %>% print()
+  ungroup() %>% print(n=20)
 
-ggplot(summary_data, aes(x = Count, y = reorder(Place_Name, Count))) +
-  geom_bar(stat = "identity", fill = "steelblue") +
-  labs(x = "Count", y = "Place_Name") +
-  ggtitle("Top 30 Most Referred Location Names") +
-  facet_wrap(~ Place_Name, ncol = 1, scales = "free_y") +
-  theme(axis.text.y = element_text(size = 8, hjust = 0.5))
+top_20_summary_data <- summary_data %>%
+  top_n(20, Count) %>%
+  ungroup() %>% print()
+
+# Create a bar chart using ggplot2
+ggplot(top_20_summary_data, aes(x = reorder(Place_Name, -Count), y = Count)) +
+  geom_bar(stat = "identity") +
+  labs(x = "Place Name", y = "Count") +
+  ggtitle("Top 20 Place Names Mentioned") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+
+
+# Create a leaflet map
+m <- leaflet() %>%
+  addTiles() %>%
+  addCircleMarkers(
+    data = top_20_summary_data,
+    lat = ~Lat,
+    lng = ~Long,
+    radius = sqrt(top_20_summary_data$Count) * 0.8,  # Adjust the scaling factor as needed
+    color = "blue",
+    fill = TRUE,
+    fillOpacity = 0.6,
+    popup = paste("Place Name:", top_20_summary_data$Place_Name, "<br>",
+                  "Count:", top_20_summary_data$Count)
+  )
+# Display the map
+m
 
 
 fpath_target <- here("geotext_indianregion.csv")
@@ -161,3 +186,4 @@ top_scores_kw %>% # also valid for top_scores_colloc
   kable_minimal() %>% 
   scroll_box(height = "400px")
 
+quarto::render("paper_quarto.md", to = "html", verbose = TRUE)
