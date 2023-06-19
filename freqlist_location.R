@@ -148,7 +148,7 @@ top_scores_colloc %>% # also valid for top_scores_kw
   head(30) %>%                       # select top 30 rows
   kbl(col.names = c("Type", "Frequency", "PMI", r"(Signed $G^2$)")) %>% 
   kable_minimal() %>% 
-  scroll_box(height = "400px")
+  scroll_box(height = "400px") %>% print()
 
 top_scores_kw %>% # also valid for top_scores_colloc
   as_tibble() %>%
@@ -160,3 +160,17 @@ top_scores_kw %>% # also valid for top_scores_colloc
   scroll_box(height = "400px")
 
 quarto::render("paper_quarto.md", to = "html", verbose = TRUE)
+
+
+test_table <- data.frame(
+  Column1 = rnorm(1),
+  Column2 = rnorm(1),
+  Column3 = rnorm(1),
+  Column4 = rnorm(1)
+) %>% print()
+
+test_table %>% # also valid for top_scores_colloc
+  as_tibble() %>%                     # select top 30 rows
+  kbl(col.names = c("Type", "Frequency", "PMI", r"(Signed $G^2$)")) %>% 
+  kable_minimal() %>% 
+  scroll_box(height = "400px") %>% print()
