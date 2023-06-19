@@ -3,7 +3,7 @@ install.packages('mclm')
 install.packages('here')
 install.packages('kableExtra')
 install.packages("leaflet")
-
+install.packages("quarto")
 
 library('tidyverse')
 library('mclm')
@@ -21,11 +21,20 @@ summary_data <- data %>%
   arrange(desc(Count)) %>%
   ungroup() %>% print(n=20)
 
-top_20_summary_data <- summary_data %>%
-  top_n(20, Count) %>%
-  ungroup() %>% print()
+summary_data %>% # also valid for top_scores_colloc
+  as_tibble() %>%
+  select(Place_Name, Count) %>% # select 4 columns
+  arrange(desc(Count)) %>%             # sort by PMI (descending) 
+  head(20) %>%                       # select top 30 rows
+  kbl(col.names = c("Place_Name", "Count")) %>% 
+  kable_minimal() %>% 
+  scroll_box(height = "400px")
 
 # Create a bar chart using ggplot2
+top_20_summary_data <- summary_data %>%
+  top_n(20, Count) %>%
+  ungroup()
+
 ggplot(top_20_summary_data, aes(x = reorder(Place_Name, -Count), y = Count)) +
   geom_bar(stat = "identity") +
   labs(x = "Place Name", y = "Count") +
@@ -51,47 +60,6 @@ m <- leaflet() %>%
 # Display the map
 m
 
-
-fpath_target <- here("geotext_indianregion.csv")
-fpath_ref <- here("wholebooktext.csv")
-fname
-# Read the CSV file
-data_target <- read_csv(fpath_target)
-data_ref <- read_csv(fpath_ref)
-
-
-# Preprocess the "Plain_text" column
-data_target$Text <- tolower(data_target$Text)
-data_ref$Text <- tolower(data_ref$Text)
-
-corpus_target <- unique(data_target$Text)
-corpus_ref <- unique(data_ref$Text)
-
-flist_target <- freqlist(corpus_target, as_text = TRUE) %>% print()
-flist_ref <- freqlist(corpus_ref, as_text = TRUE) %>% print()
-
-# calculate scores
-scores_kw <- assoc_scores(flist_target, flist_ref)
-
-# print scores, sorted by PMI
-print(scores_kw, sort_order = "PMI")
-print(scores_kw, sort_order = "G_signed")
-
-top_scores_kw <- scores_kw %>% 
-  filter(PMI >= 2 & G_signed >= 2)
-
-# print top_scores_kw, sorted by PMI
-top_scores_kw %>%
-  print(sort_order = "PMI")
-
-# print top_scores_kw, sorted by G_signed
-top_scores_kw %>%
-  print(sort_order = "G_signed")
-
-
-
-
-
 corpus_folder <- here("NH_wholetext")
 fnames_wholetext <- get_fnames(corpus_folder) %>% 
   keep_re("[.]txt")
@@ -103,6 +71,11 @@ fnames_indiatext <- get_fnames(corpus_folder) %>%
   keep_re("[.]txt")
 
 print(fnames_indiatext, 10, hide_path = corpus_folder)
+
+prettyNum(n_tokens(ref_flist))
+n_types(ref_flist)
+prettyNum(n_tokens(tar_flist))
+n_types(tar_flist)
 
 # build frequency list for target corpus
 flist_target <- fnames_indiatext %>%
