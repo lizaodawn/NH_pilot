@@ -88,7 +88,7 @@ In this regards, this paper tries to further explore what themes are referred ar
 
 # Corpus Description
 
-As mentioned, the digitized text with geographical annotation is available through [TOPOSText](https://topostext.org/work/148 "Check Natural History on ToposText") project, I further scraped the full text and exported them in .txt as a \![reference corpus\]{#ref-corpus}, and also exported those with annotation of coordinates in a range of Indian subcontinent as geographically related texts to India as a \![target corpus\]{#tar-corpus}. The scraping code can be accessed in the link.
+As mentioned, the digitized text with geographical annotation is available through [TOPOSText](https://topostext.org/work/148 "Check Natural History on ToposText") project, I further scraped the full text and exported them in .txt as a **reference corpus**, and also exported those with annotation of coordinates in a range of Indian subcontinent as geographically related texts to India as a **target corpus**. The scraping code can be accessed in the link.
 
 ```{r}
 #| label: prepare-corpus
@@ -107,11 +107,11 @@ ref_flist <- freqlist(fnames_wholetext, re_token_splitter = re("\\s+"))
 tar_flist <- freqlist(fnames_indiatext, re_token_splitter = re("\\s+"))
 ```
 
-> The @ref-corpus consists of all texts in the encyclopedia, divided by paragraphs, has `r prettyNum(n_tokens(ref_flist))` tokens and `r n_types(ref_flist)` types, with the type-token ratio of `r round(n_types(ref_flist)/n_tokens(ref_flist), 2)`.
->
-> And the @tar-corpus consists of all text related to Indian subcontinent (with coordinates in range of 8°4'N-37°6'N and 68°7'E to 97°25'E) , has `r prettyNum(n_tokens(tar_flist))` tokens and `r n_types(tar_flist)` types, with the type-token ratio of `r round(n_types(tar_flist)/n_tokens(tar_flist), 2)`.
->
-> The tokens are separated by white space and in the analysis of this paper, all the punctuation marks are removed.
+The **reference corpus** consists of all texts in the encyclopedia, divided by paragraphs, has `r prettyNum(n_tokens(ref_flist))` tokens and `r n_types(ref_flist)` types, with the type-token ratio of `r round(n_types(ref_flist)/n_tokens(ref_flist), 2)`.
+
+And the **target corpus** consists of all text related to Indian subcontinent (with coordinates in range of *8°4'N-37°6'N and 68°7'E to 97°25'E*) , has `r prettyNum(n_tokens(tar_flist))` tokens and `r n_types(tar_flist)` types, with the type-token ratio of `r round(n_types(tar_flist)/n_tokens(tar_flist), 2)`.
+
+The tokens are separated by white space and in the analysis of this paper, all the punctuation marks are removed.
 
 # Keyword Analysis on India-related texts
 
@@ -142,14 +142,17 @@ top_scores_kw <- scores_kw %>%
 
 ```
 
-@tbl-kwtables shows the top 30 keywords in Indian related texts comparing to other context, respectively sorted by PMI and G_signed.
+@tbl-kwtable_PMI and @tbl-kwtable_Gsigned shows the top 30 keywords in Indian related texts comparing to other context, respectively sorted by PMI and G_signed.
 
-::: {#tbl-kwtables .panel-tabset}
+::: panel-tabset
 ## Sorted by PMI
 
 ```{r}
 #| warning: false
 #| echo: false
+#| label: tbl-kwtable_PMI
+#| tbl-cap-location: top
+#| tbl-cap: Top 30 Keywords on Indian Related Text in Natural History (sorted by PMI)
 
 top_scores_kw %>% # also valid for top_scores_colloc
   as_tibble() %>%
@@ -166,6 +169,9 @@ top_scores_kw %>% # also valid for top_scores_colloc
 ```{r}
 #| warning: false
 #| echo: false
+#| label: tbl-kwtable_Gsigned
+#| tbl-cap-location: top
+#| tbl-cap: Top 30 Keywords on Indian Related Text in Natural History (sorted by G_Signed)
 
 top_scores_kw %>% # also valid for top_scores_colloc
   as_tibble() %>%
@@ -228,7 +234,7 @@ top_scores_colloc <- scores_colloc %>%
   filter(PMI >= 2 & G_signed >= 2)
 ```
 
-@tbl-coltable_PMI and @tbl-coltable_Gsigned shows the top 30 keywords in Indian related texts comparing to other context, respectively sorted by PMI and G_signed.
+@tbl-coltable_PMI and @tbl-coltable_Gsigned shows the top 30 collocates to the word "india" in the whole text, respectively sorted by PMI and G_signed.
 
 ::: panel-tabset
 ## Sorted by PMI
@@ -244,7 +250,7 @@ top_scores_colloc %>%
   select(type, a, PMI, G_signed) %>% # select 4 columns
   arrange(desc(PMI)) %>%        # sort by G_signed (descending)  
   head(30) %>%                       # select top 30 rows
-  kbl(col.names = c("Type", "Frequency", "PMI", "Signed G^2"))%>%
+  kbl(col.names = c("Type", "Frequency", "PMI", "Signed G^2^"))%>%
   kable_minimal() %>% 
   scroll_box(height = "400px")
 
