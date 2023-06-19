@@ -154,12 +154,12 @@ top_scores_kw <- scores_kw %>%
 #| tbl-cap-location: top
 #| tbl-cap: Top 30 Keywords on Indian Related Text in Natural History (sorted by PMI)
 
-top_scores_kw %>% # also valid for top_scores_colloc
+top_scores_kw %>% 
   as_tibble() %>%
   select(type, a, PMI, G_signed) %>% # select 4 columns
   arrange(desc(PMI)) %>%             # sort by PMI (descending) 
   head(30) %>%                       # select top 30 rows
-  kbl(col.names = c("Type", "Frequency", "PMI", r"(Signed $G^2$)"))%>% 
+  kbl(col.names = c("Type", "Frequency", "PMI", r"(Signed $G^2$)")) %>% 
   kable_minimal() %>% 
   scroll_box(height = "400px")
 ```
