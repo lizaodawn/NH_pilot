@@ -21,7 +21,6 @@ library('kableExtra')
 library('dplyr')
 library('ggplot2')
 library('leaflet')
-library('widgetframe')
 options(digits = 3)
 ```
 
@@ -81,7 +80,7 @@ m <- leaflet() %>%
                   "Count:", top_20_summary_data$Count)
   ) 
 
-widgetframe::frameWidget(m, width = "100%")
+m
 
 ```
 
@@ -89,7 +88,7 @@ In this regards, this paper tries to further explore what themes are referred ar
 
 # Corpus Description
 
-As mentioned, the digitized text with geographical annotation is available through [TOPOSText](https://topostext.org/work/148 "Check Natural History on ToposText") project, I further scraped the full text and exported them in .txt as a \[reference corpus\](#\| label: ref-corpus), and also exported those with annotation of coordinates in a range of indian subcontinent as geographically related texts to India as a \[target corpus\](#tar-corpus). The scraping code can be accessed in the link.
+As mentioned, the digitized text with geographical annotation is available through [TOPOSText](https://topostext.org/work/148 "Check Natural History on ToposText") project, I further scraped the full text and exported them in .txt as a \![reference corpus\]{#ref-corpus}, and also exported those with annotation of coordinates in a range of Indian subcontinent as geographically related texts to India as a \![target corpus\]{#tar-corpus}. The scraping code can be accessed in the link.
 
 ```{r}
 #| label: prepare-corpus
@@ -108,11 +107,11 @@ ref_flist <- freqlist(fnames_wholetext, re_token_splitter = re("\\s+"))
 tar_flist <- freqlist(fnames_indiatext, re_token_splitter = re("\\s+"))
 ```
 
-The @ref-corpus consists of all texts in the encyclopedia, divided by paragraphs, has `r prettyNum(n_tokens(ref_flist))` tokens and `r n_types(ref_flist)` types, with the type-token ratio of `r round(n_types(ref_flist)/n_tokens(ref_flist), 2)`.
-
-And the @tar-corpus consists of all text related to Indian subcontinent (with coordinates in range of 8°4'N-37°6'N and 68°7'E to 97°25'E) , has `r prettyNum(n_tokens(tar_flist))` tokens and `r n_types(tar_flist)` types, with the type-token ratio of `r round(n_types(tar_flist)/n_tokens(tar_flist), 2)`.
-
-The tokens are separated by white space and in the analysis of this paper, all the punctuation marks are removed.
+> The @ref-corpus consists of all texts in the encyclopedia, divided by paragraphs, has `r prettyNum(n_tokens(ref_flist))` tokens and `r n_types(ref_flist)` types, with the type-token ratio of `r round(n_types(ref_flist)/n_tokens(ref_flist), 2)`.
+>
+> And the @tar-corpus consists of all text related to Indian subcontinent (with coordinates in range of 8°4'N-37°6'N and 68°7'E to 97°25'E) , has `r prettyNum(n_tokens(tar_flist))` tokens and `r n_types(tar_flist)` types, with the type-token ratio of `r round(n_types(tar_flist)/n_tokens(tar_flist), 2)`.
+>
+> The tokens are separated by white space and in the analysis of this paper, all the punctuation marks are removed.
 
 # Keyword Analysis on India-related texts
 
@@ -145,8 +144,42 @@ top_scores_kw <- scores_kw %>%
 
 @tbl-kwtables shows the top 30 keywords in Indian related texts comparing to other context, respectively sorted by PMI and G_signed.
 
+::: {#tbl-kwtables .panel-tabset}
+## Sorted by PMI
+
 ```{r}
-#| label: tbl-kwtables
+#| warning: false
+#| echo: false
+
+top_scores_kw %>% # also valid for top_scores_colloc
+  as_tibble() %>%
+  select(type, a, PMI, G_signed) %>% # select 4 columns
+  arrange(desc(PMI)) %>%             # sort by PMI (descending) 
+  head(30) %>%                       # select top 30 rows
+  kbl(col.names = c("Type", "Frequency", "PMI", r"(Signed $G^2$)"))%>% 
+  kable_minimal() %>% 
+  scroll_box(height = "400px")
+```
+
+## Sorted by G_signed
+
+```{r}
+#| warning: false
+#| echo: false
+
+top_scores_kw %>% # also valid for top_scores_colloc
+  as_tibble() %>%
+  select(type, a, PMI, G_signed) %>% # select 4 columns
+  arrange(desc(G_signed)) %>%             # sort by PMI (descending) 
+  head(30) %>%                       # select top 30 rows
+  kbl(col.names = c("Type", "Frequency", "PMI", r"(Signed $G^2$)")) %>% 
+  kable_minimal() %>% 
+  scroll_box(height = "400px")
+```
+:::
+
+```{r}
+#| label: tbl-kwtables1
 #| tbl-cap: Top 30 Keywords of Indian related texts in Natural History
 #| tbl-subcap: 
 #|  - "Sorted by PMI"
@@ -154,6 +187,7 @@ top_scores_kw <- scores_kw %>%
 #| layout-ncol: 2
 #| warning: false
 #| echo: false
+#| output: false
 
 
 
@@ -162,14 +196,14 @@ top_scores_kw %>% # also valid for top_scores_colloc
   select(type, a, PMI, G_signed) %>% # select 4 columns
   arrange(desc(PMI)) %>%             # sort by PMI (descending) 
   head(30) %>%                       # select top 30 rows
-  kbl(col.names = c("Type", "Frequency", "PMI", "(Signed $G^{2}$)"))
+  kbl(col.names = c("Type", "Frequency", "PMI", "r (Signed $G^{2}$)"))
 
 top_scores_kw %>% # also valid for top_scores_colloc
   as_tibble() %>%
   select(type, a, PMI, G_signed) %>% # select 4 columns
   arrange(desc(G_signed)) %>%             # sort by PMI (descending) 
   head(30) %>%                       # select top 30 rows
-  kbl(col.names = c("Type", "Frequency", "PMI", "(Signed $G^{2}$)")) 
+  kbl(col.names = c("Type", "Frequency", "PMI", "r (Signed $G^{2}$)")) 
 
 
 
@@ -194,16 +228,60 @@ top_scores_colloc <- scores_colloc %>%
   filter(PMI >= 2 & G_signed >= 2)
 ```
 
-@tbl-coltables shows the top 30 keywords in Indian related texts comparing to other context, respectively sorted by PMI and G_signed.
+@tbl-coltable_PMI and @tbl-coltable_Gsigned shows the top 30 keywords in Indian related texts comparing to other context, respectively sorted by PMI and G_signed.
+
+::: panel-tabset
+## Sorted by PMI
 
 ```{r}
-#| label: tbl-coltables
+#| label: tbl-coltable_PMI
+#| tbl-cap-location: top
+#| tbl-cap: Top 30 Keywords on Indian Related Text in Natural History (sorted by PMI)
+#| warning: false
+#| echo: false
+top_scores_colloc %>% 
+  as_tibble() %>%
+  select(type, a, PMI, G_signed) %>% # select 4 columns
+  arrange(desc(PMI)) %>%        # sort by G_signed (descending)  
+  head(30) %>%                       # select top 30 rows
+  kbl(col.names = c("Type", "Frequency", "PMI", "Signed G^2"))%>%
+  kable_minimal() %>% 
+  scroll_box(height = "400px")
+
+```
+
+## Sorted by G_signed
+
+```{r}
+#| label: tbl-coltable_Gsigned
+#| tbl-cap-location: top
+#| tbl-cap: Top 30 Keywords on Indian Related Text in Natural History (sorted by G_signed)
+#| warning: false
+#| echo: false
+
+top_scores_colloc %>% 
+  as_tibble() %>%
+  select(type, a, PMI, G_signed) %>% # select 4 columns
+  arrange(desc(G_signed)) %>%        # sort by G_signed (descending)  
+  head(30) %>%                       # select top 30 rows
+  kbl(col.names = c("Type", "Frequency", "PMI", "`r (Signed G^2^)`"))%>% 
+  kable_minimal() %>% 
+  scroll_box(height = "400px") 
+
+```
+:::
+
+```{r}
+#| label: tbl-coltables1
 #| tbl-cap: Top 30 Collocates of word "India" in Natural History
 #| tbl-subcap: 
 #|  - "Sorted by PMI"
 #|  - "Sorted by G_signed"
 #| layout-ncol: 2
 #| warning: false
+#| echo: false
+#| output: false
+
 
 
 top_scores_colloc %>% 
