@@ -10,6 +10,10 @@ format:
     abstract-title: "Abstract"
 number-sections: true
 code-fold: true
+bibliography:
+  - bibliography.bib
+  - packages.bib
+csl: unified-style-sheet-for-linguistics.csl
 abstract: 'The paper applies the methodology of keyword analysis and collocation analysis in corpus linguistics to explore the possible topics of the text related to "India" in Natural History of Pliny the Elder.'
 ---
 
@@ -22,6 +26,11 @@ library('dplyr')
 library('ggplot2')
 library('leaflet')
 options(digits = 3)
+
+knitr::write_bib(
+  c("base", "mclm", "ggplot2", "tidyverse", "leaflet"),
+  here("packages.bib")
+)
 ```
 
 # Research Question
@@ -58,7 +67,7 @@ ggplot(top_20_summary_data, aes(x = reorder(Place_Name, -Count), y = Count)) +
 
 ```
 
-When mapping the places with the annotated coordinates, as shown in @fig-map, India is the only one place that not in mediterranean region while having a rather high counts in the mentioned times.
+When mapping the places with the annotated coordinates, as shown in @fig-map, India is the only one place that not in Mediterranean region while having a rather high counts in the mentioned times.
 
 ```{r}
 #| label: fig-map
@@ -113,6 +122,8 @@ And the **target corpus** consists of all text related to Indian subcontinent (w
 
 The tokens are separated by white space and in the analysis of this paper, all the punctuation marks are removed.
 
+`{tidyverse}`, `{mclm}` are the main packages used in this paper.
+
 # Keyword Analysis on India-related texts
 
 ```{r}
@@ -142,9 +153,9 @@ top_scores_kw <- scores_kw %>%
 
 ```
 
-@tbl-kwtable_PMI and @tbl-kwtable_Gsigned shows the top 30 keywords in Indian related texts comparing to other context, respectively sorted by PMI and G_signed.
+@tbl-kwtables below shows the top 30 keywords in Indian related texts comparing to other context, respectively sorted by PMI and G_signed.
 
-::: panel-tabset
+::: {#tbl-kwtables .panel-tabset}
 ## Sorted by PMI
 
 ```{r}
@@ -242,7 +253,7 @@ top_scores_colloc <- scores_colloc %>%
 ```{r}
 #| label: tbl-coltable_PMI
 #| tbl-cap-location: top
-#| tbl-cap: Top 30 Keywords on Indian Related Text in Natural History (sorted by PMI)
+#| tbl-cap: Top 30 collocates to the word "india" in Natural History (sorted by PMI)
 #| warning: false
 #| echo: false
 top_scores_colloc %>% 
@@ -261,7 +272,7 @@ top_scores_colloc %>%
 ```{r}
 #| label: tbl-coltable_Gsigned
 #| tbl-cap-location: top
-#| tbl-cap: Top 30 Keywords on Indian Related Text in Natural History (sorted by G_signed)
+#| tbl-cap: Top 30 collocates to the word "india" in Natural History (sorted by G_signed)
 #| warning: false
 #| echo: false
 
@@ -307,8 +318,9 @@ top_scores_colloc %>%
 
 ```
 
-\`\`\`
-
 # Conclusion
 
 Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+
+```{quarto-cite}
+```
