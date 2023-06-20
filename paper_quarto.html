@@ -2,6 +2,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
+
+<script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [["$","$"]]}})</script>
+<script async src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
 <meta name="generator" content="quarto-1.3.361">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
@@ -55,7 +59,26 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="paper_quarto_files/libs/clipboard/clipboard.min.js"></script>
@@ -150,8 +173,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div id="fig-map" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<div class="leaflet html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-ac154d846533ec2d3a9c" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-ac154d846533ec2d3a9c">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addCircleMarkers","args":[[40.6,41.891,27.1,30,28,35.5,30.0918,35,44.142,37.6,35.2052,13.01,36.4408,37.9718,41.8933,35.2791,43.5,41.1,39.702,19.5,36.85,37.01],[16.3,12.486,30.7,74,40,39,31.2313,33,7.343,14.5,25.1836,35.01,28.2244,23.72793,12.483,40.2708,33.5,14.6,44.298,39,10.32,34.01],[13.67040599250805,13.12097557348538,12.92439553712281,10.33827838665607,8.872429205127535,8.352245207128441,7.37563556583431,7.37563556583431,7.244308110509934,6.740919818541087,6.4,6.092618484691127,5.986651818838307,5.986651818838307,5.768882040742383,5.484523680320835,5.484523680320835,5.425863986500215,5.366563145999496,5.184592558726289,5.184592558726289,5.184592558726289],null,null,{"interactive":true,"className":"","stroke":true,"color":"blue","weight":5,"opacity":0.5,"fill":true,"fillColor":"blue","fillOpacity":0.6},null,null,["Place Name: Italy <br> Count: 292","Place Name: Rome <br> Count: 269","Place Name: Egypt <br> Count: 261","Place Name: India <br> Count: 167","Place Name: Arabia <br> Count: 123","Place Name: Syria <br> Count: 109","Place Name: Nile <br> Count: 85","Place Name: Cyprus <br> Count: 85","Place Name: Alps <br> Count: 82","Place Name: Sicily <br> Count: 71","Place Name: Crete <br> Count: 64","Place Name: Ethiopia <br> Count: 58","Place Name: Rhodes <br> Count: 56","Place Name: Athens <br> Count: 56","Place Name: Capitol <br> Count: 52","Place Name: Euphrates <br> Count: 47","Place Name: Pontus <br> Count: 47","Place Name: Campania <br> Count: 46","Place Name: Armenia <br> Count: 45","Place Name: Red Sea <br> Count: 42","Place Name: Carthage <br> Count: 42","Place Name: Cilicia <br> Count: 42"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[13.01,44.142],"lng":[7.343,74]}},"evals":[],"jsHooks":[]}</script>
+<div class="leaflet html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-42aded0547fa433cc4ac" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-42aded0547fa433cc4ac">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addCircleMarkers","args":[[40.6,41.891,27.1,30,28,35.5,30.0918,35,44.142,37.6,35.2052,13.01,36.4408,37.9718,41.8933,35.2791,43.5,41.1,39.702,19.5,36.85,37.01],[16.3,12.486,30.7,74,40,39,31.2313,33,7.343,14.5,25.1836,35.01,28.2244,23.72793,12.483,40.2708,33.5,14.6,44.298,39,10.32,34.01],[13.67040599250805,13.12097557348538,12.92439553712281,10.33827838665607,8.872429205127535,8.352245207128441,7.37563556583431,7.37563556583431,7.244308110509934,6.740919818541087,6.4,6.092618484691127,5.986651818838307,5.986651818838307,5.768882040742383,5.484523680320835,5.484523680320835,5.425863986500215,5.366563145999496,5.184592558726289,5.184592558726289,5.184592558726289],null,null,{"interactive":true,"className":"","stroke":true,"color":"blue","weight":5,"opacity":0.5,"fill":true,"fillColor":"blue","fillOpacity":0.6},null,null,["Place Name: Italy <br> Count: 292","Place Name: Rome <br> Count: 269","Place Name: Egypt <br> Count: 261","Place Name: India <br> Count: 167","Place Name: Arabia <br> Count: 123","Place Name: Syria <br> Count: 109","Place Name: Nile <br> Count: 85","Place Name: Cyprus <br> Count: 85","Place Name: Alps <br> Count: 82","Place Name: Sicily <br> Count: 71","Place Name: Crete <br> Count: 64","Place Name: Ethiopia <br> Count: 58","Place Name: Rhodes <br> Count: 56","Place Name: Athens <br> Count: 56","Place Name: Capitol <br> Count: 52","Place Name: Euphrates <br> Count: 47","Place Name: Pontus <br> Count: 47","Place Name: Campania <br> Count: 46","Place Name: Armenia <br> Count: 45","Place Name: Red Sea <br> Count: 42","Place Name: Carthage <br> Count: 42","Place Name: Cilicia <br> Count: 42"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[13.01,44.142],"lng":[7.343,74]}},"evals":[],"jsHooks":[]}</script>
 <figcaption class="figure-caption">Figure&nbsp;2: Mapping of geographical names mentioned in Natural History</figcaption>
 </figure>
 </div>
@@ -180,7 +203,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The <strong>reference corpus</strong> consists of all texts in the encyclopedia, divided by paragraphs, has 711245 tokens and 51523 types, with the type-token ratio of 0.07.</p>
 <p>And the <strong>target corpus</strong> consists of all text related to Indian subcontinent (with coordinates in range of <em>8°4’N-37°6’N and 68°7’E to 97°25’E</em>) , has 34712 tokens and 7422 types, with the type-token ratio of 0.21.</p>
 <p>The tokens are separated by white space and in the analysis of this paper, all the punctuation marks are removed.</p>
-<p><code>{tidyverse}</code>, <code>{mclm}</code> are the main packages used in this paper.</p>
+<p><span class="citation" data-cites="R-tidyverse">(<a href="#ref-R-tidyverse" role="doc-biblioref">Wickham 2023</a>)</span> and <span class="citation" data-cites="R-mclm">(<a href="#ref-R-mclm" role="doc-biblioref">Speelman &amp; Montes 2022</a>)</span> <span class="citation" data-cites="R-base">(<a href="#ref-R-base" role="doc-biblioref">R Core Team 2022</a>)</span> <span class="citation" data-cites="R-ggplot2">(<a href="#ref-R-ggplot2" role="doc-biblioref">Wickham et al. 2023</a>)</span> <span class="citation" data-cites="R-leaflet">(<a href="#ref-R-leaflet" role="doc-biblioref">Cheng, Karambelkar &amp; Xie 2023</a>)</span> are the main packages used in this paper. <span class="citation" data-cites="dodd2021">(<a href="#ref-dodd2021" role="doc-biblioref">Dodd 2021</a>)</span> <span class="citation" data-cites="nappo2017">(<a href="#ref-nappo2017" role="doc-biblioref">Nappo 2017</a>)</span></p>
 </section>
 <section id="keyword-analysis-on-india-related-texts" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Keyword Analysis on India-related texts</h1>
@@ -660,7 +683,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <th data-quarto-table-cell-role="th" style="text-align: left; position: sticky; top: 0; background-color: #FFFFFF;">Type</th>
 <th data-quarto-table-cell-role="th" style="text-align: right; position: sticky; top: 0; background-color: #FFFFFF;">Frequency</th>
 <th data-quarto-table-cell-role="th" style="text-align: right; position: sticky; top: 0; background-color: #FFFFFF;">PMI</th>
-<th data-quarto-table-cell-role="th" style="text-align: right; position: sticky; top: 0; background-color: #FFFFFF;">Signed G^2^</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; position: sticky; top: 0; background-color: #FFFFFF;">Signed $G^2$</th>
 </tr>
 </thead>
 <tbody>
@@ -822,7 +845,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <th data-quarto-table-cell-role="th" style="text-align: left; position: sticky; top: 0; background-color: #FFFFFF;">Type</th>
 <th data-quarto-table-cell-role="th" style="text-align: right; position: sticky; top: 0; background-color: #FFFFFF;">Frequency</th>
 <th data-quarto-table-cell-role="th" style="text-align: right; position: sticky; top: 0; background-color: #FFFFFF;">PMI</th>
-<th data-quarto-table-cell-role="th" style="text-align: right; position: sticky; top: 0; background-color: #FFFFFF;">`r (Signed G^2^)`</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; position: sticky; top: 0; background-color: #FFFFFF;">Signed $G^2$</th>
 </tr>
 </thead>
 <tbody>
@@ -980,11 +1003,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="conclusion" class="level1" data-number="5">
 <h1 data-number="5"><span class="header-section-number">5</span> Conclusion</h1>
-<p>Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <a href="https://quarto.org" class="uri">https://quarto.org</a>.</p>
-<pre class="{quarto-cite}"><code></code></pre>
+<p>Trade related words (including important transportation milestones, trading goods and the description of the goods (colors, precious, etc.)) are more prone to be occur in the text related to India. It reflects the trading connection of the two empires, and also how the recognition of the other empire for the scholars of that period.</p>
+
 </section>
 
-</main>
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-R-leaflet" class="csl-entry" role="listitem">
+Cheng, Joe, Bhaskar Karambelkar &amp; Yihui Xie. 2023. <em>Leaflet: Create interactive web maps with the JavaScript leaflet library</em>. <a href="https://rstudio.github.io/leaflet/">https://rstudio.github.io/leaflet/</a>.
+</div>
+<div id="ref-dodd2021" class="csl-entry" role="listitem">
+Dodd, Emlyn. 2021. Wine, oil, and knowledge networks across the graeco-roman cyclades: New data from paros and naxos in 2021. <em>Mediterranean Archaeology</em> 34/35. 155–168. <a href="https://www.jstor.org/stable/48691689">https://www.jstor.org/stable/48691689</a>.
+</div>
+<div id="ref-nappo2017" class="csl-entry" role="listitem">
+Nappo, Dario. 2017. <em>Money and Flows of Coinage in the Red Sea Trade</em>. Vol. 1. Oxford University Press. <a href="https://doi.org/10.1093/oso/9780198790662.003.0017">https://doi.org/10.1093/oso/9780198790662.003.0017</a>. <a href="https://academic.oup.com/book/9102/chapter/155703740">https://academic.oup.com/book/9102/chapter/155703740</a>.
+</div>
+<div id="ref-R-base" class="csl-entry" role="listitem">
+R Core Team. 2022. <em>R: A language and environment for statistical computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/">https://www.R-project.org/</a>.
+</div>
+<div id="ref-R-mclm" class="csl-entry" role="listitem">
+Speelman, Dirk &amp; Mariana Montes. 2022. <em>Mclm: Mastering corpus linguistics methods</em>. <a href="https://CRAN.R-project.org/package=mclm">https://CRAN.R-project.org/package=mclm</a>.
+</div>
+<div id="ref-R-tidyverse" class="csl-entry" role="listitem">
+Wickham, Hadley. 2023. <em>Tidyverse: Easily install and load the tidyverse</em>. <a href="https://CRAN.R-project.org/package=tidyverse">https://CRAN.R-project.org/package=tidyverse</a>.
+</div>
+<div id="ref-R-ggplot2" class="csl-entry" role="listitem">
+Wickham, Hadley, Winston Chang, Lionel Henry, Thomas Lin Pedersen, Kohske Takahashi, Claus Wilke, Kara Woo, Hiroaki Yutani &amp; Dewey Dunnington. 2023. <em>ggplot2: Create elegant data visualisations using the grammar of graphics</em>. <a href="https://CRAN.R-project.org/package=ggplot2">https://CRAN.R-project.org/package=ggplot2</a>.
+</div>
+</div></section></div></main>
 <!-- /main column -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {

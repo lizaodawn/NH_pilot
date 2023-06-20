@@ -11,8 +11,8 @@ format:
 number-sections: true
 code-fold: true
 bibliography:
-  - bibliography.bib
-  - packages.bib
+  - references.bib
+  - packages.bib  
 csl: unified-style-sheet-for-linguistics.csl
 abstract: 'The paper applies the methodology of keyword analysis and collocation analysis in corpus linguistics to explore the possible topics of the text related to "India" in Natural History of Pliny the Elder.'
 ---
@@ -122,7 +122,7 @@ And the **target corpus** consists of all text related to Indian subcontinent (w
 
 The tokens are separated by white space and in the analysis of this paper, all the punctuation marks are removed.
 
-`{tidyverse}`, `{mclm}` are the main packages used in this paper.
+[@R-tidyverse] and [@R-mclm] [@R-base] [@R-ggplot2] [@R-leaflet] are the main packages used in this paper. [@dodd2021] [@nappo2017]
 
 # Keyword Analysis on India-related texts
 
@@ -189,7 +189,7 @@ top_scores_kw %>% # also valid for top_scores_colloc
   select(type, a, PMI, G_signed) %>% # select 4 columns
   arrange(desc(G_signed)) %>%             # sort by PMI (descending) 
   head(30) %>%                       # select top 30 rows
-  kbl(col.names = c("Type", "Frequency", "PMI", r"(Signed $G^2$)")) %>% 
+  kbl(col.names = c("Type", "Frequency", "PMI", r"(Signed $G^2$)"), escape = FALSE) %>% 
   kable_minimal() %>% 
   scroll_box(height = "400px")
 ```
@@ -261,7 +261,7 @@ top_scores_colloc %>%
   select(type, a, PMI, G_signed) %>% # select 4 columns
   arrange(desc(PMI)) %>%        # sort by G_signed (descending)  
   head(30) %>%                       # select top 30 rows
-  kbl(col.names = c("Type", "Frequency", "PMI", "Signed G^2^"))%>%
+  kbl(col.names = c("Type", "Frequency", "PMI", r"(Signed $G^2$)"), escape = FALSE) %>%
   kable_minimal() %>% 
   scroll_box(height = "400px")
 
@@ -281,7 +281,7 @@ top_scores_colloc %>%
   select(type, a, PMI, G_signed) %>% # select 4 columns
   arrange(desc(G_signed)) %>%        # sort by G_signed (descending)  
   head(30) %>%                       # select top 30 rows
-  kbl(col.names = c("Type", "Frequency", "PMI", "`r (Signed G^2^)`"))%>% 
+  kbl(col.names = c("Type", "Frequency", "PMI", r"(Signed $G^2$)"), escape = FALSE) %>% 
   kable_minimal() %>% 
   scroll_box(height = "400px") 
 
@@ -320,7 +320,4 @@ top_scores_colloc %>%
 
 # Conclusion
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
-
-```{quarto-cite}
-```
+Trade related words (including important transportation milestones, trading goods and the description of the goods (colors, precious, etc.)) are more prone to be occur in the text related to India. It reflects the trading connection of the two empires, and also how the recognition of the other empire for the scholars of that period.
