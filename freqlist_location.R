@@ -4,11 +4,7 @@ install.packages('here')
 install.packages('kableExtra')
 install.packages("leaflet")
 install.packages("quarto")
-install.packages("topicmodels")
-install.packages("tm")
 
-library(topicmodels)
-library(tm)
 
 library('tidyverse')
 library('mclm')
@@ -24,16 +20,8 @@ summary_data <- data %>%
   group_by(ToposText_ID, Place_Name, Lat, Long) %>%
   summarise(Count = n()) %>%
   arrange(desc(Count)) %>%
-  ungroup() %>% print(n=20)
+  ungroup() 
 
-summary_data %>% # also valid for top_scores_colloc
-  as_tibble() %>%
-  select(Place_Name, Count) %>% # select 4 columns
-  arrange(desc(Count)) %>%             # sort by PMI (descending) 
-  head(20) %>%                       # select top 30 rows
-  kbl(col.names = c("Place_Name", "Count")) %>% 
-  kable_minimal() %>% 
-  scroll_box(height = "400px")
 
 # Create a bar chart using ggplot2
 top_20_summary_data <- summary_data %>%
@@ -64,36 +52,32 @@ m <- leaflet() %>%
   )
 
 
-corpus_folder <- here("NH_wholetext")
-fnames_wholetext <- get_fnames(corpus_folder) %>% 
+corpus_folder_whole <- here("NH_wholetext")
+fnames_wholetext <- get_fnames(corpus_folder_whole) %>% 
   keep_re("[.]txt")
 
-print(fnames_wholetext, 10, hide_path = corpus_folder)
+print(fnames_wholetext, 10, hide_path = corpus_folder_whole)
 
-corpus_folder <- here("NH_geotext_india")
-fnames_indiatext <- get_fnames(corpus_folder) %>% 
+corpus_folder_in <- here("NH_geotext_india")
+fnames_indiatext <- get_fnames(corpus_folder_in) %>% 
   keep_re("[.]txt")
 
-print(fnames_indiatext, 10, hide_path = corpus_folder)
+print(fnames_indiatext, 10, hide_path = corpus_folder_in)
 
-prettyNum(n_tokens(ref_flist))
-n_types(ref_flist)
-prettyNum(n_tokens(tar_flist))
-n_types(tar_flist)
+ref_flist <- freqlist(fnames_wholetext, re_token_splitter = re("\\s+"))
+tar_flist <- freqlist(fnames_indiatext, re_token_splitter = re("\\s+"))
 
 # build frequency list for target corpus
 flist_target <- fnames_indiatext %>%
   freqlist(re_token_transf_in = "[[:punct:]]", # Match punctuation marks
            token_transf_out = "",# Replace punctuation marks with an empty string
            re_drop_token = "india"
-    ) %>%
-  print()
+    ) 
 
 # build frequency list for reference corpus
 flist_ref <- fnames_wholetext %>%
   freqlist(re_token_transf_in = "[[:punct:]]", # Match punctuation marks
-           token_transf_out = "") %>%
-  print()
+           token_transf_out = "")
 
 # calculate scores
 scores_kw <- assoc_scores(flist_target, flist_ref)
@@ -104,26 +88,6 @@ print(scores_kw, sort_order = "PMI")
 # print scores, sorted by G_signed
 print(scores_kw, sort_order = "G_signed")
 
-
-keyword_PMI_tibble <- tibble(
-  Word = c("ganges", "beryls", "ichthyophagi", "megasthenes", "obsidian", "bdellium", "agates", "callaina", "condensation", "gerra", "jomanes", "nonius", "prasii", "alia", "carnelian", "cophes", "hypasis", "merchandize", "peppertree", "sacae"),
-  Type = c("Proper Noun", "Noun", "Plural Noun", "Proper Noun", "Noun", "Noun", "Noun", "Noun/Proper Noun", "Noun", "Noun/Proper Noun", "Noun/Proper Noun", "Noun/Proper Noun", "Noun/Proper Noun", "Adverb", "Noun", "Noun/Proper Noun", "Noun/Proper Noun", "Noun", "Noun", "Noun/Proper Noun"),
-  Exp = c("a major river in India", "a type of gemstone", "a group of people who primarily subsist on fish", "a Greek historian and diplomat", "a type of volcanic glass", "a fragrant resin obtained from certain trees", "a type of semiprecious gemstone", "pale green precious stone (lat)", "the process of vapor turning into a liquid state", "war (lat)", "a Roman nomen gentile, gens or 'family name'", "a Roman nomen gentile, gens or 'family name'", "prase, green coloured gem", "by another / different way / route", "a reddish-brown variety of chalcedony", "a river that rises in the ancient Paropamise range, eventually falling into the Indus river near its confluence with the Cophes river", "a river in north India", "goods or commodities", "a tree that produces peppercorns", "the easternmost nation of Elibe, situated to the south of Ilia and the north of Bern")
-) %>% print()
-
-keyword_G_tibble <- tibble(
-  Word = c("hundred", "amber", "ganges", "arabia", "thousand", "glass", "elephants", "rockcrystal", "beryls", "thence", "indus", "ethiopia", "tribe", "pepper", "lustre", "smaragdus", "gates", "iaspis", "ichthyophagi", "megasthenes"),
-  Type = c("Noun", "Noun", "Proper Noun", "Proper Noun", "Noun", "Noun", "Noun", "Noun", "Noun", "Adverb", "Noun", "Noun", "Noun", "Noun", "Noun", "Noun", "Noun", "Noun", "Plural Noun", "Proper Noun"),
-  Exp = c("the number equivalent to ten multiplied by ten", "a fossilized tree resin", "a major river in India", "a region in the Arabian Peninsula", "the number equivalent to ten multiplied by one hundred", "a hard, brittle substance", "large, intelligent mammals", "a transparent variety of quartz", "a type of gemstone", "from that place or from there", "a major river in South Asia", "a region in Eastern Africa", "a social group with a common ancestry", "a pungent, spicy seasoning", "the quality of light reflected from a surface", "emerald, a green gemstone", "large entrances or doorways", "a type of gemstone", "a group of people who primarily subsist on fish", "a Greek historian and diplomat")
-) %>% select(Word, Type, Exp) %>%                        
-  kbl(col.names = c("Word", "Type", "Exp")) %>% 
-  kable_minimal() %>% 
-  scroll_box(height = "400px") %>% print()
-
-
-
-# Print the tibble
-print(df_tibble)
 
 top_scores_kw <- scores_kw %>% 
   filter(PMI >= 2 & G_signed >= 2)
@@ -136,9 +100,43 @@ top_scores_kw %>%
 top_scores_kw %>%
   print(sort_order = "G_signed")
 
+top_scores_kw %>% 
+  as_tibble() %>%
+  select(type, a, PMI, G_signed) %>% 
+  arrange(desc(PMI)) %>%             
+  slice_max(order_by = PMI, n = 20, with_ties = TRUE) %>%                       
+  kbl(col.names = c("Type", "Frequency", "PMI", r"(Signed $G^2$)")) %>% 
+  kable_minimal() %>% 
+  scroll_box(height = "400px") %>%  print()
+
+
+keyword_PMI_list <- data.frame(
+  Word = c("ganges", "beryls", "ichthyophagi", "megasthenes", "obsidian", "bdellium", "agates", "callaina", "condensation", "gerra", "jomanes", "nonius", "prasii", "alia", "carnelian", "cophes", "hypasis", "merchandize", "peppertree", "sacae", "sandastros", "thornbush"),
+  Exp = c("a major river in India", "a type of gemstone", "a group of people who primarily subsist on fish", "a Greek historian and diplomat", "a type of volcanic glass", "a fragrant resin obtained from certain trees", "a type of semiprecious gemstone", "pale green precious stone (lat)", "the process of vapor turning into a liquid state", "war (lat)", "a Roman nomen gentile, gens or \"family name\"", "a Roman nomen gentile, gens or \"family name\"", "prase, green coloured gem", "by another / different way / route (lat)", "a reddish-brown variety of chalcedony", "a river that rises in the ancient Paropamise range, eventually falling into the Indus river near its confluence with the Cophes river", "a river in north India", "goods or commodities", "a tree that produces peppercorns", "the easternmost nation of Elibe, situated to the south of Ilia and the north of Bern", "a precious stone found in India and Arabia", "any of many thorny or spiny shrubs and bushes"),
+  Tag = c("river", "goods", "people", "people", "goods", "goods", "goods", "goods", "activity", "activity", "people", "people", "goods", "route", "goods", "river", "river", "goods", "tree", "river", "goods", "tree"),
+  Sub_tag = c("N/A", "stone", "group of people", "famous people", "others", "others", "stone", "stone", "producing activity", "N/A", "human name", "human name", "stone", "N/A", "stone", "N/A", "N/A", "general", "origin of goods", "N/A", "stone", "N/A")
+)
+
+keyword_PMI_list %>% 
+  as_tibble() %>%
+  select(Word, Exp, Tag, Sub_tag) %>%                        
+  kbl(col.names = c("Word", "Exp", "Tag", "Sub_tag")) %>% 
+  kable_minimal() %>% print()
+
+tag_counts <- keyword_PMI_list %>%
+  count(Tag) %>%
+  arrange(desc(n))
+
+# Plot the tag distribution
+ggplot(tag_counts, aes(x = n, y = reorder(Tag, -n), fill = Tag)) +
+  geom_bar(stat = "identity") +
+  labs(x = "Count", y = "Tag", fill = "Tag") +
+  theme_minimal() +
+  coord_flip()
+
+
 coocs <- fnames_wholetext %>% 
-  surf_cooc("(?xi)  ^ india $", 
-            re_token_splitter = r"--[(?xi)    \s+   ]--", # whitespace as token splitter
+  surf_cooc("(?xi)  ^ india $",
             re_token_transf_in = "[[:punct:]]", # Match punctuation marks
             token_transf_out = "")
 coocs$target_freqlist
@@ -164,30 +162,33 @@ top_scores_colloc %>%
 top_scores_colloc %>%
   print(sort_order = "G_signed")
 
-top_scores_colloc %>% # also valid for top_scores_kw
+top_scores_colloc %>% 
   as_tibble() %>%
   select(type, a, PMI, G_signed) %>% # select 4 columns
-  arrange(desc(G_signed)) %>%        # sort by G_signed (descending)  
-  head(30) %>%                       # select top 30 rows
-  kbl(col.names = c("Type", "Frequency", "PMI", r"(Signed $G^2$)")) %>% 
+  slice_max(order_by = G_signed, n = 20, with_ties = TRUE) %>%                       # select top 30 rows
+  kbl(col.names = c("Type", "Frequency", "PMI", r"(Signed $G^2$)"), escape = FALSE) %>%
   kable_minimal() %>% 
   scroll_box(height = "400px") %>% print()
 
-top_scores_kw %>% # also valid for top_scores_colloc
+
+conc_data <- conc(fnames_wholetext, '\\bindia\\b')
+print(conc_data)
+
+conc_data %>%
   as_tibble() %>%
-  select(type, a, PMI, G_signed) %>% # select 4 columns
-  arrange(desc(PMI)) %>%             # sort by PMI (descending) 
-  head(30) %>%                       # select top 30 rows
-  kbl(col.names = c("Type", "Frequency", "PMI", r"(Signed $G^2$)")) %>% 
-  kable_minimal() %>% 
+  select(source, left, match, right) %>%
+  mutate(
+    source = short_names(source),
+    book = as.integer(gsub("^(\\d+).*", "\\1", source)),
+    chapter = as.numeric(gsub("^\\d+\\.(\\d+)\\.\\d+_text$", "\\1", source)),
+    paragraph = as.numeric(gsub("^\\d+\\.\\d+\\.(\\d+)_text$", "\\1", source))
+  ) %>%
+  arrange(book, chapter, paragraph) %>%
+  select(book, chapter, paragraph, left, match, right) %>%
+  kbl(align = c("r", "r", "r", "c", "l", "l", "l")) %>%
+  kable_paper(font_size = 15) %>%
   scroll_box(height = "400px")
 
-corpus <- Corpus(VectorSource(character()))
-
-for (file in fnames_indiatext) {
-  text <- readLines(file, warn = FALSE)
-  doc <- PlainTextDocument(text)
-  corpus <- tm_add_document(corpus, doc)
-}
+ 
 quarto::render("paper_quarto.md", to = "html", verbose = TRUE)
 

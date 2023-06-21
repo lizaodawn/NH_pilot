@@ -35,7 +35,7 @@ knitr::write_bib(
 
 # Research Question
 
-Pliny the Elder's "Natural History" stands as a seminal work in the history of encyclopedias, serving as a gateway to understanding the knowledge and worldview of ancient Rome. Beyond its role as a compendium of diverse subjects, the text provides a captivating glimpse into the actual merchant exchanges [@dodd2021] of the Roman Empire while shedding a light on the spatial imagination of Pliny and the scholarly references of his time [@nappo2017].
+Pliny the Elder's "Natural History" stands as a seminal work in the history of encyclopedias, serving as a gateway to understanding the knowledge and worldview of ancient Rome. Beyond its role as a compendium of diverse subjects, the text provides a captivating glimpse into the actual merchant exchanges [@dodd2021] of the Roman Empire while shedding a light on the spatial imagination of Pliny and the scholarly references of his time [@plinyth2011].
 
 The text of the whole book has been digitized and annotated with people's name, places' name and coordinates by [TOPOSText](https://topostext.org/the-project) project since 2012. This invaluable resource allows for the creation of a dataset that includes both the textual contents and geographical annotations, which can be utilized to investigate the distribution of place names in the entire text and examine the frequencies and patterns of geographically-related content.
 
@@ -128,7 +128,7 @@ The punctuation marks are removed in the tokenization process.
 
 # Keyword Analysis on India-related texts
 
-The frequency list of the **target corpus** (Indian subcontinent related texts) and **reference corpus** (whole text) are generated respectively. And the association scores are calculated and filtered for those returning both PMI and $G^2$ gaining 2 or higher, in order to get the statisticly most significant keyword in India-related texts comparing to the reference corpus.
+The frequency list of the **target corpus** (Indian subcontinent related texts) and **reference corpus** (whole text) are generated respectively. And the association scores are calculated and filtered for those returning both PMI and $G^2$ gaining 2 or higher (in which criteria indicating the words having an at least four times higher probability than that in all the data taken together, as well as having a confirming evidence statistically [@methods]), in order to get the statistically most significant keyword in India-related texts comparing to the reference corpus.
 
 When calculating the word frequency in the **target corpus**, the word "india" itself is removed from the token in order to get more descriptive words in the corpus, which will be more efficient in implying the possible thematic keyword in the **target corpus**.
 
@@ -160,7 +160,7 @@ top_scores_kw <- scores_kw %>%
 
 ```
 
-Tables below shows the top 20 keywords in Indian related texts comparing to other context, respectively sorted by PMI (@tbl-kwtable_PMI) and G_signed (@tbl-kwtable_Gsigned).
+Tables below shows the top 20 keywords in Indian related texts comparing to the entire texts in the encyclopedia, respectively sorted by PMI (@tbl-kwtable_PMI) and G_signed (@tbl-kwtable_Gsigned).
 
 ::: panel-tabset
 ## Sorted by PMI
@@ -175,8 +175,7 @@ Tables below shows the top 20 keywords in Indian related texts comparing to othe
 top_scores_kw %>% 
   as_tibble() %>%
   select(type, a, PMI, G_signed) %>% 
-  arrange(desc(PMI)) %>%             
-  head(20) %>%                       
+  slice_max(order_by = PMI, n = 20, with_ties = TRUE) %>%                       
   kbl(col.names = c("Type", "Frequency", "PMI", r"(Signed $G^2$)")) %>% 
   kable_minimal() %>% 
   scroll_box(height = "400px")
@@ -193,30 +192,63 @@ top_scores_kw %>%
 
 top_scores_kw %>% # also valid for top_scores_colloc
   as_tibble() %>%
-  select(type, a, PMI, G_signed) %>% # select 4 columns
-  arrange(desc(G_signed)) %>%             # sort by PMI (descending) 
-  head(20) %>%                       # select top 30 rows
+  select(type, a, PMI, G_signed) %>%         # sort by PMI (descending) 
+  slice_max(order_by = G_signed, n = 20, with_ties = TRUE) %>%   # select top 30 rows
   kbl(col.names = c("Type", "Frequency", "PMI", r"(Signed $G^2$)")) %>% 
   kable_minimal() %>% 
   scroll_box(height = "400px")
 ```
 :::
 
-@tbl-kwPMI below shows the explanation of the top 20 keywords in Indian related text.
+As **PMI Score** is seen as the indicator for keyword analysis, the top 20 keywords sorted by PMI were further checked of the meaning and tagged of its type manually. @tbl-kwlist below shows the explanation of the top 20 keywords in Indian related text.
 
 ```{r}
 #| warning: false
-#| label: tbl-kwPMI
+#| echo: false
+#| label: tbl-kwlist
+#| tbl-cap: Top 20 keywords with meaning sorted by PMI
+#| tbl-cap-location: top
 
-keyword_PMI_tibble <- tibble(
-  Word = c("ganges", "beryls", "ichthyophagi", "megasthenes", "obsidian", "bdellium", "agates", "callaina", "condensation", "gerra", "jomanes", "nonius", "prasii", "alia", "carnelian", "cophes", "hypasis", "merchandize", "peppertree", "sacae"),
-  Type = c("Proper Noun", "Noun", "Plural Noun", "Proper Noun", "Noun", "Noun", "Noun", "Noun/Proper Noun", "Noun", "Noun/Proper Noun", "Noun/Proper Noun", "Noun/Proper Noun", "Noun/Proper Noun", "Adverb", "Noun", "Noun/Proper Noun", "Noun/Proper Noun", "Noun", "Noun", "Noun/Proper Noun"),
-  Exp = c("a major river in India", "a type of gemstone", "a group of people who primarily subsist on fish", "a Greek historian and diplomat", "a type of volcanic glass", "a fragrant resin obtained from certain trees", "a type of semiprecious gemstone", "pale green precious stone (lat)", "the process of vapor turning into a liquid state", "war (lat)", "a Roman nomen gentile, gens or 'family name'", "a Roman nomen gentile, gens or 'family name'", "prase, green coloured gem", "by another / different way / route", "a reddish-brown variety of chalcedony", "a river that rises in the ancient Paropamise range, eventually falling into the Indus river near its confluence with the Cophes river", "a river in north India", "goods or commodities", "a tree that produces peppercorns", "the easternmost nation of Elibe, situated to the south of Ilia and the north of Bern")
-) %>% print()
+keyword_PMI_list <- data.frame(
+  Word = c("ganges", "beryls", "ichthyophagi", "megasthenes", "obsidian", "bdellium", "agates", "callaina", "condensation", "gerra", "jomanes", "nonius", "prasii", "alia", "carnelian", "cophes", "hypasis", "merchandize", "peppertree", "sacae", "sandastros", "thornbush"),
+  Exp = c("a major river in India", "a type of gemstone", "a group of people who primarily subsist on fish", "a Greek historian and diplomat", "a type of volcanic glass", "a fragrant resin obtained from certain trees", "a type of semiprecious gemstone", "pale green precious stone (lat)", "the process of vapor turning into a liquid state", "war (lat)", "a Roman nomen gentile, gens or \"family name\"", "a Roman nomen gentile, gens or \"family name\"", "prase, green coloured gem", "by another / different way / route (lat)", "a reddish-brown variety of chalcedony", "a river that rises in the ancient Paropamise range, eventually falling into the Indus river near its confluence with the Cophes river", "a river in north India", "goods or commodities", "a tree that produces peppercorns", "the easternmost nation of Elibe, situated to the south of Ilia and the north of Bern", "a precious stone found in India and Arabia", "any of many thorny or spiny shrubs and bushes"),
+  Tag = c("river", "goods", "people", "people", "goods", "goods", "goods", "goods", "activity", "activity", "people", "people", "goods", "route", "goods", "river", "river", "goods", "tree", "river", "goods", "tree"),
+  Sub_tag = c("N/A", "stone", "group of people", "famous people", "others", "others", "stone", "stone", "producing activity", "N/A", "human name", "human name", "stone", "N/A", "stone", "N/A", "N/A", "general", "origin of goods", "N/A", "stone", "N/A")
+) 
 
+keyword_PMI_list %>% 
+  as_tibble() %>%
+  select(Word, Exp, Tag, Sub_tag) %>%                        
+  kbl(col.names = c("Word", "Exp", "Tag", "Sub_tag")) %>% 
+  kable_minimal()
+```
+
+As the distribution plot of categories @fig-kwtype manifested, most keywords about Indian related texts in Natural History have a potential topic of goods (especially precious stones), and also people (both tribes and famous diplomats) and rivers in India (carrying the important role of origin of goods or transportation routes), which incorporates the investigation in [@nappo2017].
+
+```{r}
+#| warning: false
+#| echo: false
+#| label: fig-kwtype
+#| fig-cap: Top 20 keywords type distribution
+#| fig-cap-location: top
+
+tag_counts <- keyword_PMI_list %>%
+  count(Tag) %>%
+  arrange(desc(n))
+
+# Plot the tag distribution
+ggplot(tag_counts, aes(x = n, y = reorder(Tag, -n), fill = Tag)) +
+  geom_bar(stat = "identity") +
+  labs(x = "Count", y = "Tag", fill = "Tag") +
+  theme_minimal() +
+  coord_flip()
 ```
 
 # Collocation Analysis on "India" in the whole corpus
+
+In addition to the investigation on the keywords in the "Indian" related texts, it is also worthwhile having a look at what words collocated when Pliny the Elder referred to the word "India".
+
+By indicating "india" as the target item for the analysis through the function of [surf_cooc](https://masterclm.github.io/mclm/reference/create_cooc.html) in [@R-mclm] and removing the punctuation marks, similarly to the Keyword Analysis criteria chosen above, collocation scores for co-text of both right and left side of "india" are calculated and filtered with those with both PMI and G_signed scores as 2 or above to get the prominent collocates of "india", in order to get an concrete overview of the discourse and recognization of Pliny the Elder to "India".
 
 ```{r}
 #| label: collocation
@@ -224,7 +256,6 @@ keyword_PMI_tibble <- tibble(
 
 coocs <- fnames_wholetext %>% 
   surf_cooc("(?xi)  ^ india $", 
-            re_token_splitter = r"--[(?xi)    \s+   ]--", # whitespace as token splitter
             re_token_transf_in = "[[:punct:]]", # Match punctuation marks
             token_transf_out = "")
 
@@ -235,42 +266,40 @@ top_scores_colloc <- scores_colloc %>%
   filter(PMI >= 2 & G_signed >= 2)
 ```
 
-@tbl-coltable_PMI and @tbl-coltable_Gsigned shows the top 30 collocates to the word "india" in the whole text, respectively sorted by PMI and G_signed.
+@tbl-coltable_Gsigned and @tbl-coltable_PMI shows the top 20 collocates to the word "india" in the whole text, respectively sorted by PMI and G_signed.
 
 ::: panel-tabset
-## Sorted by PMI
+## Sorted by G_singed
 
 ```{r}
-#| label: tbl-coltable_PMI
+#| label: tbl-coltable_Gsigned
 #| tbl-cap-location: top
-#| tbl-cap: Top 30 collocates to the word "india" in Natural History (sorted by PMI)
+#| tbl-cap: Top 20 collocates to the word "india" in Natural History (sorted by PMI)
 #| warning: false
 #| echo: false
 top_scores_colloc %>% 
   as_tibble() %>%
-  select(type, a, PMI, G_signed) %>% # select 4 columns
-  arrange(desc(PMI)) %>%        # sort by G_signed (descending)  
-  head(30) %>%                       # select top 30 rows
+  select(type, a, PMI, G_signed) %>% 
+  slice_max(order_by = G_signed, n = 20, with_ties = TRUE) %>%
   kbl(col.names = c("Type", "Frequency", "PMI", r"(Signed $G^2$)"), escape = FALSE) %>%
   kable_minimal() %>% 
   scroll_box(height = "400px")
 
 ```
 
-## Sorted by G_signed
+## Sorted by PMI
 
 ```{r}
-#| label: tbl-coltable_Gsigned
+#| label: tbl-coltable_PMI
 #| tbl-cap-location: top
-#| tbl-cap: Top 30 collocates to the word "india" in Natural History (sorted by G_signed)
+#| tbl-cap: Top 20 collocates to the word "india" in Natural History (sorted by PMI)
 #| warning: false
 #| echo: false
 
 top_scores_colloc %>% 
   as_tibble() %>%
-  select(type, a, PMI, G_signed) %>% # select 4 columns
-  arrange(desc(G_signed)) %>%        # sort by G_signed (descending)  
-  head(30) %>%                       # select top 30 rows
+  select(type, a, PMI, G_signed) %>%
+  slice_max(order_by = PMI, n = 20, with_ties = TRUE) %>% 
   kbl(col.names = c("Type", "Frequency", "PMI", r"(Signed $G^2$)"), escape = FALSE) %>% 
   kable_minimal() %>% 
   scroll_box(height = "400px") 
@@ -278,34 +307,33 @@ top_scores_colloc %>%
 ```
 :::
 
+As the returned $G^2$ indicates the strongness of evidence of the independency of the two words,
+
+In addition, as shown in @tbl-concordance, with the concordance table of word "india" providing more details about the context of \"India\".
+
 ```{r}
-#| label: tbl-coltables1
-#| tbl-cap: Top 30 Collocates of word "India" in Natural History
-#| tbl-subcap: 
-#|  - "Sorted by PMI"
-#|  - "Sorted by G_signed"
-#| layout-ncol: 2
+#| label: tbl-concordance
+#| tbl-cap-location: top
+#| tbl-cap: Concordance table of word "india" in Natural History
 #| warning: false
 #| echo: false
-#| output: false
 
+conc_data <- conc(fnames_wholetext, '\\bindia\\b')
 
-
-top_scores_colloc %>% 
+conc_data %>%
   as_tibble() %>%
-  select(type, a, PMI, G_signed) %>% # select 4 columns
-  arrange(desc(PMI)) %>%        # sort by G_signed (descending)  
-  head(30) %>%                       # select top 30 rows
-  kbl(col.names = c("Type", "Frequency", "PMI", "(Signed $G^{2}$)")) 
-
-top_scores_colloc %>% 
-  as_tibble() %>%
-  select(type, a, PMI, G_signed) %>% # select 4 columns
-  arrange(desc(G_signed)) %>%        # sort by G_signed (descending)  
-  head(30) %>%                       # select top 30 rows
-  kbl(col.names = c("Type", "Frequency", "PMI", "(Signed $G^{2}$)")) 
-
-
+  select(source, left, match, right) %>%
+  mutate(
+    source = short_names(source),
+    book = as.integer(gsub("^(\\d+).*", "\\1", source)),
+    chapter = as.numeric(gsub("^\\d+\\.(\\d+)\\.\\d+_text$", "\\1", source)),
+    paragraph = as.numeric(gsub("^\\d+\\.\\d+\\.(\\d+)_text$", "\\1", source))
+  ) %>%
+  arrange(book, chapter, paragraph) %>%
+  select(book, chapter, paragraph, left, match, right) %>%
+  kbl(align = c("r", "r", "r", "c", "l", "l", "l")) %>%
+  kable_paper(font_size = 15) %>%
+  scroll_box(height = "400px")
 ```
 
 # Conclusion
