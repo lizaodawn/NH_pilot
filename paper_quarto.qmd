@@ -35,15 +35,16 @@ knitr::write_bib(
 
 # Research Question
 
-Natural History by Pliny the Elder is considered the very first encyclopedia in modern history. It not only showcased the actual merchant exchange of the Roman Empire, but also manifested the spatial imagination of Pliny the Elder and the referenced scholarships of that time.
+Pliny the Elder's "Natural History" stands as a seminal work in the history of encyclopedias, serving as a gateway to understanding the knowledge and worldview of ancient Rome. Beyond its role as a compendium of diverse subjects, the text provides a captivating glimpse into the actual merchant exchanges [@dodd2021] of the Roman Empire while shedding a light on the spatial imagination of Pliny and the scholarly references of his time [@nappo2017].
 
-The text of the whole book has been digitized and annotated with people's name and places' name and coordinates by [TOPOSText](https://topostext.org/the-project) project since 2012. By scraping the text as well as the geographical related annotations, the distribution of place names in the encyclopedia can be investigated, which will contribute to a comprehensive understanding of the spatial imagination of Pliny the Elder and the scholarships in his reference network.
+The text of the whole book has been digitized and annotated with people's name, places' name and coordinates by [TOPOSText](https://topostext.org/the-project) project since 2012. This invaluable resource allows for the creation of a dataset that includes both the textual contents and geographical annotations, which can be utilized to investigate the distribution of place names in the entire text and examine the frequencies and patterns of geographically-related content.
 
-@fig-geoname shows the Top 20 distinct geographical names mentioned in Natural History.
+As a starting point, @fig-geoname reveals the Top 20 distinct geographical names mentioned within the text.
 
 ```{r}
 #| label: fig-geoname
 #| fig-cap: Bar Chart for Top 20 Distinct Place Names Mentioned in Natural History
+#| fig-cap-location: top
 #| warning: false
 #| echo: false
 
@@ -67,11 +68,12 @@ ggplot(top_20_summary_data, aes(x = reorder(Place_Name, -Count), y = Count)) +
 
 ```
 
-When mapping the places with the annotated coordinates, as shown in @fig-map, India is the only one place that not in Mediterranean region while having a rather high counts in the mentioned times.
+An intriguing observation from this analysis, as depicted in @fig-map, is the prominence of India---a region outside the Mediterranean---despite its high frequency of mentions.
 
 ```{r}
 #| label: fig-map
 #| fig-cap: Mapping of geographical names mentioned in Natural History
+#| fig-cap-location: top
 #| warning: false
 #| echo: false
 
@@ -93,11 +95,13 @@ m
 
 ```
 
-In this regards, this paper tries to further explore what themes are referred around the text about India region with application of keyword analysis and collocation analysis methods in corpus linguistics.
+Building upon this observation, this paper aims to delve deeper into the themes associated with the India region by employing keyword analysis and collocation analysis methods within the framework of corpus linguistics.
+
+The analysis is conducted in R environment [@R-base], and the main corpus linguistics anlysing methods are applied through functions from [mclm](https://masterclm.github.io/mclm/) [@R-mclm] package. In addition, [tidyverse](https://www.tidyverse.org/) [@R-tidyverse] and [leaflet](https://rstudio.github.io/leaflet/) [@R-leaflet] are used for data manipulation and visualisation.
 
 # Corpus Description
 
-As mentioned, the digitized text with geographical annotation is available through [TOPOSText](https://topostext.org/work/148 "Check Natural History on ToposText") project, I further scraped the full text and exported them in .txt as a **reference corpus**, and also exported those with annotation of coordinates in a range of Indian subcontinent as geographically related texts to India as a **target corpus**. The scraping code can be accessed in the link.
+As mentioned earlier, the digitized text of "Natural History" with geographical annotations is readily accessible through the [TOPOSText](https://topostext.org/work/148 "Check Natural History on ToposText") project. In order to facilitate the analysis, I conducted additional scraping of the full text, exporting it as a **reference corpus** in .txt format. Furthermore, I extracted the texts specifically associated with the Indian subcontinent, utilizing the annotated coordinates, creating a **target corpus** of geographically related texts focused on India. The scraping code can be found in the link: .
 
 ```{r}
 #| label: prepare-corpus
@@ -120,11 +124,13 @@ The **reference corpus** consists of all texts in the encyclopedia, divided by p
 
 And the **target corpus** consists of all text related to Indian subcontinent (with coordinates in range of *8°4'N-37°6'N and 68°7'E to 97°25'E*) , has `r prettyNum(n_tokens(tar_flist))` tokens and `r n_types(tar_flist)` types, with the type-token ratio of `r round(n_types(tar_flist)/n_tokens(tar_flist), 2)`.
 
-The tokens are separated by white space and in the analysis of this paper, all the punctuation marks are removed.
-
-[@R-tidyverse] and [@R-mclm] [@R-base] [@R-ggplot2] [@R-leaflet] are the main packages used in this paper. [@dodd2021] [@nappo2017]
+The punctuation marks are removed in the tokenization process.
 
 # Keyword Analysis on India-related texts
+
+The frequency list of the **target corpus** (Indian subcontinent related texts) and **reference corpus** (whole text) are generated respectively. And the association scores are calculated and filtered for those returning both PMI and $G^2$ gaining 2 or higher, in order to get the statisticly most significant keyword in India-related texts comparing to the reference corpus.
+
+When calculating the word frequency in the **target corpus**, the word "india" itself is removed from the token in order to get more descriptive words in the corpus, which will be more efficient in implying the possible thematic keyword in the **target corpus**.
 
 ```{r}
 #| label: keyword
@@ -134,16 +140,17 @@ The tokens are separated by white space and in the analysis of this paper, all t
 # build frequency list for target corpus
 flist_target <- fnames_indiatext %>%
   freqlist(
-    re_token_splitter = r"--[(?xi)    \s+   ]--", # whitespace as token splitter
     re_token_transf_in = "[[:punct:]]", # Match punctuation marks
-    token_transf_out = "" # Replace punctuation marks with an empty string
+    token_transf_out = "", # Replace punctuation marks with an empty string
+    re_drop_token = "india"
   )
 
 # build frequency list for reference corpus
 flist_ref <- fnames_wholetext %>%
-  freqlist(re_token_splitter = r"--[(?xi)    \s+   ]--", # whitespace as token splitter
-           re_token_transf_in = "[[:punct:]]", # Match punctuation marks
-           token_transf_out = "") 
+  freqlist(
+    re_token_transf_in = "[[:punct:]]", # Match punctuation marks
+    token_transf_out = ""
+  ) 
 
 # calculate scores
 scores_kw <- assoc_scores(flist_target, flist_ref)
@@ -153,9 +160,9 @@ top_scores_kw <- scores_kw %>%
 
 ```
 
-@tbl-kwtables below shows the top 30 keywords in Indian related texts comparing to other context, respectively sorted by PMI and G_signed.
+Tables below shows the top 20 keywords in Indian related texts comparing to other context, respectively sorted by PMI (@tbl-kwtable_PMI) and G_signed (@tbl-kwtable_Gsigned).
 
-::: {#tbl-kwtables .panel-tabset}
+::: panel-tabset
 ## Sorted by PMI
 
 ```{r}
@@ -163,13 +170,13 @@ top_scores_kw <- scores_kw %>%
 #| echo: false
 #| label: tbl-kwtable_PMI
 #| tbl-cap-location: top
-#| tbl-cap: Top 30 Keywords on Indian Related Text in Natural History (sorted by PMI)
+#| tbl-cap: Top 20 Keywords on Indian Related Text in Natural History (sorted by PMI)
 
 top_scores_kw %>% 
   as_tibble() %>%
-  select(type, a, PMI, G_signed) %>% # select 4 columns
-  arrange(desc(PMI)) %>%             # sort by PMI (descending) 
-  head(30) %>%                       # select top 30 rows
+  select(type, a, PMI, G_signed) %>% 
+  arrange(desc(PMI)) %>%             
+  head(20) %>%                       
   kbl(col.names = c("Type", "Frequency", "PMI", r"(Signed $G^2$)")) %>% 
   kable_minimal() %>% 
   scroll_box(height = "400px")
@@ -182,47 +189,30 @@ top_scores_kw %>%
 #| echo: false
 #| label: tbl-kwtable_Gsigned
 #| tbl-cap-location: top
-#| tbl-cap: Top 30 Keywords on Indian Related Text in Natural History (sorted by G_Signed)
+#| tbl-cap: Top 20 Keywords on Indian Related Text in Natural History (sorted by G_Signed)
 
 top_scores_kw %>% # also valid for top_scores_colloc
   as_tibble() %>%
   select(type, a, PMI, G_signed) %>% # select 4 columns
   arrange(desc(G_signed)) %>%             # sort by PMI (descending) 
-  head(30) %>%                       # select top 30 rows
-  kbl(col.names = c("Type", "Frequency", "PMI", r"(Signed $G^2$)"), escape = FALSE) %>% 
+  head(20) %>%                       # select top 30 rows
+  kbl(col.names = c("Type", "Frequency", "PMI", r"(Signed $G^2$)")) %>% 
   kable_minimal() %>% 
   scroll_box(height = "400px")
 ```
 :::
 
+@tbl-kwPMI below shows the explanation of the top 20 keywords in Indian related text.
+
 ```{r}
-#| label: tbl-kwtables1
-#| tbl-cap: Top 30 Keywords of Indian related texts in Natural History
-#| tbl-subcap: 
-#|  - "Sorted by PMI"
-#|  - "Sorted by G_signed"
-#| layout-ncol: 2
 #| warning: false
-#| echo: false
-#| output: false
+#| label: tbl-kwPMI
 
-
-
-top_scores_kw %>% # also valid for top_scores_colloc
-  as_tibble() %>%
-  select(type, a, PMI, G_signed) %>% # select 4 columns
-  arrange(desc(PMI)) %>%             # sort by PMI (descending) 
-  head(30) %>%                       # select top 30 rows
-  kbl(col.names = c("Type", "Frequency", "PMI", "r (Signed $G^{2}$)"))
-
-top_scores_kw %>% # also valid for top_scores_colloc
-  as_tibble() %>%
-  select(type, a, PMI, G_signed) %>% # select 4 columns
-  arrange(desc(G_signed)) %>%             # sort by PMI (descending) 
-  head(30) %>%                       # select top 30 rows
-  kbl(col.names = c("Type", "Frequency", "PMI", "r (Signed $G^{2}$)")) 
-
-
+keyword_PMI_tibble <- tibble(
+  Word = c("ganges", "beryls", "ichthyophagi", "megasthenes", "obsidian", "bdellium", "agates", "callaina", "condensation", "gerra", "jomanes", "nonius", "prasii", "alia", "carnelian", "cophes", "hypasis", "merchandize", "peppertree", "sacae"),
+  Type = c("Proper Noun", "Noun", "Plural Noun", "Proper Noun", "Noun", "Noun", "Noun", "Noun/Proper Noun", "Noun", "Noun/Proper Noun", "Noun/Proper Noun", "Noun/Proper Noun", "Noun/Proper Noun", "Adverb", "Noun", "Noun/Proper Noun", "Noun/Proper Noun", "Noun", "Noun", "Noun/Proper Noun"),
+  Exp = c("a major river in India", "a type of gemstone", "a group of people who primarily subsist on fish", "a Greek historian and diplomat", "a type of volcanic glass", "a fragrant resin obtained from certain trees", "a type of semiprecious gemstone", "pale green precious stone (lat)", "the process of vapor turning into a liquid state", "war (lat)", "a Roman nomen gentile, gens or 'family name'", "a Roman nomen gentile, gens or 'family name'", "prase, green coloured gem", "by another / different way / route", "a reddish-brown variety of chalcedony", "a river that rises in the ancient Paropamise range, eventually falling into the Indus river near its confluence with the Cophes river", "a river in north India", "goods or commodities", "a tree that produces peppercorns", "the easternmost nation of Elibe, situated to the south of Ilia and the north of Bern")
+) %>% print()
 
 ```
 

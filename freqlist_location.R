@@ -4,6 +4,11 @@ install.packages('here')
 install.packages('kableExtra')
 install.packages("leaflet")
 install.packages("quarto")
+install.packages("topicmodels")
+install.packages("tm")
+
+library(topicmodels)
+library(tm)
 
 library('tidyverse')
 library('mclm')
@@ -57,8 +62,7 @@ m <- leaflet() %>%
     popup = paste("Place Name:", top_20_summary_data$Place_Name, "<br>",
                   "Count:", top_20_summary_data$Count)
   )
-# Display the map
-m
+
 
 corpus_folder <- here("NH_wholetext")
 fnames_wholetext <- get_fnames(corpus_folder) %>% 
@@ -79,17 +83,15 @@ n_types(tar_flist)
 
 # build frequency list for target corpus
 flist_target <- fnames_indiatext %>%
-  freqlist(
-    re_token_splitter = r"--[(?xi)    \s+   ]--", # whitespace as token splitter
-    re_token_transf_in = "[[:punct:]]", # Match punctuation marks
-    token_transf_out = "" # Replace punctuation marks with an empty string
-  ) %>%
+  freqlist(re_token_transf_in = "[[:punct:]]", # Match punctuation marks
+           token_transf_out = "",# Replace punctuation marks with an empty string
+           re_drop_token = "india"
+    ) %>%
   print()
 
 # build frequency list for reference corpus
 flist_ref <- fnames_wholetext %>%
-  freqlist(re_token_splitter = r"--[(?xi)    \s+   ]--", # whitespace as token splitter
-           re_token_transf_in = "[[:punct:]]", # Match punctuation marks
+  freqlist(re_token_transf_in = "[[:punct:]]", # Match punctuation marks
            token_transf_out = "") %>%
   print()
 
@@ -101,6 +103,27 @@ print(scores_kw, sort_order = "PMI")
 
 # print scores, sorted by G_signed
 print(scores_kw, sort_order = "G_signed")
+
+
+keyword_PMI_tibble <- tibble(
+  Word = c("ganges", "beryls", "ichthyophagi", "megasthenes", "obsidian", "bdellium", "agates", "callaina", "condensation", "gerra", "jomanes", "nonius", "prasii", "alia", "carnelian", "cophes", "hypasis", "merchandize", "peppertree", "sacae"),
+  Type = c("Proper Noun", "Noun", "Plural Noun", "Proper Noun", "Noun", "Noun", "Noun", "Noun/Proper Noun", "Noun", "Noun/Proper Noun", "Noun/Proper Noun", "Noun/Proper Noun", "Noun/Proper Noun", "Adverb", "Noun", "Noun/Proper Noun", "Noun/Proper Noun", "Noun", "Noun", "Noun/Proper Noun"),
+  Exp = c("a major river in India", "a type of gemstone", "a group of people who primarily subsist on fish", "a Greek historian and diplomat", "a type of volcanic glass", "a fragrant resin obtained from certain trees", "a type of semiprecious gemstone", "pale green precious stone (lat)", "the process of vapor turning into a liquid state", "war (lat)", "a Roman nomen gentile, gens or 'family name'", "a Roman nomen gentile, gens or 'family name'", "prase, green coloured gem", "by another / different way / route", "a reddish-brown variety of chalcedony", "a river that rises in the ancient Paropamise range, eventually falling into the Indus river near its confluence with the Cophes river", "a river in north India", "goods or commodities", "a tree that produces peppercorns", "the easternmost nation of Elibe, situated to the south of Ilia and the north of Bern")
+) %>% print()
+
+keyword_G_tibble <- tibble(
+  Word = c("hundred", "amber", "ganges", "arabia", "thousand", "glass", "elephants", "rockcrystal", "beryls", "thence", "indus", "ethiopia", "tribe", "pepper", "lustre", "smaragdus", "gates", "iaspis", "ichthyophagi", "megasthenes"),
+  Type = c("Noun", "Noun", "Proper Noun", "Proper Noun", "Noun", "Noun", "Noun", "Noun", "Noun", "Adverb", "Noun", "Noun", "Noun", "Noun", "Noun", "Noun", "Noun", "Noun", "Plural Noun", "Proper Noun"),
+  Exp = c("the number equivalent to ten multiplied by ten", "a fossilized tree resin", "a major river in India", "a region in the Arabian Peninsula", "the number equivalent to ten multiplied by one hundred", "a hard, brittle substance", "large, intelligent mammals", "a transparent variety of quartz", "a type of gemstone", "from that place or from there", "a major river in South Asia", "a region in Eastern Africa", "a social group with a common ancestry", "a pungent, spicy seasoning", "the quality of light reflected from a surface", "emerald, a green gemstone", "large entrances or doorways", "a type of gemstone", "a group of people who primarily subsist on fish", "a Greek historian and diplomat")
+) %>% select(Word, Type, Exp) %>%                        
+  kbl(col.names = c("Word", "Type", "Exp")) %>% 
+  kable_minimal() %>% 
+  scroll_box(height = "400px") %>% print()
+
+
+
+# Print the tibble
+print(df_tibble)
 
 top_scores_kw <- scores_kw %>% 
   filter(PMI >= 2 & G_signed >= 2)
@@ -159,5 +182,12 @@ top_scores_kw %>% # also valid for top_scores_colloc
   kable_minimal() %>% 
   scroll_box(height = "400px")
 
+corpus <- Corpus(VectorSource(character()))
+
+for (file in fnames_indiatext) {
+  text <- readLines(file, warn = FALSE)
+  doc <- PlainTextDocument(text)
+  corpus <- tm_add_document(corpus, doc)
+}
 quarto::render("paper_quarto.md", to = "html", verbose = TRUE)
 

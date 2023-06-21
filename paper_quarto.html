@@ -2,10 +2,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-
-<script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [["$","$"]]}})</script>
-<script async src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
 <meta name="generator" content="quarto-1.3.361">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
@@ -104,6 +100,8 @@ div.csl-indent {
 <script src="paper_quarto_files/libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="paper_quarto_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
@@ -156,10 +154,10 @@ div.csl-indent {
 
 <section id="research-question" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Research Question</h1>
-<p>Natural History by Pliny the Elder is considered the very first encyclopedia in modern history. It not only showcased the actual merchant exchange of the Roman Empire, but also manifested the spatial imagination of Pliny the Elder and the referenced scholarships of that time.</p>
-<p>The text of the whole book has been digitized and annotated with people’s name and places’ name and coordinates by <a href="https://topostext.org/the-project">TOPOSText</a> project since 2012. By scraping the text as well as the geographical related annotations, the distribution of place names in the encyclopedia can be investigated, which will contribute to a comprehensive understanding of the spatial imagination of Pliny the Elder and the scholarships in his reference network.</p>
-<p><a href="#fig-geoname">Figure&nbsp;1</a> shows the Top 20 distinct geographical names mentioned in Natural History.</p>
-<div class="cell">
+<p>Pliny the Elder’s “Natural History” stands as a seminal work in the history of encyclopedias, serving as a gateway to understanding the knowledge and worldview of ancient Rome. Beyond its role as a compendium of diverse subjects, the text provides a captivating glimpse into the actual merchant exchanges <span class="citation" data-cites="dodd2021">(<a href="#ref-dodd2021" role="doc-biblioref">Dodd 2021</a>)</span> of the Roman Empire while shedding a light on the spatial imagination of Pliny and the scholarly references of his time <span class="citation" data-cites="nappo2017">(<a href="#ref-nappo2017" role="doc-biblioref">Nappo 2017</a>)</span>.</p>
+<p>The text of the whole book has been digitized and annotated with people’s name, places’ name and coordinates by <a href="https://topostext.org/the-project">TOPOSText</a> project since 2012. This invaluable resource allows for the creation of a dataset that includes both the textual contents and geographical annotations, which can be utilized to investigate the distribution of place names in the entire text and examine the frequencies and patterns of geographically-related content.</p>
+<p>As a starting point, <a href="#fig-geoname">Figure&nbsp;1</a> reveals the Top 20 distinct geographical names mentioned within the text.</p>
+<div class="cell fig-cap-location-top">
 <div class="cell-output-display">
 <div id="fig-geoname" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -169,21 +167,22 @@ div.csl-indent {
 </div>
 </div>
 </div>
-<p>When mapping the places with the annotated coordinates, as shown in <a href="#fig-map">Figure&nbsp;2</a>, India is the only one place that not in Mediterranean region while having a rather high counts in the mentioned times.</p>
-<div class="cell">
+<p>An intriguing observation from this analysis, as depicted in <a href="#fig-map">Figure&nbsp;2</a>, is the prominence of India—a region outside the Mediterranean—despite its high frequency of mentions.</p>
+<div class="cell fig-cap-location-top">
 <div id="fig-map" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<div class="leaflet html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-42aded0547fa433cc4ac" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-42aded0547fa433cc4ac">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addCircleMarkers","args":[[40.6,41.891,27.1,30,28,35.5,30.0918,35,44.142,37.6,35.2052,13.01,36.4408,37.9718,41.8933,35.2791,43.5,41.1,39.702,19.5,36.85,37.01],[16.3,12.486,30.7,74,40,39,31.2313,33,7.343,14.5,25.1836,35.01,28.2244,23.72793,12.483,40.2708,33.5,14.6,44.298,39,10.32,34.01],[13.67040599250805,13.12097557348538,12.92439553712281,10.33827838665607,8.872429205127535,8.352245207128441,7.37563556583431,7.37563556583431,7.244308110509934,6.740919818541087,6.4,6.092618484691127,5.986651818838307,5.986651818838307,5.768882040742383,5.484523680320835,5.484523680320835,5.425863986500215,5.366563145999496,5.184592558726289,5.184592558726289,5.184592558726289],null,null,{"interactive":true,"className":"","stroke":true,"color":"blue","weight":5,"opacity":0.5,"fill":true,"fillColor":"blue","fillOpacity":0.6},null,null,["Place Name: Italy <br> Count: 292","Place Name: Rome <br> Count: 269","Place Name: Egypt <br> Count: 261","Place Name: India <br> Count: 167","Place Name: Arabia <br> Count: 123","Place Name: Syria <br> Count: 109","Place Name: Nile <br> Count: 85","Place Name: Cyprus <br> Count: 85","Place Name: Alps <br> Count: 82","Place Name: Sicily <br> Count: 71","Place Name: Crete <br> Count: 64","Place Name: Ethiopia <br> Count: 58","Place Name: Rhodes <br> Count: 56","Place Name: Athens <br> Count: 56","Place Name: Capitol <br> Count: 52","Place Name: Euphrates <br> Count: 47","Place Name: Pontus <br> Count: 47","Place Name: Campania <br> Count: 46","Place Name: Armenia <br> Count: 45","Place Name: Red Sea <br> Count: 42","Place Name: Carthage <br> Count: 42","Place Name: Cilicia <br> Count: 42"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[13.01,44.142],"lng":[7.343,74]}},"evals":[],"jsHooks":[]}</script>
+<div class="leaflet html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-bb018a57d9f26fc0b112" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-bb018a57d9f26fc0b112">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addCircleMarkers","args":[[40.6,41.891,27.1,30,28,35.5,30.0918,35,44.142,37.6,35.2052,13.01,36.4408,37.9718,41.8933,35.2791,43.5,41.1,39.702,19.5,36.85,37.01],[16.3,12.486,30.7,74,40,39,31.2313,33,7.343,14.5,25.1836,35.01,28.2244,23.72793,12.483,40.2708,33.5,14.6,44.298,39,10.32,34.01],[13.67040599250805,13.12097557348538,12.92439553712281,10.33827838665607,8.872429205127535,8.352245207128441,7.37563556583431,7.37563556583431,7.244308110509934,6.740919818541087,6.4,6.092618484691127,5.986651818838307,5.986651818838307,5.768882040742383,5.484523680320835,5.484523680320835,5.425863986500215,5.366563145999496,5.184592558726289,5.184592558726289,5.184592558726289],null,null,{"interactive":true,"className":"","stroke":true,"color":"blue","weight":5,"opacity":0.5,"fill":true,"fillColor":"blue","fillOpacity":0.6},null,null,["Place Name: Italy <br> Count: 292","Place Name: Rome <br> Count: 269","Place Name: Egypt <br> Count: 261","Place Name: India <br> Count: 167","Place Name: Arabia <br> Count: 123","Place Name: Syria <br> Count: 109","Place Name: Nile <br> Count: 85","Place Name: Cyprus <br> Count: 85","Place Name: Alps <br> Count: 82","Place Name: Sicily <br> Count: 71","Place Name: Crete <br> Count: 64","Place Name: Ethiopia <br> Count: 58","Place Name: Rhodes <br> Count: 56","Place Name: Athens <br> Count: 56","Place Name: Capitol <br> Count: 52","Place Name: Euphrates <br> Count: 47","Place Name: Pontus <br> Count: 47","Place Name: Campania <br> Count: 46","Place Name: Armenia <br> Count: 45","Place Name: Red Sea <br> Count: 42","Place Name: Carthage <br> Count: 42","Place Name: Cilicia <br> Count: 42"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[13.01,44.142],"lng":[7.343,74]}},"evals":[],"jsHooks":[]}</script>
 <figcaption class="figure-caption">Figure&nbsp;2: Mapping of geographical names mentioned in Natural History</figcaption>
 </figure>
 </div>
 </div>
-<p>In this regards, this paper tries to further explore what themes are referred around the text about India region with application of keyword analysis and collocation analysis methods in corpus linguistics.</p>
+<p>Building upon this observation, this paper aims to delve deeper into the themes associated with the India region by employing keyword analysis and collocation analysis methods within the framework of corpus linguistics.</p>
+<p>The analysis is conducted in R environment <span class="citation" data-cites="R-base">(<a href="#ref-R-base" role="doc-biblioref">R Core Team 2022</a>)</span>, and the main corpus linguistics anlysing methods are applied through functions from <a href="https://masterclm.github.io/mclm/">mclm</a> <span class="citation" data-cites="R-mclm">(<a href="#ref-R-mclm" role="doc-biblioref">Speelman &amp; Montes 2022</a>)</span> package. In addition, <a href="https://www.tidyverse.org/">tidyverse</a> <span class="citation" data-cites="R-tidyverse">(<a href="#ref-R-tidyverse" role="doc-biblioref">Wickham 2023</a>)</span> and <a href="https://rstudio.github.io/leaflet/">leaflet</a> <span class="citation" data-cites="R-leaflet">(<a href="#ref-R-leaflet" role="doc-biblioref">Cheng, Karambelkar &amp; Xie 2023</a>)</span> are used for data manipulation and visualisation.</p>
 </section>
 <section id="corpus-description" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Corpus Description</h1>
-<p>As mentioned, the digitized text with geographical annotation is available through <a href="https://topostext.org/work/148" title="Check Natural History on ToposText">TOPOSText</a> project, I further scraped the full text and exported them in .txt as a <strong>reference corpus</strong>, and also exported those with annotation of coordinates in a range of Indian subcontinent as geographically related texts to India as a <strong>target corpus</strong>. The scraping code can be accessed in the link.</p>
+<p>As mentioned earlier, the digitized text of “Natural History” with geographical annotations is readily accessible through the <a href="https://topostext.org/work/148" title="Check Natural History on ToposText">TOPOSText</a> project. In order to facilitate the analysis, I conducted additional scraping of the full text, exporting it as a <strong>reference corpus</strong> in .txt format. Furthermore, I extracted the texts specifically associated with the Indian subcontinent, utilizing the annotated coordinates, creating a <strong>target corpus</strong> of geographically related texts focused on India. The scraping code can be found in the link: .</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -202,46 +201,48 @@ div.csl-indent {
 </div>
 <p>The <strong>reference corpus</strong> consists of all texts in the encyclopedia, divided by paragraphs, has 711245 tokens and 51523 types, with the type-token ratio of 0.07.</p>
 <p>And the <strong>target corpus</strong> consists of all text related to Indian subcontinent (with coordinates in range of <em>8°4’N-37°6’N and 68°7’E to 97°25’E</em>) , has 34712 tokens and 7422 types, with the type-token ratio of 0.21.</p>
-<p>The tokens are separated by white space and in the analysis of this paper, all the punctuation marks are removed.</p>
-<p><span class="citation" data-cites="R-tidyverse">(<a href="#ref-R-tidyverse" role="doc-biblioref">Wickham 2023</a>)</span> and <span class="citation" data-cites="R-mclm">(<a href="#ref-R-mclm" role="doc-biblioref">Speelman &amp; Montes 2022</a>)</span> <span class="citation" data-cites="R-base">(<a href="#ref-R-base" role="doc-biblioref">R Core Team 2022</a>)</span> <span class="citation" data-cites="R-ggplot2">(<a href="#ref-R-ggplot2" role="doc-biblioref">Wickham et al. 2023</a>)</span> <span class="citation" data-cites="R-leaflet">(<a href="#ref-R-leaflet" role="doc-biblioref">Cheng, Karambelkar &amp; Xie 2023</a>)</span> are the main packages used in this paper. <span class="citation" data-cites="dodd2021">(<a href="#ref-dodd2021" role="doc-biblioref">Dodd 2021</a>)</span> <span class="citation" data-cites="nappo2017">(<a href="#ref-nappo2017" role="doc-biblioref">Nappo 2017</a>)</span></p>
+<p>The punctuation marks are removed in the tokenization process.</p>
 </section>
 <section id="keyword-analysis-on-india-related-texts" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Keyword Analysis on India-related texts</h1>
+<p>The frequency list of the <strong>target corpus</strong> (Indian subcontinent related texts) and <strong>reference corpus</strong> (whole text) are generated respectively. And the association scores are calculated and filtered for those returning both PMI and <span class="math inline">\(G^2\)</span> gaining 2 or higher, in order to get the statisticly most significant keyword in India-related texts comparing to the reference corpus.</p>
+<p>When calculating the word frequency in the <strong>target corpus</strong>, the word “india” itself is removed from the token in order to get more descriptive words in the corpus, which will be more efficient in implying the possible thematic keyword in the <strong>target corpus</strong>.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># build frequency list for target corpus</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>flist_target <span class="ot">&lt;-</span> fnames_indiatext <span class="sc">%&gt;%</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">freqlist</span>(</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">re_token_splitter =</span> r<span class="st">"--[(?xi)    \s+   ]--"</span>, <span class="co"># whitespace as token splitter</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">re_token_transf_in =</span> <span class="st">"[[:punct:]]"</span>, <span class="co"># Match punctuation marks</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">token_transf_out =</span> <span class="st">""</span> <span class="co"># Replace punctuation marks with an empty string</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">re_token_transf_in =</span> <span class="st">"[[:punct:]]"</span>, <span class="co"># Match punctuation marks</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">token_transf_out =</span> <span class="st">""</span>, <span class="co"># Replace punctuation marks with an empty string</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">re_drop_token =</span> <span class="st">"india"</span></span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># build frequency list for reference corpus</span></span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>flist_ref <span class="ot">&lt;-</span> fnames_wholetext <span class="sc">%&gt;%</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">freqlist</span>(<span class="at">re_token_splitter =</span> r<span class="st">"--[(?xi)    \s+   ]--"</span>, <span class="co"># whitespace as token splitter</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>           <span class="at">re_token_transf_in =</span> <span class="st">"[[:punct:]]"</span>, <span class="co"># Match punctuation marks</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>           <span class="at">token_transf_out =</span> <span class="st">""</span>) </span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate scores</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>scores_kw <span class="ot">&lt;-</span> <span class="fu">assoc_scores</span>(flist_target, flist_ref)</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>top_scores_kw <span class="ot">&lt;-</span> scores_kw <span class="sc">%&gt;%</span> </span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(PMI <span class="sc">&gt;=</span> <span class="dv">2</span> <span class="sc">&amp;</span> G_signed <span class="sc">&gt;=</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">freqlist</span>(</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">re_token_transf_in =</span> <span class="st">"[[:punct:]]"</span>, <span class="co"># Match punctuation marks</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">token_transf_out =</span> <span class="st">""</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  ) </span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate scores</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>scores_kw <span class="ot">&lt;-</span> <span class="fu">assoc_scores</span>(flist_target, flist_ref)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>top_scores_kw <span class="ot">&lt;-</span> scores_kw <span class="sc">%&gt;%</span> </span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(PMI <span class="sc">&gt;=</span> <span class="dv">2</span> <span class="sc">&amp;</span> G_signed <span class="sc">&gt;=</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p><strong>?@tbl-kwtables</strong> below shows the top 30 keywords in Indian related texts comparing to other context, respectively sorted by PMI and G_signed.</p>
-<div class="tabset-margin-container"></div><div id="tbl-kwtables" class="panel-tabset anchored">
+<p>Tables below shows the top 20 keywords in Indian related texts comparing to other context, respectively sorted by PMI (<a href="#tbl-kwtable_PMI">Table&nbsp;1</a>) and G_signed (<a href="#tbl-kwtable_Gsigned">Table&nbsp;2</a>).</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Sorted by PMI</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Sorted by G_signed</a></li></ul>
-<div id="tbl-kwtables" class="tab-content anchored">
+<div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <div class="cell tbl-cap-location-top">
 <div class="cell-output-display">
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:400px; ">
 <div id="tbl-kwtable_PMI" class="anchored">
 <table class="lightable-minimal table table-sm table-striped small" data-quarto-postprocess="true">
-<caption>Table&nbsp;1: Top 30 Keywords on Indian Related Text in Natural History (sorted by PMI)</caption>
+<caption>Table&nbsp;1: Top 20 Keywords on Indian Related Text in Natural History (sorted by PMI)</caption>
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th" style="text-align: left; position: sticky; top: 0; background-color: #FFFFFF;">Type</th>
@@ -252,184 +253,124 @@ div.csl-indent {
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">india</td>
-<td style="text-align: right;">169</td>
-<td style="text-align: right;">3.42</td>
-<td style="text-align: right;">584.91</td>
-</tr>
-<tr class="even">
 <td style="text-align: left;">ganges</td>
 <td style="text-align: right;">22</td>
-<td style="text-align: right;">3.42</td>
-<td style="text-align: right;">76.06</td>
+<td style="text-align: right;">3.43</td>
+<td style="text-align: right;">76.3</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">beryls</td>
 <td style="text-align: right;">13</td>
-<td style="text-align: right;">3.42</td>
-<td style="text-align: right;">44.94</td>
+<td style="text-align: right;">3.43</td>
+<td style="text-align: right;">45.1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">ichthyophagi</td>
 <td style="text-align: right;">7</td>
-<td style="text-align: right;">3.42</td>
-<td style="text-align: right;">24.20</td>
+<td style="text-align: right;">3.43</td>
+<td style="text-align: right;">24.3</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">megasthenes</td>
 <td style="text-align: right;">7</td>
-<td style="text-align: right;">3.42</td>
-<td style="text-align: right;">24.20</td>
+<td style="text-align: right;">3.43</td>
+<td style="text-align: right;">24.3</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">obsidian</td>
 <td style="text-align: right;">6</td>
-<td style="text-align: right;">3.42</td>
-<td style="text-align: right;">20.74</td>
+<td style="text-align: right;">3.43</td>
+<td style="text-align: right;">20.8</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">bdellium</td>
 <td style="text-align: right;">5</td>
-<td style="text-align: right;">3.42</td>
-<td style="text-align: right;">17.29</td>
+<td style="text-align: right;">3.43</td>
+<td style="text-align: right;">17.3</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">agates</td>
 <td style="text-align: right;">4</td>
-<td style="text-align: right;">3.42</td>
-<td style="text-align: right;">13.83</td>
+<td style="text-align: right;">3.43</td>
+<td style="text-align: right;">13.9</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">callaina</td>
 <td style="text-align: right;">4</td>
-<td style="text-align: right;">3.42</td>
-<td style="text-align: right;">13.83</td>
+<td style="text-align: right;">3.43</td>
+<td style="text-align: right;">13.9</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">condensation</td>
 <td style="text-align: right;">4</td>
-<td style="text-align: right;">3.42</td>
-<td style="text-align: right;">13.83</td>
+<td style="text-align: right;">3.43</td>
+<td style="text-align: right;">13.9</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">gerra</td>
 <td style="text-align: right;">4</td>
-<td style="text-align: right;">3.42</td>
-<td style="text-align: right;">13.83</td>
+<td style="text-align: right;">3.43</td>
+<td style="text-align: right;">13.9</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">jomanes</td>
 <td style="text-align: right;">4</td>
-<td style="text-align: right;">3.42</td>
-<td style="text-align: right;">13.83</td>
+<td style="text-align: right;">3.43</td>
+<td style="text-align: right;">13.9</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">nonius</td>
 <td style="text-align: right;">4</td>
-<td style="text-align: right;">3.42</td>
-<td style="text-align: right;">13.83</td>
+<td style="text-align: right;">3.43</td>
+<td style="text-align: right;">13.9</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">prasii</td>
 <td style="text-align: right;">4</td>
-<td style="text-align: right;">3.42</td>
-<td style="text-align: right;">13.83</td>
+<td style="text-align: right;">3.43</td>
+<td style="text-align: right;">13.9</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">alia</td>
 <td style="text-align: right;">3</td>
-<td style="text-align: right;">3.42</td>
-<td style="text-align: right;">10.37</td>
+<td style="text-align: right;">3.43</td>
+<td style="text-align: right;">10.4</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">carnelian</td>
 <td style="text-align: right;">3</td>
-<td style="text-align: right;">3.42</td>
-<td style="text-align: right;">10.37</td>
+<td style="text-align: right;">3.43</td>
+<td style="text-align: right;">10.4</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">cophes</td>
 <td style="text-align: right;">3</td>
-<td style="text-align: right;">3.42</td>
-<td style="text-align: right;">10.37</td>
+<td style="text-align: right;">3.43</td>
+<td style="text-align: right;">10.4</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">hypasis</td>
 <td style="text-align: right;">3</td>
-<td style="text-align: right;">3.42</td>
-<td style="text-align: right;">10.37</td>
+<td style="text-align: right;">3.43</td>
+<td style="text-align: right;">10.4</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">merchandize</td>
 <td style="text-align: right;">3</td>
-<td style="text-align: right;">3.42</td>
-<td style="text-align: right;">10.37</td>
+<td style="text-align: right;">3.43</td>
+<td style="text-align: right;">10.4</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">peppertree</td>
 <td style="text-align: right;">3</td>
-<td style="text-align: right;">3.42</td>
-<td style="text-align: right;">10.37</td>
+<td style="text-align: right;">3.43</td>
+<td style="text-align: right;">10.4</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">sacae</td>
 <td style="text-align: right;">3</td>
-<td style="text-align: right;">3.42</td>
-<td style="text-align: right;">10.37</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">sandastros</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">3.42</td>
-<td style="text-align: right;">10.37</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">thornbush</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">3.42</td>
-<td style="text-align: right;">10.37</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">agate</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: right;">3.29</td>
-<td style="text-align: right;">16.09</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">amethysts</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: right;">3.29</td>
-<td style="text-align: right;">16.09</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">mart</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: right;">3.29</td>
-<td style="text-align: right;">16.09</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">aloe</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">3.25</td>
-<td style="text-align: right;">12.65</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">arii</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">3.25</td>
-<td style="text-align: right;">12.65</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">exudation</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">3.25</td>
-<td style="text-align: right;">12.65</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">expeditions</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">3.20</td>
-<td style="text-align: right;">9.22</td>
+<td style="text-align: right;">3.43</td>
+<td style="text-align: right;">10.4</td>
 </tr>
 </tbody>
 </table>
@@ -445,7 +386,7 @@ div.csl-indent {
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:400px; ">
 <div id="tbl-kwtable_Gsigned" class="anchored">
 <table class="lightable-minimal table table-sm table-striped small" data-quarto-postprocess="true">
-<caption>Table&nbsp;2: Top 30 Keywords on Indian Related Text in Natural History (sorted by G_Signed)</caption>
+<caption>Table&nbsp;2: Top 20 Keywords on Indian Related Text in Natural History (sorted by G_Signed)</caption>
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th" style="text-align: left; position: sticky; top: 0; background-color: #FFFFFF;">Type</th>
@@ -456,184 +397,124 @@ div.csl-indent {
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">india</td>
-<td style="text-align: right;">169</td>
-<td style="text-align: right;">3.42</td>
-<td style="text-align: right;">584.9</td>
-</tr>
-<tr class="even">
 <td style="text-align: left;">hundred</td>
 <td style="text-align: right;">81</td>
-<td style="text-align: right;">2.28</td>
-<td style="text-align: right;">140.1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">amber</td>
-<td style="text-align: right;">32</td>
-<td style="text-align: right;">2.93</td>
-<td style="text-align: right;">84.7</td>
+<td style="text-align: right;">2.29</td>
+<td style="text-align: right;">141.0</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">indian</td>
-<td style="text-align: right;">36</td>
-<td style="text-align: right;">2.62</td>
-<td style="text-align: right;">78.7</td>
+<td style="text-align: left;">amber</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">2.94</td>
+<td style="text-align: right;">85.1</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">ganges</td>
 <td style="text-align: right;">22</td>
-<td style="text-align: right;">3.42</td>
-<td style="text-align: right;">76.1</td>
+<td style="text-align: right;">3.43</td>
+<td style="text-align: right;">76.3</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">arabia</td>
 <td style="text-align: right;">37</td>
-<td style="text-align: right;">2.28</td>
-<td style="text-align: right;">64.0</td>
+<td style="text-align: right;">2.29</td>
+<td style="text-align: right;">64.4</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">thousand</td>
 <td style="text-align: right;">30</td>
-<td style="text-align: right;">2.46</td>
-<td style="text-align: right;">59.1</td>
+<td style="text-align: right;">2.47</td>
+<td style="text-align: right;">59.5</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">glass</td>
 <td style="text-align: right;">24</td>
-<td style="text-align: right;">2.62</td>
-<td style="text-align: right;">52.4</td>
+<td style="text-align: right;">2.63</td>
+<td style="text-align: right;">52.7</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">elephants</td>
 <td style="text-align: right;">27</td>
-<td style="text-align: right;">2.41</td>
-<td style="text-align: right;">51.4</td>
+<td style="text-align: right;">2.42</td>
+<td style="text-align: right;">51.7</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">rockcrystal</td>
 <td style="text-align: right;">19</td>
-<td style="text-align: right;">2.89</td>
-<td style="text-align: right;">49.1</td>
+<td style="text-align: right;">2.90</td>
+<td style="text-align: right;">49.3</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">beryls</td>
 <td style="text-align: right;">13</td>
-<td style="text-align: right;">3.42</td>
-<td style="text-align: right;">44.9</td>
+<td style="text-align: right;">3.43</td>
+<td style="text-align: right;">45.1</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">thence</td>
 <td style="text-align: right;">23</td>
-<td style="text-align: right;">2.41</td>
-<td style="text-align: right;">43.7</td>
+<td style="text-align: right;">2.42</td>
+<td style="text-align: right;">44.0</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">indians</td>
-<td style="text-align: right;">14</td>
-<td style="text-align: right;">2.88</td>
-<td style="text-align: right;">35.8</td>
-</tr>
-<tr class="even">
 <td style="text-align: left;">indus</td>
 <td style="text-align: right;">13</td>
-<td style="text-align: right;">2.84</td>
-<td style="text-align: right;">32.6</td>
+<td style="text-align: right;">2.85</td>
+<td style="text-align: right;">32.7</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">ethiopia</td>
 <td style="text-align: right;">18</td>
-<td style="text-align: right;">2.33</td>
-<td style="text-align: right;">32.3</td>
+<td style="text-align: right;">2.34</td>
+<td style="text-align: right;">32.5</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">tribe</td>
 <td style="text-align: right;">16</td>
-<td style="text-align: right;">2.40</td>
-<td style="text-align: right;">30.3</td>
+<td style="text-align: right;">2.41</td>
+<td style="text-align: right;">30.4</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">pepper</td>
 <td style="text-align: right;">17</td>
-<td style="text-align: right;">2.28</td>
-<td style="text-align: right;">29.5</td>
+<td style="text-align: right;">2.29</td>
+<td style="text-align: right;">29.7</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">lustre</td>
 <td style="text-align: right;">10</td>
-<td style="text-align: right;">2.89</td>
-<td style="text-align: right;">25.8</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">smaragdus</td>
-<td style="text-align: right;">11</td>
-<td style="text-align: right;">2.71</td>
-<td style="text-align: right;">25.5</td>
+<td style="text-align: right;">2.90</td>
+<td style="text-align: right;">25.9</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">gates</td>
-<td style="text-align: right;">13</td>
-<td style="text-align: right;">2.40</td>
-<td style="text-align: right;">24.5</td>
+<td style="text-align: left;">smaragdus</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">2.72</td>
+<td style="text-align: right;">25.7</td>
 </tr>
 <tr class="odd">
+<td style="text-align: left;">gates</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">2.41</td>
+<td style="text-align: right;">24.6</td>
+</tr>
+<tr class="even">
 <td style="text-align: left;">iaspis</td>
 <td style="text-align: right;">8</td>
-<td style="text-align: right;">3.18</td>
+<td style="text-align: right;">3.19</td>
+<td style="text-align: right;">24.4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ichthyophagi</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">3.43</td>
 <td style="text-align: right;">24.3</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">ichthyophagi</td>
-<td style="text-align: right;">7</td>
-<td style="text-align: right;">3.42</td>
-<td style="text-align: right;">24.2</td>
-</tr>
-<tr class="odd">
 <td style="text-align: left;">megasthenes</td>
 <td style="text-align: right;">7</td>
-<td style="text-align: right;">3.42</td>
-<td style="text-align: right;">24.2</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">caspian</td>
-<td style="text-align: right;">13</td>
-<td style="text-align: right;">2.19</td>
-<td style="text-align: right;">21.1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">onesicritus</td>
-<td style="text-align: right;">7</td>
-<td style="text-align: right;">3.14</td>
-<td style="text-align: right;">20.9</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">sardonyx</td>
-<td style="text-align: right;">8</td>
-<td style="text-align: right;">2.90</td>
-<td style="text-align: right;">20.8</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">obsidian</td>
-<td style="text-align: right;">6</td>
-<td style="text-align: right;">3.42</td>
-<td style="text-align: right;">20.7</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">gem</td>
-<td style="text-align: right;">9</td>
-<td style="text-align: right;">2.64</td>
-<td style="text-align: right;">20.0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">elephant</td>
-<td style="text-align: right;">13</td>
-<td style="text-align: right;">2.06</td>
-<td style="text-align: right;">19.0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">cappadocia</td>
-<td style="text-align: right;">11</td>
-<td style="text-align: right;">2.24</td>
-<td style="text-align: right;">18.5</td>
+<td style="text-align: right;">3.43</td>
+<td style="text-align: right;">24.3</td>
 </tr>
 </tbody>
 </table>
@@ -645,8 +526,48 @@ div.csl-indent {
 </div>
 </div>
 </div>
-<div id="tbl-kwtables1" class="cell tbl-parent quarto-layout-panel anchored" data-tbl-cap="Top 30 Keywords of Indian related texts in Natural History" data-tbl-subcap="[&quot;Sorted by PMI&quot;,&quot;Sorted by G_signed&quot;]">
-
+<p><strong>?@tbl-kwPMI</strong> below shows the explanation of the top 20 keywords in Indian related text.</p>
+<div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>keyword_PMI_tibble <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">Word =</span> <span class="fu">c</span>(<span class="st">"ganges"</span>, <span class="st">"beryls"</span>, <span class="st">"ichthyophagi"</span>, <span class="st">"megasthenes"</span>, <span class="st">"obsidian"</span>, <span class="st">"bdellium"</span>, <span class="st">"agates"</span>, <span class="st">"callaina"</span>, <span class="st">"condensation"</span>, <span class="st">"gerra"</span>, <span class="st">"jomanes"</span>, <span class="st">"nonius"</span>, <span class="st">"prasii"</span>, <span class="st">"alia"</span>, <span class="st">"carnelian"</span>, <span class="st">"cophes"</span>, <span class="st">"hypasis"</span>, <span class="st">"merchandize"</span>, <span class="st">"peppertree"</span>, <span class="st">"sacae"</span>),</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Type =</span> <span class="fu">c</span>(<span class="st">"Proper Noun"</span>, <span class="st">"Noun"</span>, <span class="st">"Plural Noun"</span>, <span class="st">"Proper Noun"</span>, <span class="st">"Noun"</span>, <span class="st">"Noun"</span>, <span class="st">"Noun"</span>, <span class="st">"Noun/Proper Noun"</span>, <span class="st">"Noun"</span>, <span class="st">"Noun/Proper Noun"</span>, <span class="st">"Noun/Proper Noun"</span>, <span class="st">"Noun/Proper Noun"</span>, <span class="st">"Noun/Proper Noun"</span>, <span class="st">"Adverb"</span>, <span class="st">"Noun"</span>, <span class="st">"Noun/Proper Noun"</span>, <span class="st">"Noun/Proper Noun"</span>, <span class="st">"Noun"</span>, <span class="st">"Noun"</span>, <span class="st">"Noun/Proper Noun"</span>),</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Exp =</span> <span class="fu">c</span>(<span class="st">"a major river in India"</span>, <span class="st">"a type of gemstone"</span>, <span class="st">"a group of people who primarily subsist on fish"</span>, <span class="st">"a Greek historian and diplomat"</span>, <span class="st">"a type of volcanic glass"</span>, <span class="st">"a fragrant resin obtained from certain trees"</span>, <span class="st">"a type of semiprecious gemstone"</span>, <span class="st">"pale green precious stone (lat)"</span>, <span class="st">"the process of vapor turning into a liquid state"</span>, <span class="st">"war (lat)"</span>, <span class="st">"a Roman nomen gentile, gens or 'family name'"</span>, <span class="st">"a Roman nomen gentile, gens or 'family name'"</span>, <span class="st">"prase, green coloured gem"</span>, <span class="st">"by another / different way / route"</span>, <span class="st">"a reddish-brown variety of chalcedony"</span>, <span class="st">"a river that rises in the ancient Paropamise range, eventually falling into the Indus river near its confluence with the Cophes river"</span>, <span class="st">"a river in north India"</span>, <span class="st">"goods or commodities"</span>, <span class="st">"a tree that produces peppercorns"</span>, <span class="st">"the easternmost nation of Elibe, situated to the south of Ilia and the north of Bern"</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span> <span class="fu">print</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="tbl-kwPMI" class="cell tbl-parent quarto-layout-panel anchored">
+<div class="panel-caption table-caption">
+<p><strong>?(caption)</strong></p>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output cell-output-stdout quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
+<pre><code># A tibble: 20 × 3
+   Word         Type             Exp                                            
+   &lt;chr&gt;        &lt;chr&gt;            &lt;chr&gt;                                          
+ 1 ganges       Proper Noun      a major river in India                         
+ 2 beryls       Noun             a type of gemstone                             
+ 3 ichthyophagi Plural Noun      a group of people who primarily subsist on fish
+ 4 megasthenes  Proper Noun      a Greek historian and diplomat                 
+ 5 obsidian     Noun             a type of volcanic glass                       
+ 6 bdellium     Noun             a fragrant resin obtained from certain trees   
+ 7 agates       Noun             a type of semiprecious gemstone                
+ 8 callaina     Noun/Proper Noun pale green precious stone (lat)                
+ 9 condensation Noun             the process of vapor turning into a liquid sta…
+10 gerra        Noun/Proper Noun war (lat)                                      
+11 jomanes      Noun/Proper Noun a Roman nomen gentile, gens or 'family name'   
+12 nonius       Noun/Proper Noun a Roman nomen gentile, gens or 'family name'   
+13 prasii       Noun/Proper Noun prase, green coloured gem                      
+14 alia         Adverb           by another / different way / route             
+15 carnelian    Noun             a reddish-brown variety of chalcedony          
+16 cophes       Noun/Proper Noun a river that rises in the ancient Paropamise r…
+17 hypasis      Noun/Proper Noun a river in north India                         
+18 merchandize  Noun             goods or commodities                           
+19 peppertree   Noun             a tree that produces peppercorns               
+20 sacae        Noun/Proper Noun the easternmost nation of Elibe, situated to t…</code></pre>
+</div>
+</div>
+</div>
 </div>
 </section>
 <section id="collocation-analysis-on-india-in-the-whole-corpus" class="level1" data-number="4">
@@ -654,17 +575,17 @@ div.csl-indent {
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>coocs <span class="ot">&lt;-</span> fnames_wholetext <span class="sc">%&gt;%</span> </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">surf_cooc</span>(<span class="st">"(?xi)  ^ india $"</span>, </span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">re_token_splitter =</span> r<span class="st">"--[(?xi)    \s+   ]--"</span>, <span class="co"># whitespace as token splitter</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">re_token_transf_in =</span> <span class="st">"[[:punct:]]"</span>, <span class="co"># Match punctuation marks</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">token_transf_out =</span> <span class="st">""</span>)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate scores</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>scores_colloc <span class="ot">&lt;-</span> <span class="fu">assoc_scores</span>(coocs)</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>top_scores_colloc <span class="ot">&lt;-</span> scores_colloc <span class="sc">%&gt;%</span> </span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(PMI <span class="sc">&gt;=</span> <span class="dv">2</span> <span class="sc">&amp;</span> G_signed <span class="sc">&gt;=</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>coocs <span class="ot">&lt;-</span> fnames_wholetext <span class="sc">%&gt;%</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">surf_cooc</span>(<span class="st">"(?xi)  ^ india $"</span>, </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">re_token_splitter =</span> r<span class="st">"--[(?xi)    \s+   ]--"</span>, <span class="co"># whitespace as token splitter</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">re_token_transf_in =</span> <span class="st">"[[:punct:]]"</span>, <span class="co"># Match punctuation marks</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">token_transf_out =</span> <span class="st">""</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate scores</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>scores_colloc <span class="ot">&lt;-</span> <span class="fu">assoc_scores</span>(coocs)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>top_scores_colloc <span class="ot">&lt;-</span> scores_colloc <span class="sc">%&gt;%</span> </span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(PMI <span class="sc">&gt;=</span> <span class="dv">2</span> <span class="sc">&amp;</span> G_signed <span class="sc">&gt;=</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p><a href="#tbl-coltable_PMI">Table&nbsp;3</a> and <a href="#tbl-coltable_Gsigned">Table&nbsp;4</a> shows the top 30 collocates to the word “india” in the whole text, respectively sorted by PMI and G_signed.</p>
@@ -1025,9 +946,6 @@ Speelman, Dirk &amp; Mariana Montes. 2022. <em>Mclm: Mastering corpus linguistic
 </div>
 <div id="ref-R-tidyverse" class="csl-entry" role="listitem">
 Wickham, Hadley. 2023. <em>Tidyverse: Easily install and load the tidyverse</em>. <a href="https://CRAN.R-project.org/package=tidyverse">https://CRAN.R-project.org/package=tidyverse</a>.
-</div>
-<div id="ref-R-ggplot2" class="csl-entry" role="listitem">
-Wickham, Hadley, Winston Chang, Lionel Henry, Thomas Lin Pedersen, Kohske Takahashi, Claus Wilke, Kara Woo, Hiroaki Yutani &amp; Dewey Dunnington. 2023. <em>ggplot2: Create elegant data visualisations using the grammar of graphics</em>. <a href="https://CRAN.R-project.org/package=ggplot2">https://CRAN.R-project.org/package=ggplot2</a>.
 </div>
 </div></section></div></main>
 <!-- /main column -->
