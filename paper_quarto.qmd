@@ -132,7 +132,7 @@ The punctuation marks are removed in the tokenization process.
 
 As mentioned, the method of keyword analysis could help with a further discuss about the prominent theme and topic in the India-related texts.
 
-The frequency lists for the **target corpus** (Indian subcontinent related texts) and **reference corpus** (whole text) are generated respectively, and the association scores are calculated through the [assoc_scores](https://masterclm.github.io/mclm/reference/assoc_scores.html) function. The association score is filtered based on the criteira of both PMI and $G^2$ scores, requiring a minimum score of 2. This criterion ensures that the selected words have a probability at least four times higher than the overall data, along with statistically significant supporting evidence [@methods], allowing to identify the most statistically significant keywords in India-related texts when compared to the reference corpus.
+The frequency lists for the **target corpus** (Indian subcontinent related texts) and **reference corpus** (whole text) are generated respectively, and the association scores are calculated through the [assoc_scores](https://masterclm.github.io/mclm/reference/assoc_scores.html) function. The association score is filtered based on the criteria of both PMI and $G^2$ scores, requiring a minimum score of 2. This criterion ensures that the selected words have a probability at least four times higher than the overall data, along with statistically significant supporting evidence [@methods], allowing to identify the most statistically significant keywords in India-related texts when compared to the reference corpus.
 
 During the calculation of word frequencies in the **target corpus**, the specific word "India" itself was excluded from the analysis. This exclusion was intentional, aiming to focus on more descriptive words within the corpus and efficiently identify potential thematic keywords in the **target corpus**.
 
@@ -227,7 +227,7 @@ keyword_PMI_list %>%
   kable_minimal()
 ```
 
-The distribution plot of categories, as demonstrated in @fig-kwtype, reveals the pattern regarding keywords of India-related texts in Natural History.
+The distribution plot of categories, as demonstrated in @fig-kwtype, reveals the pattern regarding keywords of India-related texts in *Natural History*.
 
 ```{r}
 #| warning: false
@@ -278,7 +278,7 @@ top_scores_colloc <- scores_colloc %>%
   filter(PMI >= 2 & G_signed >= 2)
 ```
 
-@tbl-coltable_Gsigned and @tbl-coltable_PMI display the top 20 collocates associated with the word "india" in the entire text., respectively sorted by G_signed and PMI scores. As the returned $G^2$ score helps gauge the strength of evidence regarding the independence between the two words [@methods], thereby facilitating the initial sorting.
+@tbl-coltable_Gsigned and @tbl-coltable_PMI display the top 20 collocates associated with the word "india" in the entire text, respectively sorted by G_signed and PMI scores. As the returned $G^2$ score helps gauge the strength of evidence regarding the independence between the two words [@methods], thereby facilitating the initial sorting.
 
 ::: panel-tabset
 ## Sorted by G_singed
@@ -286,7 +286,7 @@ top_scores_colloc <- scores_colloc %>%
 ```{r}
 #| label: tbl-coltable_Gsigned
 #| tbl-cap-location: top
-#| tbl-cap: Top 20 collocates to the word "india" in Natural History (sorted by PMI)
+#| tbl-cap: Top 20 collocates to the word "india" in Natural History (sorted by G_signed)
 #| warning: false
 #| echo: false
 top_scores_colloc %>% 
@@ -323,13 +323,13 @@ The top 20 collocates associated with the word "India," sorted by their $G^2$ sc
 
 1.  **Geographical Connections**: The collocates such as "arabia", "ethiopia", "east," "south," "opposite," and "beyond" indicate the geographical relationships and proximity between India and these regions.
 
-2.  **Trading and Imports**: The presence of collocates like "imported," "produces," "produce," and "nations" suggests that India had a significant role in trade and the importation of goods. It also implies that India was known for producing various commodities that were sought after by other nations.
+2.  **Trading and Imports**: The presence of collocates like "imported", "produces", "produce" and "nations" suggests that India had a significant role in trade and the importation of goods. It also implies that India was known for producing various commodities that were sought after by other nations.
 
-3.  **Boundaries and Borders**: The collocates "boundary," "set," and "part" indicate the existence of defined boundaries or borders related to India. This suggests that there were recognized territorial demarcations associated with India during the referenced period.
+3.  **Boundaries and Borders**: The collocates "boundary," "set" and "part" indicate the existence of defined boundaries or borders related to India. This suggests that there were recognized territorial demarcations associated with India during the referenced period.
 
 Within the context of Pliny the Elder's *Natural History* is a book with an encyclopedia scope written in Roman Empire, these collocates suggest the interconnecting role India played in the network of interactions, trade, or cultural exchanges between India and the Mediterranean regions during 1st century BC. They highlight India's significance as a trading partner, its geographical positioning, and the recognition of its territorial boundaries.
 
-Furthermore, the concordance table of the word "india," as displayed in @tbl-concordance, presents a comprehensive overview of the instances where "india" appears throughout the text, showcasing the specific contexts as well as providing additional information regarding the references to "India." It serves as a valuable resource for understanding the various perspectives, descriptions, and associations attributed to India within the context of *Natural History*.
+Furthermore, the concordance table of the word "india" as displayed in @tbl-concordance, presents a comprehensive overview of the instances where "india" appears throughout the text, showcasing the specific contexts as well as providing additional information regarding the references to "India." It serves as a valuable resource for understanding the various perspectives, descriptions, and associations attributed to India within the context of *Natural History*.
 
 ```{r}
 #| label: tbl-concordance
