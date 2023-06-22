@@ -4,9 +4,12 @@
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.3.361">
 
+<script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [["$","$"]]}})</script>
+<script async src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Lizao Zhuang (Dawn) r0914937">
+<meta name="author" content="Dawn, Lizao Zhuang (r0914937)">
 
 <title>Keyword and Collocation analysis on India-related text of Natural History</title>
 <style>
@@ -115,8 +118,8 @@ div.csl-indent {
   <ul>
   <li><a href="#research-question" id="toc-research-question" class="nav-link active" data-scroll-target="#research-question"><span class="header-section-number">1</span> Research Question</a></li>
   <li><a href="#corpus-description" id="toc-corpus-description" class="nav-link" data-scroll-target="#corpus-description"><span class="header-section-number">2</span> Corpus Description</a></li>
-  <li><a href="#keyword-analysis-on-india-related-texts" id="toc-keyword-analysis-on-india-related-texts" class="nav-link" data-scroll-target="#keyword-analysis-on-india-related-texts"><span class="header-section-number">3</span> Keyword Analysis on India-related texts</a></li>
-  <li><a href="#collocation-analysis-on-india-in-the-whole-corpus" id="toc-collocation-analysis-on-india-in-the-whole-corpus" class="nav-link" data-scroll-target="#collocation-analysis-on-india-in-the-whole-corpus"><span class="header-section-number">4</span> Collocation Analysis on “India” in the whole corpus</a></li>
+  <li><a href="#keyword-analysis-on-india-related-texts" id="toc-keyword-analysis-on-india-related-texts" class="nav-link" data-scroll-target="#keyword-analysis-on-india-related-texts"><span class="header-section-number">3</span> Keyword analysis on India-related texts</a></li>
+  <li><a href="#collocation-analysis-on-india-in-the-whole-corpus" id="toc-collocation-analysis-on-india-in-the-whole-corpus" class="nav-link" data-scroll-target="#collocation-analysis-on-india-in-the-whole-corpus"><span class="header-section-number">4</span> Collocation analysis on “India” in the whole corpus</a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">5</span> Conclusion</a></li>
   </ul>
 </nav>
@@ -135,7 +138,7 @@ div.csl-indent {
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>Lizao Zhuang (Dawn) r0914937 </p>
+             <p>Dawn, Lizao Zhuang (r0914937) </p>
           </div>
   </div>
     
@@ -146,7 +149,7 @@ div.csl-indent {
 <div>
   <div class="abstract">
     <div class="abstract-title">Abstract</div>
-    The paper applies the methodology of keyword analysis and collocation analysis in corpus linguistics to explore the possible topics of the text related to “India” in Natural History of Pliny the Elder.
+    This paper presents a comprehensive analysis of keywords and collocates related to India in a corpus of Natural History by Pliny the Elder. The study focuses on uncovering prominent themes and topics associated with India in the context of the book. The research employs keyword analysis and collocate examination techniques to reveal significant insights into the perception and imagination of India, as a competent counterpart to the Roman Empire, by Pliny the Elder and the scholars of his time.
   </div>
 </div>
 
@@ -154,7 +157,7 @@ div.csl-indent {
 
 <section id="research-question" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Research Question</h1>
-<p>Pliny the Elder’s “Natural History” stands as a seminal work in the history of encyclopedias, serving as a gateway to understanding the knowledge and worldview of ancient Rome. Beyond its role as a compendium of diverse subjects, the text provides a captivating glimpse into the actual merchant exchanges <span class="citation" data-cites="dodd2021">(<a href="#ref-dodd2021" role="doc-biblioref">Dodd 2021</a>)</span> of the Roman Empire while shedding a light on the spatial imagination of Pliny and the scholarly references of his time <span class="citation" data-cites="plinyth2011">(<a href="#ref-plinyth2011" role="doc-biblioref">Gibson &amp; Morello 2011</a>)</span>.</p>
+<p>Pliny the Elder’s <em>Natural History</em> stands as a seminal work in the history of encyclopedias, serving as a gateway to understanding the knowledge and worldview of ancient Rome. Beyond its role as a compendium of diverse subjects, the text provides a captivating glimpse into the actual merchant exchanges <span class="citation" data-cites="dodd2021">(<a href="#ref-dodd2021" role="doc-biblioref">Dodd 2021</a>)</span> of the Roman Empire while shedding a light on the spatial imagination of Pliny and the scholarly references of his time <span class="citation" data-cites="plinyth2011">(<a href="#ref-plinyth2011" role="doc-biblioref">Gibson &amp; Morello 2011</a>)</span>.</p>
 <p>The text of the whole book has been digitized and annotated with people’s name, places’ name and coordinates by <a href="https://topostext.org/the-project">TOPOSText</a> project since 2012. This invaluable resource allows for the creation of a dataset that includes both the textual contents and geographical annotations, which can be utilized to investigate the distribution of place names in the entire text and examine the frequencies and patterns of geographically-related content.</p>
 <p>As a starting point, <a href="#fig-geoname">Figure&nbsp;1</a> reveals the Top 20 distinct geographical names mentioned within the text.</p>
 <div class="cell fig-cap-location-top">
@@ -171,18 +174,18 @@ div.csl-indent {
 <div class="cell fig-cap-location-top">
 <div id="fig-map" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<div class="leaflet html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-6b9322057a3325442949" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-6b9322057a3325442949">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addCircleMarkers","args":[[40.6,41.891,27.1,30,28,35.5,30.0918,35,44.142,37.6,35.2052,13.01,36.4408,37.9718,41.8933,35.2791,43.5,41.1,39.702,19.5,36.85,37.01],[16.3,12.486,30.7,74,40,39,31.2313,33,7.343,14.5,25.1836,35.01,28.2244,23.72793,12.483,40.2708,33.5,14.6,44.298,39,10.32,34.01],[13.67040599250805,13.12097557348538,12.92439553712281,10.33827838665607,8.872429205127535,8.352245207128441,7.37563556583431,7.37563556583431,7.244308110509934,6.740919818541087,6.4,6.092618484691127,5.986651818838307,5.986651818838307,5.768882040742383,5.484523680320835,5.484523680320835,5.425863986500215,5.366563145999496,5.184592558726289,5.184592558726289,5.184592558726289],null,null,{"interactive":true,"className":"","stroke":true,"color":"blue","weight":5,"opacity":0.5,"fill":true,"fillColor":"blue","fillOpacity":0.6},null,null,["Place Name: Italy <br> Count: 292","Place Name: Rome <br> Count: 269","Place Name: Egypt <br> Count: 261","Place Name: India <br> Count: 167","Place Name: Arabia <br> Count: 123","Place Name: Syria <br> Count: 109","Place Name: Nile <br> Count: 85","Place Name: Cyprus <br> Count: 85","Place Name: Alps <br> Count: 82","Place Name: Sicily <br> Count: 71","Place Name: Crete <br> Count: 64","Place Name: Ethiopia <br> Count: 58","Place Name: Rhodes <br> Count: 56","Place Name: Athens <br> Count: 56","Place Name: Capitol <br> Count: 52","Place Name: Euphrates <br> Count: 47","Place Name: Pontus <br> Count: 47","Place Name: Campania <br> Count: 46","Place Name: Armenia <br> Count: 45","Place Name: Red Sea <br> Count: 42","Place Name: Carthage <br> Count: 42","Place Name: Cilicia <br> Count: 42"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[13.01,44.142],"lng":[7.343,74]}},"evals":[],"jsHooks":[]}</script>
+<div class="leaflet html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-ce5fcd76c7822ee37970" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-ce5fcd76c7822ee37970">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addCircleMarkers","args":[[40.6,41.891,27.1,30,28,35.5,30.0918,35,44.142,37.6,35.2052,13.01,36.4408,37.9718,41.8933,35.2791,43.5,41.1,39.702,19.5,36.85,37.01],[16.3,12.486,30.7,74,40,39,31.2313,33,7.343,14.5,25.1836,35.01,28.2244,23.72793,12.483,40.2708,33.5,14.6,44.298,39,10.32,34.01],[13.67040599250805,13.12097557348538,12.92439553712281,10.33827838665607,8.872429205127535,8.352245207128441,7.37563556583431,7.37563556583431,7.244308110509934,6.740919818541087,6.4,6.092618484691127,5.986651818838307,5.986651818838307,5.768882040742383,5.484523680320835,5.484523680320835,5.425863986500215,5.366563145999496,5.184592558726289,5.184592558726289,5.184592558726289],null,null,{"interactive":true,"className":"","stroke":true,"color":"blue","weight":5,"opacity":0.5,"fill":true,"fillColor":"blue","fillOpacity":0.6},null,null,["Place Name: Italy <br> Count: 292","Place Name: Rome <br> Count: 269","Place Name: Egypt <br> Count: 261","Place Name: India <br> Count: 167","Place Name: Arabia <br> Count: 123","Place Name: Syria <br> Count: 109","Place Name: Nile <br> Count: 85","Place Name: Cyprus <br> Count: 85","Place Name: Alps <br> Count: 82","Place Name: Sicily <br> Count: 71","Place Name: Crete <br> Count: 64","Place Name: Ethiopia <br> Count: 58","Place Name: Rhodes <br> Count: 56","Place Name: Athens <br> Count: 56","Place Name: Capitol <br> Count: 52","Place Name: Euphrates <br> Count: 47","Place Name: Pontus <br> Count: 47","Place Name: Campania <br> Count: 46","Place Name: Armenia <br> Count: 45","Place Name: Red Sea <br> Count: 42","Place Name: Carthage <br> Count: 42","Place Name: Cilicia <br> Count: 42"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[13.01,44.142],"lng":[7.343,74]}},"evals":[],"jsHooks":[]}</script>
 <figcaption class="figure-caption">Figure&nbsp;2: Mapping of geographical names mentioned in Natural History</figcaption>
 </figure>
 </div>
 </div>
-<p>Building upon this observation, this paper aims to delve deeper into the themes associated with the India region by employing keyword analysis and collocation analysis methods within the framework of corpus linguistics.</p>
-<p>The analysis is conducted in R environment <span class="citation" data-cites="R-base">(<a href="#ref-R-base" role="doc-biblioref">R Core Team 2022</a>)</span>, and the main corpus linguistics anlysing methods are applied through functions from <a href="https://masterclm.github.io/mclm/">mclm</a> <span class="citation" data-cites="R-mclm">(<a href="#ref-R-mclm" role="doc-biblioref">Speelman &amp; Montes 2022</a>)</span> package. In addition, <a href="https://www.tidyverse.org/">tidyverse</a> <span class="citation" data-cites="R-tidyverse">(<a href="#ref-R-tidyverse" role="doc-biblioref">Wickham 2023</a>)</span> and <a href="https://rstudio.github.io/leaflet/">leaflet</a> <span class="citation" data-cites="R-leaflet">(<a href="#ref-R-leaflet" role="doc-biblioref">Cheng, Karambelkar &amp; Xie 2023</a>)</span> are used for data manipulation and visualisation.</p>
+<p>Building upon this observation, this paper aims to delve deeper into the themes associated with the India region referred in the text by employing keyword analysis and collocation analysis methods within the framework of corpus linguistics.</p>
+<p>The analysis is conducted in R environment <span class="citation" data-cites="R-base">(<a href="#ref-R-base" role="doc-biblioref">R Core Team 2022</a>)</span>, and the main anlysing methods are applied through functions from <a href="https://masterclm.github.io/mclm/">mclm</a> <span class="citation" data-cites="R-mclm">(<a href="#ref-R-mclm" role="doc-biblioref">Speelman &amp; Montes 2022</a>)</span> package. In addition, <a href="https://www.tidyverse.org/">tidyverse</a> <span class="citation" data-cites="R-tidyverse">(<a href="#ref-R-tidyverse" role="doc-biblioref">Wickham 2023</a>)</span> and <a href="https://rstudio.github.io/leaflet/">leaflet</a> <span class="citation" data-cites="R-leaflet">(<a href="#ref-R-leaflet" role="doc-biblioref">Cheng, Karambelkar &amp; Xie 2023</a>)</span> are used for data manipulation and visualisation.</p>
 </section>
 <section id="corpus-description" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Corpus Description</h1>
-<p>As mentioned earlier, the digitized text of “Natural History” with geographical annotations is readily accessible through the <a href="https://topostext.org/work/148" title="Check Natural History on ToposText">TOPOSText</a> project. In order to facilitate the analysis, I conducted additional scraping of the full text, exporting it as a <strong>reference corpus</strong> in .txt format. Furthermore, I extracted the texts specifically associated with the Indian subcontinent, utilizing the annotated coordinates, creating a <strong>target corpus</strong> of geographically related texts focused on India. The scraping was conducted with <a href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/">beautifulsoup</a> library in python, the <a href="https://github.com/lizaodawn/zhuang/blob/papertry/Natural%20History_corpus%20scrape.ipynb">code</a> can be referred by click.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>As mentioned earlier, the digitized text of <em>Natural History</em> with geographical annotations is readily accessible through the <a href="https://topostext.org/work/148" title="Check Natural History on ToposText">TOPOSText</a> project. In order to facilitate the analysis, I conducted a scraping of the full text, exporting it as a <strong>reference corpus</strong> in .txt format. Furthermore, I extracted the texts specifically associated with the Indian subcontinent, utilizing the annotated coordinates, creating a <strong>target corpus</strong> of geographically related texts focused on India. The scraping was conducted with <a href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/">Beautiful Soup</a> library in Python, and the <a href="https://github.com/lizaodawn/zhuang/blob/papertry/Natural%20History_corpus%20scrape.ipynb">code</a> is uploaded to the same repository of the project.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -199,14 +202,15 @@ div.csl-indent {
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>tar_flist <span class="ot">&lt;-</span> <span class="fu">freqlist</span>(fnames_indiatext, <span class="at">re_token_splitter =</span> <span class="fu">re</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">s+"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>The <strong>reference corpus</strong> consists of all texts in the encyclopedia, divided by paragraphs, has 711245 tokens and 51523 types, with the type-token ratio of 0.07.</p>
-<p>And the <strong>target corpus</strong> consists of all text related to Indian subcontinent (with coordinates in range of <em>8°4’N-37°6’N and 68°7’E to 97°25’E</em>) , has 34712 tokens and 7422 types, with the type-token ratio of 0.21.</p>
+<p>The <strong>target corpus</strong> consists of all text related to Indian subcontinent (with coordinates in range of <em>8°4’N-37°6’N and 68°7’E to 97°25’E</em>), segregated by paragraphs, containing 34712 tokens and 7422 types, with the type-token ratio of 0.21.</p>
+<p>And the <strong>reference corpus</strong> consists of all texts in <em>Natural History</em>, segregated by paragraphs, consisting of 711245 tokens and 51523 types, with the type-token ratio of 0.07.</p>
 <p>The punctuation marks are removed in the tokenization process.</p>
 </section>
 <section id="keyword-analysis-on-india-related-texts" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> Keyword Analysis on India-related texts</h1>
-<p>The frequency list of the <strong>target corpus</strong> (Indian subcontinent related texts) and <strong>reference corpus</strong> (whole text) are generated respectively. And the association scores are calculated and filtered for those returning both PMI and <span class="math inline">\(G^2\)</span> gaining 2 or higher (in which criteria indicating the words having an at least four times higher probability than that in all the data taken together, as well as having a confirming evidence statistically <span class="citation" data-cites="methods"></span>), in order to get the statistically most significant keyword in India-related texts comparing to the reference corpus.</p>
-<p>When calculating the word frequency in the <strong>target corpus</strong>, the word “india” itself is removed from the token in order to get more descriptive words in the corpus, which will be more efficient in implying the possible thematic keyword in the <strong>target corpus</strong>.</p>
+<h1 data-number="3"><span class="header-section-number">3</span> Keyword analysis on India-related texts</h1>
+<p>As mentioned, the method of keyword analysis could help with a further discuss about the prominent theme and topic in the India-related texts.</p>
+<p>The frequency lists for the <strong>target corpus</strong> (Indian subcontinent related texts) and <strong>reference corpus</strong> (whole text) are generated respectively, and the association scores are calculated through the <a href="https://masterclm.github.io/mclm/reference/assoc_scores.html">assoc_scores</a> function. The association score is filtered based on the criteira of both PMI and <span class="math inline">\(G^2\)</span> scores, requiring a minimum score of 2. This criterion ensures that the selected words have a probability at least four times higher than the overall data, along with statistically significant supporting evidence <span class="citation" data-cites="methods">(<a href="#ref-methods" role="doc-biblioref">Montes 2022</a>)</span>, allowing to identify the most statistically significant keywords in India-related texts when compared to the reference corpus.</p>
+<p>During the calculation of word frequencies in the <strong>target corpus</strong>, the specific word “India” itself was excluded from the analysis. This exclusion was intentional, aiming to focus on more descriptive words within the corpus and efficiently identify potential thematic keywords in the <strong>target corpus</strong>.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -232,7 +236,7 @@ div.csl-indent {
 <span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(PMI <span class="sc">&gt;=</span> <span class="dv">2</span> <span class="sc">&amp;</span> G_signed <span class="sc">&gt;=</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>Tables below shows the top 20 keywords in Indian related texts comparing to the entire texts in the encyclopedia, respectively sorted by PMI (<a href="#tbl-kwtable_PMI">Table&nbsp;1</a>) and G_signed (<a href="#tbl-kwtable_Gsigned">Table&nbsp;2</a>).</p>
+<p>The following tables present the top 20 keywords in India-related texts as compared to the entire texts in <em>Natural History</em>. They are sorted based on their PMI (<a href="#tbl-kwtable_PMI">Table&nbsp;1</a>) and G_signed scores (<a href="#tbl-kwtable_Gsigned">Table&nbsp;2</a>), respectively. The initial sorting was carried out based on the PMI scores (<a href="#tbl-kwtable_PMI">Table&nbsp;1</a>), since the it serves as a crucial indicator for measuring the keyness of words.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Sorted by PMI</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Sorted by G_signed</a></li></ul>
 <div class="tab-content">
@@ -538,7 +542,7 @@ div.csl-indent {
 </div>
 </div>
 </div>
-<p>As <strong>PMI Score</strong> is seen as the indicator for keyword analysis, the top 20 keywords sorted by PMI were further checked of the meaning and tagged of its type manually. <a href="#tbl-kwlist">Table&nbsp;3</a> below shows the explanation of the top 20 keywords in Indian related text.</p>
+<p>From these keywords, a manual examination was performed to determine their meaning and assign appropriate tags as based on their category. The resulting explanations for the top 20 keywords, sorted by PMI, can be found in <a href="#tbl-kwlist">Table&nbsp;3</a> below.</p>
 <div class="cell tbl-cap-location-top">
 <div class="cell-output-display">
 <div id="tbl-kwlist" class="anchored">
@@ -548,8 +552,8 @@ div.csl-indent {
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">Word</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">Exp</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">Tag</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">Sub_tag</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Category</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Sub_category</th>
 </tr>
 </thead>
 <tbody>
@@ -692,7 +696,7 @@ div.csl-indent {
 
 </div>
 </div>
-<p>As the distribution plot of categories <a href="#fig-kwtype">Figure&nbsp;3</a> manifested, most keywords about Indian related texts in Natural History have a potential topic of goods (especially precious stones), and also people (both tribes and famous diplomats) and rivers in India (carrying the important role of origin of goods or transportation routes), which incorporates the investigation in <span class="citation" data-cites="nappo2017">(<a href="#ref-nappo2017" role="doc-biblioref">Nappo 2017</a>)</span>.</p>
+<p>The distribution plot of categories, as demonstrated in <a href="#fig-kwtype">Figure&nbsp;3</a>, reveals the pattern regarding keywords of India-related texts in Natural History.</p>
 <div class="cell fig-cap-location-top">
 <div class="cell-output-display">
 <div id="fig-kwtype" class="quarto-figure quarto-figure-center anchored">
@@ -703,11 +707,15 @@ div.csl-indent {
 </div>
 </div>
 </div>
+<p>Significantly, a substantial number of the keywords in the India-related text revolve around goods, particularly precious stones, suggesting a prominent thematic focus. The presence of keywords such as “beryls”, “obsidian”, “bdellium”, “agates”, “callaina”, “prasii”, “carnelian” and “sandastros” indicates the involvement of various gemstones and goods associated with India. These findings are complemented by the presence of keywords like “condensation”, “merchandize” and “peppertree” which suggest the production and trade of goods between the Roman Empire and the Indian subcontinent during that era.</p>
+<p>Furthermore, the keywords related to rivers in India, such as “ganges”, “cophes”, “hypasis,” and “sacae” indicate their significance as sources of goods or as integral parts of trading routes. Since Pliny the Elder’s contextual framework includes critical descriptions of the geographical surroundings like rivers, as evident in his references to the Po River and the Nile River <span class="citation" data-cites="pollard2009 murphy2003">(<a href="#ref-pollard2009" role="doc-biblioref">Pollard 2009</a>; <a href="#ref-murphy2003" role="doc-biblioref">Murphy 2003</a>)</span>, a deeper investigation into the portrayal and role of Indian rivers within this context would provide valuable insights.</p>
+<p>Additionally, a notable proportion of the keywords pertain to people, encompassing names, descriptions, and specific historical figures like “megasthenes”. This suggests the historical significance of individuals who played a role in trade with India or in documenting and understanding the region.</p>
+<p>In conclusion, the keywords extracted from the India-related text in the <em>Natural History</em> shed light on India’s role in trade, the production of valuable goods, and its association with notable historical figures and geographical features within the perspective of Pliny the Elder during the 1st century BC in the context of the Roman Empire. These findings could also contribute to a better understanding of India’s historical interactions with the broader ancient world.</p>
 </section>
 <section id="collocation-analysis-on-india-in-the-whole-corpus" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> Collocation Analysis on “India” in the whole corpus</h1>
-<p>In addition to the investigation on the keywords in the “Indian” related texts, it is also worthwhile having a look at what words collocated when Pliny the Elder referred to the word “India”.</p>
-<p>By indicating “india” as the target item for the analysis through the function of <a href="https://masterclm.github.io/mclm/reference/create_cooc.html">surf_cooc</a> in <span class="citation" data-cites="R-mclm">(<a href="#ref-R-mclm" role="doc-biblioref">Speelman &amp; Montes 2022</a>)</span> and removing the punctuation marks, similarly to the Keyword Analysis criteria chosen above, collocation scores for co-text of both right and left side of “india” are calculated and filtered with those with both PMI and G_signed scores as 2 or above to get the prominent collocates of “india”, in order to get an concrete overview of the discourse and recognization of Pliny the Elder to “India”.</p>
+<h1 data-number="4"><span class="header-section-number">4</span> Collocation analysis on “India” in the whole corpus</h1>
+<p>In addition to examining the keywords in the India-related texts, it is also valuable to explore the collocates that appear alongside the word “India” when mentioned in the book.</p>
+<p>To analyse the co-text surrounding the term “India,” the <a href="https://masterclm.github.io/mclm/reference/create_cooc.html">surf_cooc</a> function was employed, with “india” designated as the target item for the analysis. And following the same criteria as the previous keyword analysis, the collocation scores were filtered of having both PMI and G_signed scores of 2 or higher. By employing this approach, the prominent collocates of “india” were identified, providing a tangible understanding of the prevailing discourse and potentially reflecting Pliny the Elder’s perspective on the region.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -723,7 +731,7 @@ div.csl-indent {
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(PMI <span class="sc">&gt;=</span> <span class="dv">2</span> <span class="sc">&amp;</span> G_signed <span class="sc">&gt;=</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p><a href="#tbl-coltable_Gsigned">Table&nbsp;4</a> and <a href="#tbl-coltable_PMI">Table&nbsp;5</a> shows the top 20 collocates to the word “india” in the whole text, respectively sorted by PMI and G_signed.</p>
+<p><a href="#tbl-coltable_Gsigned">Table&nbsp;4</a> and <a href="#tbl-coltable_PMI">Table&nbsp;5</a> display the top 20 collocates associated with the word “india” in the entire text., respectively sorted by G_signed and PMI scores. As the returned <span class="math inline">\(G^2\)</span> score helps gauge the strength of evidence regarding the independence between the two words <span class="citation" data-cites="methods">(<a href="#ref-methods" role="doc-biblioref">Montes 2022</a>)</span>, thereby facilitating the initial sorting.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">Sorted by G_singed</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">Sorted by PMI</a></li></ul>
 <div class="tab-content">
@@ -1017,8 +1025,14 @@ div.csl-indent {
 </div>
 </div>
 </div>
-<p>As the returned <span class="math inline">\(G^2\)</span> indicates the strongness of evidence of the independency of the two words,</p>
-<p>In addition, as shown in <a href="#tbl-concordance">Table&nbsp;6</a>, with the concordance table of word “india” providing more details about the context of “India”.</p>
+<p>The top 20 collocates associated with the word “India,” sorted by their <span class="math inline">\(G^2\)</span> scores, reveal three key dimensions:</p>
+<ol type="1">
+<li><p><strong>Geographical Connections</strong>: The collocates such as “arabia”, “ethiopia”, “east,” “south,” “opposite,” and “beyond” indicate the geographical relationships and proximity between India and these regions.</p></li>
+<li><p><strong>Trading and Imports</strong>: The presence of collocates like “imported,” “produces,” “produce,” and “nations” suggests that India had a significant role in trade and the importation of goods. It also implies that India was known for producing various commodities that were sought after by other nations.</p></li>
+<li><p><strong>Boundaries and Borders</strong>: The collocates “boundary,” “set,” and “part” indicate the existence of defined boundaries or borders related to India. This suggests that there were recognized territorial demarcations associated with India during the referenced period.</p></li>
+</ol>
+<p>Within the context of Pliny the Elder’s <em>Natural History</em> is a book with an encyclopedia scope written in Roman Empire, these collocates suggest the interconnecting role India played in the network of interactions, trade, or cultural exchanges between India and the Mediterranean regions during 1st century BC. They highlight India’s significance as a trading partner, its geographical positioning, and the recognition of its territorial boundaries.</p>
+<p>Furthermore, the concordance table of the word “india,” as displayed in <a href="#tbl-concordance">Table&nbsp;6</a>, presents a comprehensive overview of the instances where “india” appears throughout the text, showcasing the specific contexts as well as providing additional information regarding the references to “India.” It serves as a valuable resource for understanding the various perspectives, descriptions, and associations attributed to India within the context of <em>Natural History</em>.</p>
 <div class="cell tbl-cap-location-top">
 <div class="cell-output-display">
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:400px; ">
@@ -2398,15 +2412,16 @@ div.csl-indent {
 </section>
 <section id="conclusion" class="level1" data-number="5">
 <h1 data-number="5"><span class="header-section-number">5</span> Conclusion</h1>
-<p>Trade related words (including important transportation milestones, trading goods and the description of the goods (colors, precious, etc.)) are more prone to be occur in the text related to India. It reflects the trading connection of the two empires, and also how the recognition of the other empire for the scholars of that period.</p>
+<p>In conclusion, this paper located the research question on potential theme and topics in texts about India in Pliny the Elder’s <em>Natural History</em> based on the prominent distribution of “India” in the entire text comparing to other place names. The analysis was conducted with the keyword analysis and collocation analysis in a framework of corpus linguistics.</p>
+<p>The analysis of keywords in the India-related text revealed significant themes such as the rivers, gemstones, goods, and historical figures like Megasthenes. These findings emphasize the cultural, geographical, and historical importance of India in the scope of scholars in Roman Empire during 1st century BC.</p>
+<p>Moreover, the exploration of collocates uncovered the geographical connections, trading networks, and territorial boundaries linked to India. The collocates highlighted the close relationships with neighboring regions such as Arabia and Ethiopia, along with references to trade, imports, and commodity production.</p>
+<p>Additionally, the study provided information on the specific contexts and usage of the word “India” within Pliny the Elder’s <em>Natural History</em>, as a resource for further analysis about the discourse and recognition of India during that era.</p>
+<p>While this research represents an initial exploration, it paves the way for future investigations. Subsequent studies can expand the analysis to encompass a wider range of texts, explore different domains within Indian subcontinent-related literature, and utilize advanced natural language processing techniques to gain deeper semantic insights.</p>
 
 </section>
 
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
-<div id="ref-methods" class="csl-entry" role="listitem">
-Methods in corpus linguistics - keywords and collocation analysis on the BASE corpus. <a href="https://mclm2022.github.io/studies/base.html">https://mclm2022.github.io/studies/base.html</a>.
-</div>
 <div id="ref-R-leaflet" class="csl-entry" role="listitem">
 Cheng, Joe, Bhaskar Karambelkar &amp; Yihui Xie. 2023. <em>Leaflet: Create interactive web maps with the JavaScript leaflet library</em>. <a href="https://rstudio.github.io/leaflet/">https://rstudio.github.io/leaflet/</a>.
 </div>
@@ -2416,8 +2431,14 @@ Dodd, Emlyn. 2021. Wine, oil, and knowledge networks across the graeco-roman cyc
 <div id="ref-plinyth2011" class="csl-entry" role="listitem">
 Gibson, Roy &amp; Ruth Morello (eds.). 2011. <em>Pliny the Elder: Themes and Contexts</em>. Brill. <a href="https://brill.com/edcollbook/title/14893">https://brill.com/edcollbook/title/14893</a>.
 </div>
-<div id="ref-nappo2017" class="csl-entry" role="listitem">
-Nappo, Dario. 2017. <em>Money and Flows of Coinage in the Red Sea Trade</em>. Vol. 1. Oxford University Press. <a href="https://doi.org/10.1093/oso/9780198790662.003.0017">https://doi.org/10.1093/oso/9780198790662.003.0017</a>. <a href="https://academic.oup.com/book/9102/chapter/155703740">https://academic.oup.com/book/9102/chapter/155703740</a>.
+<div id="ref-methods" class="csl-entry" role="listitem">
+Montes, Mariana. 2022. Methods in corpus linguistics - keywords and collocation analysis on the BASE corpus. <a href="https://mclm2022.github.io/studies/base.html">https://mclm2022.github.io/studies/base.html</a>.
+</div>
+<div id="ref-murphy2003" class="csl-entry" role="listitem">
+Murphy, Trevor. 2003. 11. Pliny<span>’</span>s naturalis historia: The prodigal text. In, 301–322. BRILL. <a href="https://doi.org/10.1163/9789004217157_012">https://doi.org/10.1163/9789004217157_012</a>. <a href="http://dx.doi.org/10.1163/9789004217157_012">http://dx.doi.org/10.1163/9789004217157_012</a>.
+</div>
+<div id="ref-pollard2009" class="csl-entry" role="listitem">
+Pollard, Elizabeth Ann. 2009. Pliny<span>’</span>s &lt;i&gt;Natural History&lt;/i&gt; and the Flavian &lt;i&gt;Templum Pacis&lt;/i&gt;: Botanical Imperialism in First-Century &lt;small class=<span>"</span>caps<span>"</span> xmlns:m=<span>"</span>http://www.w3.org/1998/Math/MathML<span>"</span> xmlns:mml=<span>"</span>http://www.w3.org/1998/Math/MathML<span>"</span> xmlns:xlink=<span>"</span>http://www.w3.org/1999/xlink<span>"</span>&gt;c.e&lt;/small&gt;. Rome. <em>Journal of World History</em> 20(3). 309–338. <a href="https://doi.org/10.1353/jwh.0.0074">https://doi.org/10.1353/jwh.0.0074</a>. <a href="http://dx.doi.org/10.1353/jwh.0.0074">http://dx.doi.org/10.1353/jwh.0.0074</a>.
 </div>
 <div id="ref-R-base" class="csl-entry" role="listitem">
 R Core Team. 2022. <em>R: A language and environment for statistical computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/">https://www.R-project.org/</a>.
@@ -2431,7 +2452,7 @@ Wickham, Hadley. 2023. <em>Tidyverse: Easily install and load the tidyverse</em>
 </div></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 
 <ol>
-<li id="fn1"><p>Since the paper is a pilot exploration of my master thesis, I used the scraped corpus already scraped with python.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>As this paper represents a preliminary investigation for my master’s thesis, I utilized the corpus that had already been scraped using Python.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main>
 <!-- /main column -->

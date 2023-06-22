@@ -1,7 +1,7 @@
 ---
 engine: knitr
 title: "Keyword and Collocation analysis on India-related text of Natural History"
-author: "Lizao Zhuang (Dawn) r0914937"
+author: "Dawn, Lizao Zhuang (r0914937)"
 format: 
   html:
     theme: journal
@@ -14,7 +14,7 @@ bibliography:
   - references.bib
   - packages.bib  
 csl: unified-style-sheet-for-linguistics.csl
-abstract: 'The paper applies the methodology of keyword analysis and collocation analysis in corpus linguistics to explore the possible topics of the text related to "India" in Natural History of Pliny the Elder.'
+abstract: 'This paper presents a comprehensive analysis of keywords and collocates related to India in a corpus of Natural History by Pliny the Elder. The study focuses on uncovering prominent themes and topics associated with India in the context of the book. The research employs keyword analysis and collocate examination techniques to reveal significant insights into the perception and imagination of India, as a competent counterpart to the Roman Empire, by Pliny the Elder and the scholars of his time.'
 ---
 
 ```{r setup, include=FALSE}
@@ -35,7 +35,7 @@ knitr::write_bib(
 
 # Research Question
 
-Pliny the Elder's "Natural History" stands as a seminal work in the history of encyclopedias, serving as a gateway to understanding the knowledge and worldview of ancient Rome. Beyond its role as a compendium of diverse subjects, the text provides a captivating glimpse into the actual merchant exchanges [@dodd2021] of the Roman Empire while shedding a light on the spatial imagination of Pliny and the scholarly references of his time [@plinyth2011].
+Pliny the Elder's *Natural History* stands as a seminal work in the history of encyclopedias, serving as a gateway to understanding the knowledge and worldview of ancient Rome. Beyond its role as a compendium of diverse subjects, the text provides a captivating glimpse into the actual merchant exchanges [@dodd2021] of the Roman Empire while shedding a light on the spatial imagination of Pliny and the scholarly references of his time [@plinyth2011].
 
 The text of the whole book has been digitized and annotated with people's name, places' name and coordinates by [TOPOSText](https://topostext.org/the-project) project since 2012. This invaluable resource allows for the creation of a dataset that includes both the textual contents and geographical annotations, which can be utilized to investigate the distribution of place names in the entire text and examine the frequencies and patterns of geographically-related content.
 
@@ -95,15 +95,15 @@ m
 
 ```
 
-Building upon this observation, this paper aims to delve deeper into the themes associated with the India region by employing keyword analysis and collocation analysis methods within the framework of corpus linguistics.
+Building upon this observation, this paper aims to delve deeper into the themes associated with the India region referred in the text by employing keyword analysis and collocation analysis methods within the framework of corpus linguistics.
 
-The analysis is conducted in R environment [@R-base], and the main corpus linguistics anlysing methods are applied through functions from [mclm](https://masterclm.github.io/mclm/) [@R-mclm] package. In addition, [tidyverse](https://www.tidyverse.org/) [@R-tidyverse] and [leaflet](https://rstudio.github.io/leaflet/) [@R-leaflet] are used for data manipulation and visualisation.
+The analysis is conducted in R environment [@R-base], and the main anlysing methods are applied through functions from [mclm](https://masterclm.github.io/mclm/) [@R-mclm] package. In addition, [tidyverse](https://www.tidyverse.org/) [@R-tidyverse] and [leaflet](https://rstudio.github.io/leaflet/) [@R-leaflet] are used for data manipulation and visualisation.
 
 # Corpus Description
 
-As mentioned earlier, the digitized text of "Natural History" with geographical annotations is readily accessible through the [TOPOSText](https://topostext.org/work/148 "Check Natural History on ToposText") project. In order to facilitate the analysis, I conducted additional scraping of the full text, exporting it as a **reference corpus** in .txt format. Furthermore, I extracted the texts specifically associated with the Indian subcontinent, utilizing the annotated coordinates, creating a **target corpus** of geographically related texts focused on India. The scraping was conducted with [beautifulsoup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) library in python, the [code](https://github.com/lizaodawn/zhuang/blob/papertry/Natural%20History_corpus%20scrape.ipynb) can be referred by click.[^1]
+As mentioned earlier, the digitized text of *Natural History* with geographical annotations is readily accessible through the [TOPOSText](https://topostext.org/work/148 "Check Natural History on ToposText") project. In order to facilitate the analysis, I conducted a scraping of the full text, exporting it as a **reference corpus** in .txt format. Furthermore, I extracted the texts specifically associated with the Indian subcontinent, utilizing the annotated coordinates, creating a **target corpus** of geographically related texts focused on India. The scraping was conducted with [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) library in Python, and the [code](https://github.com/lizaodawn/zhuang/blob/papertry/Natural%20History_corpus%20scrape.ipynb) is uploaded to the same repository of the project.[^1]
 
-[^1]: Since the paper is a pilot exploration of my master thesis, I used the scraped corpus already scraped with python.
+[^1]: As this paper represents a preliminary investigation for my master's thesis, I utilized the corpus that had already been scraped using Python.
 
 ```{r}
 #| label: prepare-corpus
@@ -122,17 +122,19 @@ ref_flist <- freqlist(fnames_wholetext, re_token_splitter = re("\\s+"))
 tar_flist <- freqlist(fnames_indiatext, re_token_splitter = re("\\s+"))
 ```
 
-The **reference corpus** consists of all texts in the encyclopedia, divided by paragraphs, has `r prettyNum(n_tokens(ref_flist))` tokens and `r n_types(ref_flist)` types, with the type-token ratio of `r round(n_types(ref_flist)/n_tokens(ref_flist), 2)`.
+The **target corpus** consists of all text related to Indian subcontinent (with coordinates in range of *8°4'N-37°6'N and 68°7'E to 97°25'E*), segregated by paragraphs, containing `r prettyNum(n_tokens(tar_flist))` tokens and `r n_types(tar_flist)` types, with the type-token ratio of `r round(n_types(tar_flist)/n_tokens(tar_flist), 2)`.
 
-And the **target corpus** consists of all text related to Indian subcontinent (with coordinates in range of *8°4'N-37°6'N and 68°7'E to 97°25'E*) , has `r prettyNum(n_tokens(tar_flist))` tokens and `r n_types(tar_flist)` types, with the type-token ratio of `r round(n_types(tar_flist)/n_tokens(tar_flist), 2)`.
+And the **reference corpus** consists of all texts in *Natural History*, segregated by paragraphs, consisting of `r prettyNum(n_tokens(ref_flist))` tokens and `r n_types(ref_flist)` types, with the type-token ratio of `r round(n_types(ref_flist)/n_tokens(ref_flist), 2)`.
 
 The punctuation marks are removed in the tokenization process.
 
-# Keyword Analysis on India-related texts
+# Keyword analysis on India-related texts
 
-The frequency list of the **target corpus** (Indian subcontinent related texts) and **reference corpus** (whole text) are generated respectively. And the association scores are calculated and filtered for those returning both PMI and $G^2$ gaining 2 or higher (in which criteria indicating the words having an at least four times higher probability than that in all the data taken together, as well as having a confirming evidence statistically [@methods]), in order to get the statistically most significant keyword in India-related texts comparing to the reference corpus.
+As mentioned, the method of keyword analysis could help with a further discuss about the prominent theme and topic in the India-related texts.
 
-When calculating the word frequency in the **target corpus**, the word "india" itself is removed from the token in order to get more descriptive words in the corpus, which will be more efficient in implying the possible thematic keyword in the **target corpus**.
+The frequency lists for the **target corpus** (Indian subcontinent related texts) and **reference corpus** (whole text) are generated respectively, and the association scores are calculated through the [assoc_scores](https://masterclm.github.io/mclm/reference/assoc_scores.html) function. The association score is filtered based on the criteira of both PMI and $G^2$ scores, requiring a minimum score of 2. This criterion ensures that the selected words have a probability at least four times higher than the overall data, along with statistically significant supporting evidence [@methods], allowing to identify the most statistically significant keywords in India-related texts when compared to the reference corpus.
+
+During the calculation of word frequencies in the **target corpus**, the specific word "India" itself was excluded from the analysis. This exclusion was intentional, aiming to focus on more descriptive words within the corpus and efficiently identify potential thematic keywords in the **target corpus**.
 
 ```{r}
 #| label: keyword
@@ -162,7 +164,7 @@ top_scores_kw <- scores_kw %>%
 
 ```
 
-Tables below shows the top 20 keywords in Indian related texts comparing to the entire texts in the encyclopedia, respectively sorted by PMI (@tbl-kwtable_PMI) and G_signed (@tbl-kwtable_Gsigned).
+The following tables present the top 20 keywords in India-related texts as compared to the entire texts in *Natural History*. They are sorted based on their PMI (@tbl-kwtable_PMI) and G_signed scores (@tbl-kwtable_Gsigned), respectively. The initial sorting was carried out based on the PMI scores (@tbl-kwtable_PMI), since the it serves as a crucial indicator for measuring the keyness of words.
 
 ::: panel-tabset
 ## Sorted by PMI
@@ -202,7 +204,7 @@ top_scores_kw %>% # also valid for top_scores_colloc
 ```
 :::
 
-As **PMI Score** is seen as the indicator for keyword analysis, the top 20 keywords sorted by PMI were further checked of the meaning and tagged of its type manually. @tbl-kwlist below shows the explanation of the top 20 keywords in Indian related text.
+From these keywords, a manual examination was performed to determine their meaning and assign appropriate tags as based on their category. The resulting explanations for the top 20 keywords, sorted by PMI, can be found in @tbl-kwlist below.
 
 ```{r}
 #| warning: false
@@ -221,11 +223,11 @@ keyword_PMI_list <- data.frame(
 keyword_PMI_list %>% 
   as_tibble() %>%
   select(Word, Exp, Tag, Sub_tag) %>%                        
-  kbl(col.names = c("Word", "Exp", "Tag", "Sub_tag")) %>% 
+  kbl(col.names = c("Word", "Exp", "Category", "Sub_category")) %>% 
   kable_minimal()
 ```
 
-As the distribution plot of categories @fig-kwtype manifested, most keywords about Indian related texts in Natural History have a potential topic of goods (especially precious stones), and also people (both tribes and famous diplomats) and rivers in India (carrying the important role of origin of goods or transportation routes), which incorporates the investigation in [@nappo2017].
+The distribution plot of categories, as demonstrated in @fig-kwtype, reveals the pattern regarding keywords of India-related texts in Natural History.
 
 ```{r}
 #| warning: false
@@ -246,11 +248,19 @@ ggplot(tag_counts, aes(x = n, y = reorder(Tag, -n), fill = Tag)) +
   coord_flip()
 ```
 
-# Collocation Analysis on "India" in the whole corpus
+Significantly, a substantial number of the keywords in the India-related text revolve around goods, particularly precious stones, suggesting a prominent thematic focus. The presence of keywords such as "beryls", "obsidian", "bdellium", "agates", "callaina", "prasii", "carnelian" and "sandastros" indicates the involvement of various gemstones and goods associated with India. These findings are complemented by the presence of keywords like "condensation", "merchandize" and "peppertree" which suggest the production and trade of goods between the Roman Empire and the Indian subcontinent during that era.
 
-In addition to the investigation on the keywords in the "Indian" related texts, it is also worthwhile having a look at what words collocated when Pliny the Elder referred to the word "India".
+Furthermore, the keywords related to rivers in India, such as "ganges", "cophes", "hypasis," and "sacae" indicate their significance as sources of goods or as integral parts of trading routes. Since Pliny the Elder's contextual framework includes critical descriptions of the geographical surroundings like rivers, as evident in his references to the Po River and the Nile River [@pollard2009; @murphy2003], a deeper investigation into the portrayal and role of Indian rivers within this context would provide valuable insights.
 
-By indicating "india" as the target item for the analysis through the function of [surf_cooc](https://masterclm.github.io/mclm/reference/create_cooc.html) in [@R-mclm] and removing the punctuation marks, similarly to the Keyword Analysis criteria chosen above, collocation scores for co-text of both right and left side of "india" are calculated and filtered with those with both PMI and G_signed scores as 2 or above to get the prominent collocates of "india", in order to get an concrete overview of the discourse and recognization of Pliny the Elder to "India".
+Additionally, a notable proportion of the keywords pertain to people, encompassing names, descriptions, and specific historical figures like "megasthenes". This suggests the historical significance of individuals who played a role in trade with India or in documenting and understanding the region.
+
+In conclusion, the keywords extracted from the India-related text in the *Natural History* shed light on India's role in trade, the production of valuable goods, and its association with notable historical figures and geographical features within the perspective of Pliny the Elder during the 1st century BC in the context of the Roman Empire. These findings could also contribute to a better understanding of India's historical interactions with the broader ancient world.
+
+# Collocation analysis on "India" in the whole corpus
+
+In addition to examining the keywords in the India-related texts, it is also valuable to explore the collocates that appear alongside the word "India" when mentioned in the book.
+
+To analyse the co-text surrounding the term "India," the [surf_cooc](https://masterclm.github.io/mclm/reference/create_cooc.html) function was employed, with "india" designated as the target item for the analysis. And following the same criteria as the previous keyword analysis, the collocation scores were filtered of having both PMI and G_signed scores of 2 or higher. By employing this approach, the prominent collocates of "india" were identified, providing a tangible understanding of the prevailing discourse and potentially reflecting Pliny the Elder's perspective on the region.
 
 ```{r}
 #| label: collocation
@@ -268,7 +278,7 @@ top_scores_colloc <- scores_colloc %>%
   filter(PMI >= 2 & G_signed >= 2)
 ```
 
-@tbl-coltable_Gsigned and @tbl-coltable_PMI shows the top 20 collocates to the word "india" in the whole text, respectively sorted by PMI and G_signed.
+@tbl-coltable_Gsigned and @tbl-coltable_PMI display the top 20 collocates associated with the word "india" in the entire text., respectively sorted by G_signed and PMI scores. As the returned $G^2$ score helps gauge the strength of evidence regarding the independence between the two words [@methods], thereby facilitating the initial sorting.
 
 ::: panel-tabset
 ## Sorted by G_singed
@@ -309,9 +319,17 @@ top_scores_colloc %>%
 ```
 :::
 
-As the returned $G^2$ indicates the strongness of evidence of the independency of the two words,
+The top 20 collocates associated with the word "India," sorted by their $G^2$ scores, reveal three key dimensions:
 
-In addition, as shown in @tbl-concordance, with the concordance table of word "india" providing more details about the context of "India".
+1.  **Geographical Connections**: The collocates such as "arabia", "ethiopia", "east," "south," "opposite," and "beyond" indicate the geographical relationships and proximity between India and these regions.
+
+2.  **Trading and Imports**: The presence of collocates like "imported," "produces," "produce," and "nations" suggests that India had a significant role in trade and the importation of goods. It also implies that India was known for producing various commodities that were sought after by other nations.
+
+3.  **Boundaries and Borders**: The collocates "boundary," "set," and "part" indicate the existence of defined boundaries or borders related to India. This suggests that there were recognized territorial demarcations associated with India during the referenced period.
+
+Within the context of Pliny the Elder's *Natural History* is a book with an encyclopedia scope written in Roman Empire, these collocates suggest the interconnecting role India played in the network of interactions, trade, or cultural exchanges between India and the Mediterranean regions during 1st century BC. They highlight India's significance as a trading partner, its geographical positioning, and the recognition of its territorial boundaries.
+
+Furthermore, the concordance table of the word "india," as displayed in @tbl-concordance, presents a comprehensive overview of the instances where "india" appears throughout the text, showcasing the specific contexts as well as providing additional information regarding the references to "India." It serves as a valuable resource for understanding the various perspectives, descriptions, and associations attributed to India within the context of *Natural History*.
 
 ```{r}
 #| label: tbl-concordance
@@ -340,4 +358,12 @@ conc_data %>%
 
 # Conclusion
 
-Trade related words (including important transportation milestones, trading goods and the description of the goods (colors, precious, etc.)) are more prone to be occur in the text related to India. It reflects the trading connection of the two empires, and also how the recognition of the other empire for the scholars of that period.
+In conclusion, this paper located the research question on potential theme and topics in texts about India in Pliny the Elder's *Natural History* based on the prominent distribution of "India" in the entire text comparing to other place names. The analysis was conducted with the keyword analysis and collocation analysis in a framework of corpus linguistics.
+
+The analysis of keywords in the India-related text revealed significant themes such as the rivers, gemstones, goods, and historical figures like Megasthenes. These findings emphasize the cultural, geographical, and historical importance of India in the scope of scholars in Roman Empire during 1st century BC.
+
+Moreover, the exploration of collocates uncovered the geographical connections, trading networks, and territorial boundaries linked to India. The collocates highlighted the close relationships with neighboring regions such as Arabia and Ethiopia, along with references to trade, imports, and commodity production.
+
+Additionally, the study provided information on the specific contexts and usage of the word "India" within Pliny the Elder's *Natural History*, as a resource for further analysis about the discourse and recognition of India during that era.
+
+While this research represents an initial exploration, it paves the way for future investigations. Subsequent studies can expand the analysis to encompass a wider range of texts, explore different domains within Indian subcontinent-related literature, and utilize advanced natural language processing techniques to gain deeper semantic insights.
