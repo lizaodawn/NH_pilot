@@ -101,7 +101,9 @@ The analysis is conducted in R environment [@R-base], and the main corpus lingui
 
 # Corpus Description
 
-As mentioned earlier, the digitized text of "Natural History" with geographical annotations is readily accessible through the [TOPOSText](https://topostext.org/work/148 "Check Natural History on ToposText") project. In order to facilitate the analysis, I conducted additional scraping of the full text, exporting it as a **reference corpus** in .txt format. Furthermore, I extracted the texts specifically associated with the Indian subcontinent, utilizing the annotated coordinates, creating a **target corpus** of geographically related texts focused on India. The scraping code can be found in the link: .
+As mentioned earlier, the digitized text of "Natural History" with geographical annotations is readily accessible through the [TOPOSText](https://topostext.org/work/148 "Check Natural History on ToposText") project. In order to facilitate the analysis, I conducted additional scraping of the full text, exporting it as a **reference corpus** in .txt format. Furthermore, I extracted the texts specifically associated with the Indian subcontinent, utilizing the annotated coordinates, creating a **target corpus** of geographically related texts focused on India. The scraping was conducted with [beautifulsoup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) library in python, the [code](https://github.com/lizaodawn/zhuang/blob/papertry/Natural%20History_corpus%20scrape.ipynb) can be referred by click.[^1]
+
+[^1]: Since the paper is a pilot exploration of my master thesis, I used the scraped corpus already scraped with python.
 
 ```{r}
 #| label: prepare-corpus
@@ -309,7 +311,7 @@ top_scores_colloc %>%
 
 As the returned $G^2$ indicates the strongness of evidence of the independency of the two words,
 
-In addition, as shown in @tbl-concordance, with the concordance table of word "india" providing more details about the context of \"India\".
+In addition, as shown in @tbl-concordance, with the concordance table of word "india" providing more details about the context of "India".
 
 ```{r}
 #| label: tbl-concordance
