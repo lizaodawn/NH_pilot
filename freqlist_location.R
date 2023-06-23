@@ -37,7 +37,7 @@ ggplot(top_20_summary_data, aes(x = reorder(Place_Name, -Count), y = Count)) +
 
 
 # Create a leaflet map
-m <- leaflet() %>%
+mapping <- leaflet() %>%
   addTiles() %>%
   addCircleMarkers(
     data = top_20_summary_data,
@@ -64,41 +64,29 @@ fnames_indiatext <- get_fnames(corpus_folder_in) %>%
 
 print(fnames_indiatext, 10, hide_path = corpus_folder_in)
 
-ref_flist <- freqlist(fnames_wholetext, re_token_splitter = re("\\s+"))
-tar_flist <- freqlist(fnames_indiatext, re_token_splitter = re("\\s+"))
-
-# build frequency list for target corpus
-flist_target <- fnames_indiatext %>%
-  freqlist(re_token_transf_in = "[[:punct:]]", # Match punctuation marks
-           token_transf_out = "",# Replace punctuation marks with an empty string
-           re_drop_token = "india"
-    ) 
 
 # build frequency list for reference corpus
 flist_ref <- fnames_wholetext %>%
   freqlist(re_token_transf_in = "[[:punct:]]", # Match punctuation marks
            token_transf_out = "")
 
+# build frequency list for target corpus
+flist_target_all <- fnames_indiatext %>%
+  freqlist(re_token_transf_in = "[[:punct:]]", # Match punctuation marks
+           token_transf_out = ""
+    ) 
+
+flist_target <- fnames_indiatext %>%
+  freqlist(re_token_transf_in = "[[:punct:]]", # Match punctuation marks
+           token_transf_out = "",
+           re_drop_token = "india"
+  )
+
 # calculate scores
 scores_kw <- assoc_scores(flist_target, flist_ref)
 
-# print scores, sorted by PMI
-print(scores_kw, sort_order = "PMI")
-
-# print scores, sorted by G_signed
-print(scores_kw, sort_order = "G_signed")
-
-
 top_scores_kw <- scores_kw %>% 
   filter(PMI >= 2 & G_signed >= 2)
-
-# print top_scores_kw, sorted by PMI
-top_scores_kw %>%
-  print(sort_order = "PMI")
-
-# print top_scores_kw, sorted by G_signed
-top_scores_kw %>%
-  print(sort_order = "G_signed")
 
 top_scores_kw %>% 
   as_tibble() %>%
@@ -139,28 +127,12 @@ coocs <- fnames_wholetext %>%
   surf_cooc("(?xi)  ^ india $",
             re_token_transf_in = "[[:punct:]]", # Match punctuation marks
             token_transf_out = "")
-coocs$target_freqlist
-coocs$ref_freqlist
 
 # calculate scores
 scores_colloc <- assoc_scores(coocs)
 
-# print scores, sorted by PMI
-print(scores_colloc, sort_order = "PMI")
-
-# print scores, sorted by G_signed
-print(scores_colloc, sort_order = "G_signed")
-
 top_scores_colloc <- scores_colloc %>% 
   filter(PMI >= 2 & G_signed >= 2)
-
-# print top_scores_colloc, sorted by PMI
-top_scores_colloc %>%
-  print(sort_order = "PMI")
-
-# print top_scores_colloc, sorted by G_signed
-top_scores_colloc %>%
-  print(sort_order = "G_signed")
 
 top_scores_colloc %>% 
   as_tibble() %>%
@@ -172,7 +144,6 @@ top_scores_colloc %>%
 
 
 conc_data <- conc(fnames_wholetext, '\\bindia\\b')
-print(conc_data)
 
 conc_data %>%
   as_tibble() %>%
