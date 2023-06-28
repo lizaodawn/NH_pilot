@@ -132,7 +132,7 @@ flist_target_all <- fnames_indiatext %>%
 
 The **target corpus** consists of all text related to India (with coordinates in range of *8°4'N-37°6'N and 68°7'E-97°25'E*), segregated by paragraphs, containing `r prettyNum(n_tokens(flist_target_all))` tokens and `r n_types(flist_target_all)` types, with the type-token ratio of `r round(n_types(flist_target_all)/n_tokens(flist_target_all), 2)`. [^2]
 
-[^2]: Given the challenges in precisely determining the coordinate range during the 1st century BC, the coordinate range of modern India is applied as a rough approximation.
+[^2]: Given the challenges in precisely determining the coordinate range during the 1st century AD, the coordinate range of modern India is applied as a rough approximation.
 
 And the **reference corpus** consists of all texts in *Natural History*, segregated by paragraphs, consisting of `r prettyNum(n_tokens(flist_ref))` tokens and `r n_types(flist_ref)` types, with the type-token ratio of `r round(n_types(flist_ref)/n_tokens(flist_ref), 2)`.
 
@@ -264,7 +264,7 @@ Furthermore, the keywords related to rivers in India, such as "ganges", "cophes"
 
 Additionally, a notable proportion of the keywords pertain to people, encompassing names, descriptions, and specific historical figures like "megasthenes". This suggests the historical significance of individuals who played a role in trade with India or in documenting and understanding the region.
 
-In conclusion, the keywords extracted from the India-related text in the *Natural History* shed light on India's role in trade, the production of valuable goods, and its association with notable historical figures and geographical features within the perspective of Pliny the Elder during the 1st century BC in the context of the Roman Empire. These findings could also contribute to a better understanding of India's historical interactions with the broader ancient world.
+In conclusion, the keywords extracted from the India-related text in the *Natural History* shed light on India's role in trade, the production of valuable goods, and its association with notable historical figures and geographical features within the perspective of Pliny the Elder during the 1st century AD in the context of the Roman Empire. These findings could also contribute to a better understanding of India's historical interactions with the broader ancient world.
 
 # Collocation analysis on "India" in the whole corpus
 
@@ -337,7 +337,7 @@ The top 20 collocates associated with the word "India," sorted by their $G^2$ sc
 
 3.  **Boundaries and Borders**: The collocates "boundary," "set" and "part" indicate the existence of defined boundaries or borders related to India. This suggests that there were recognized territorial demarcations associated with India during the referenced period.
 
-Within the context of Pliny the Elder's *Natural History* is a book with an encyclopedia scope written in Roman Empire, these collocates suggest the interconnecting role India played in the network of interactions, trade, or cultural exchanges between India and the Mediterranean regions during 1st century BC. They highlight India's significance as a trading partner, its geographical positioning, and the recognition of its territorial boundaries.
+Within the context of Pliny the Elder's *Natural History* is a book with an encyclopedia scope written in Roman Empire, these collocates suggest the interconnecting role India played in the network of interactions, trade, or cultural exchanges between India and the Mediterranean regions during 1st century AD. They highlight India's significance as a trading partner, its geographical positioning, and the recognition of its territorial boundaries.
 
 Furthermore, the concordance table of the word "india" as displayed in @tbl-concordance, presents a comprehensive overview of the instances where "india" appears throughout the text, showcasing the specific contexts as well as providing additional information regarding the references to "India." It serves as a valuable resource for understanding the various perspectives, descriptions, and associations attributed to India within the context of *Natural History*.
 
@@ -370,7 +370,7 @@ conc_data %>%
 
 In conclusion, this paper located the research question on potential theme and topics in texts about India in Pliny the Elder's *Natural History* based on the prominent distribution of "India" in the entire text comparing to other place names. The analysis was conducted with the keyword analysis and collocation analysis in a framework of corpus linguistics.
 
-The analysis of keywords in the India-related text revealed significant themes such as the rivers, gemstones, goods, and historical figures like Megasthenes. These findings emphasize the cultural, geographical, and historical importance of India in the scope of scholars in Roman Empire during 1st century BC.
+The analysis of keywords in the India-related text revealed significant themes such as the rivers, gemstones, goods, and historical figures like Megasthenes. These findings emphasize the cultural, geographical, and historical importance of India in the scope of scholars in Roman Empire during 1st century AD.
 
 Moreover, the exploration of collocates uncovered the geographical connections, trading networks, and territorial boundaries linked to India. The collocates highlighted the close relationships with neighboring regions such as Arabia and Ethiopia, along with references to trade, imports, and commodity production.
 
