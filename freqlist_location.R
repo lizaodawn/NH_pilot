@@ -71,7 +71,7 @@ flist_target <- fnames_indiatext %>%
   freqlist
 
 # calculate scores
-scores_kw <- assoc_scores(flist_target_all, flist_ref)
+scores_kw <- assoc_scores(flist_target, flist_ref)
 
 top_scores_kw <- scores_kw %>% 
   filter(PMI >= 2 & G_signed >= 2)
@@ -80,7 +80,7 @@ top_scores_kw %>%
   as_tibble() %>%
   select(type, a, PMI, G_signed) %>% 
   arrange(desc(PMI)) %>%             
-  slice_max(order_by = PMI, n = 20, with_ties = TRUE) %>%                       
+  slice_max(order_by = G_signed, n = 20, with_ties = TRUE) %>%                       
   kbl(col.names = c("Type", "Frequency", "PMI", r"(Signed $G^2$)")) %>% 
   kable_minimal() %>% 
   scroll_box(height = "400px") %>%  print()
