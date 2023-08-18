@@ -10,8 +10,6 @@ library('tidyverse')
 library('mclm')
 library('here')
 library('kableExtra')
-library('ggplot2')
-library('dplyr')
 library('leaflet')
 
 data <- read.csv("geotext_whole.csv")
@@ -29,9 +27,8 @@ top_20_summary_data <- summary_data %>%
   ungroup()
 
 ggplot(top_20_summary_data, aes(x = reorder(Place_Name, -Count), y = Count)) +
-  geom_bar(stat = "identity") +
-  labs(x = "Place Name", y = "Count") +
-  ggtitle("Top 20 Place Names Mentioned") +
+  geom_col() +
+  labs(x = "Place name", y = "Number of occurrences") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 
@@ -40,15 +37,15 @@ ggplot(top_20_summary_data, aes(x = reorder(Place_Name, -Count), y = Count)) +
 mapping <- leaflet() %>%
   addTiles() %>%
   addCircleMarkers(
-    data = top_20_summary_data,
+    data = summary_data,
     lat = ~Lat,
     lng = ~Long,
-    radius = sqrt(top_20_summary_data$Count) * 0.8,  # Adjust the scaling factor as needed
+    radius = sqrt(summary_data$Count) * 0.8,  # Adjust the scaling factor as needed
     color = "blue",
     fill = TRUE,
     fillOpacity = 0.6,
-    popup = paste("Place Name:", top_20_summary_data$Place_Name, "<br>",
-                  "Count:", top_20_summary_data$Count)
+    popup = paste("Place name:", summary_data$Place_Name, "<br>",
+                  "Number of occurences:", summary_data$Count)
   )
 
 
@@ -67,23 +64,14 @@ print(fnames_indiatext, 10, hide_path = corpus_folder_in)
 
 # build frequency list for reference corpus
 flist_ref <- fnames_wholetext %>%
-  freqlist(re_token_transf_in = "[[:punct:]]", # Match punctuation marks
-           token_transf_out = "")
+  freqlist
 
 # build frequency list for target corpus
-flist_target_all <- fnames_indiatext %>%
-  freqlist(re_token_transf_in = "[[:punct:]]", # Match punctuation marks
-           token_transf_out = ""
-    ) 
-
-flist_target <- fnames_indiatext %>%
-  freqlist(re_token_transf_in = "[[:punct:]]", # Match punctuation marks
-           token_transf_out = "",
-           re_drop_token = "india"
-  )
+flist_target <- fnames_indiatext %>% 
+  freqlist
 
 # calculate scores
-scores_kw <- assoc_scores(flist_target, flist_ref)
+scores_kw <- assoc_scores(flist_target_all, flist_ref)
 
 top_scores_kw <- scores_kw %>% 
   filter(PMI >= 2 & G_signed >= 2)

@@ -9,7 +9,8 @@ format:
     code-link: true
     abstract-title: "Abstract"
 number-sections: true
-code-fold: true
+echo: false
+code-link: true
 bibliography:
   - references.bib
   - packages.bib  
@@ -22,8 +23,6 @@ library('tidyverse')
 library('mclm')
 library('here')
 library('kableExtra')
-library('dplyr')
-library('ggplot2')
 library('leaflet')
 options(digits = 3)
 
@@ -43,7 +42,7 @@ As a starting point, @fig-geoname reveals the Top 20 distinct geographical names
 
 ```{r}
 #| label: fig-geoname
-#| fig-cap: Bar Chart for Top 20 Distinct Place Names Mentioned in Natural History
+#| fig-cap: Bar chart for top 20 distinct place names mentioned in *Natural History*
 #| fig-cap-location: top
 #| warning: false
 #| echo: false
@@ -55,17 +54,18 @@ summary_data <- data %>%
   group_by(ToposText_ID, Place_Name, Lat, Long) %>%
   summarise(Count = n()) %>%
   arrange(desc(Count)) %>%
-  ungroup()
+  ungroup() 
 
+
+# Create a bar chart using ggplot2
 top_20_summary_data <- summary_data %>%
   top_n(20, Count) %>%
   ungroup()
 
 ggplot(top_20_summary_data, aes(x = reorder(Place_Name, -Count), y = Count)) +
-  geom_bar(stat = "identity") +
-  labs(x = "Place Name", y = "Count") +
+  geom_col() +
+  labs(x = "Place name", y = "Number of occurrences") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
-
 ```
 
 An intriguing observation from this analysis, as depicted in @fig-map, is the prominence of India---a region outside the Mediterranean---despite its high frequency of mentions.
@@ -80,16 +80,16 @@ An intriguing observation from this analysis, as depicted in @fig-map, is the pr
 m <- leaflet() %>%
   addTiles() %>%
   addCircleMarkers(
-    data = top_20_summary_data,
+    data = summary_data,
     lat = ~Lat,
     lng = ~Long,
-    radius = sqrt(top_20_summary_data$Count) * 0.8,  
+    radius = sqrt(summary_data$Count) * 0.8,  # Adjust the scaling factor as needed
     color = "blue",
     fill = TRUE,
     fillOpacity = 0.6,
-    popup = paste("Place Name:", top_20_summary_data$Place_Name, "<br>",
-                  "Count:", top_20_summary_data$Count)
-  ) 
+    popup = paste("Place name:", summary_data$Place_Name, "<br>",
+                  "Number of occurences:", summary_data$Count)
+  )
 
 m
 
@@ -142,7 +142,7 @@ The punctuation marks are removed in the tokenization process.
 
 As mentioned, the method of keyword analysis could help with a further discuss about the prominent theme and topic in the India-related texts.
 
-The frequency lists for the **target corpus** (India-related texts) and **reference corpus** (whole text) are generated respectively, and the association scores are calculated through the [assoc_scores](https://masterclm.github.io/mclm/reference/assoc_scores.html) function. The association score is filtered based on the criteria of both PMI and $G^2$ scores, requiring a minimum score of 2. This criterion ensures that the selected words have a probability at least four times higher than the overall data, along with statistically significant supporting evidence [@methods], allowing to identify the most statistically significant keywords in India-related texts when compared to the reference corpus.
+The frequency lists for the **target corpus** (India-related texts) and **reference corpus** (whole text) are generated respectively, and the association scores are calculated through the `mclm::assoc_scores()` function. The association score is filtered based on the criteria of both PMI and $G^2$ scores, requiring a minimum score of 2. This criterion ensures that the selected words have a probability at least four times higher than the overall data, along with statistically significant supporting evidence [@methods], allowing to identify the most statistically significant keywords in India-related texts when compared to the reference corpus.
 
 During the calculation of word frequencies in the **target corpus**, the specific word "India" itself was excluded from the analysis. This exclusion was intentional, aiming to focus on more descriptive words within the corpus and efficiently identify potential thematic keywords in the **target corpus**.
 
@@ -258,11 +258,11 @@ ggplot(tag_counts, aes(x = n, y = reorder(Tag, -n), fill = Tag)) +
   coord_flip()
 ```
 
-Significantly, a substantial number of the keywords in the India-related text revolve around goods, particularly precious stones, suggesting a prominent thematic focus. The presence of keywords such as "beryls", "obsidian", "bdellium", "agates", "callaina", "prasii", "carnelian" and "sandastros" indicates the involvement of various gemstones and goods associated with India. These findings are complemented by the presence of keywords like "condensation", "merchandize" and "peppertree" which suggest the production and trade of goods between the Roman Empire and the Indian regions during that era.
+Significantly, a substantial number of the keywords in the India-related text revolve around goods, particularly precious stones, suggesting a prominent thematic focus. The presence of keywords such as *beryls*, *obsidian*, *bdellium*, *agates*, *callaina*, *prasii*, *carnelian* and *sandastros* indicates the involvement of various gemstones and goods associated with India. These findings are complemented by the presence of keywords like *condensation*, *merchandize* and *peppertree* which suggest the production and trade of goods between the Roman Empire and the Indian regions during that era.
 
-Furthermore, the keywords related to rivers in India, such as "ganges", "cophes", "hypasis," and "sacae" indicate their significance as sources of goods or as integral parts of trading routes. Since Pliny the Elder's contextual framework includes critical descriptions of the geographical surroundings like rivers, as evident in his references to the Po River and the Nile River [@pollard2009; @murphy2003], a deeper investigation into the portrayal and role of Indian rivers within this context would provide valuable insights.
+Furthermore, the keywords related to rivers in India, such as *ganges*, *cophes*, *hypasis*, and *sacae* indicate their significance as sources of goods or as integral parts of trading routes. Since Pliny the Elder's contextual framework includes critical descriptions of the geographical surroundings like rivers, as evident in his references to the Po River and the Nile River [@pollard2009; @murphy2003], a deeper investigation into the portrayal and role of Indian rivers within this context would provide valuable insights.
 
-Additionally, a notable proportion of the keywords pertain to people, encompassing names, descriptions, and specific historical figures like "megasthenes". This suggests the historical significance of individuals who played a role in trade with India or in documenting and understanding the region.
+Additionally, a notable proportion of the keywords pertain to people, encompassing names, descriptions, and specific historical figures like *megasthenes*. This suggests the historical significance of individuals who played a role in trade with India or in documenting and understanding the region.
 
 In conclusion, the keywords extracted from the India-related text in the *Natural History* shed light on India's role in trade, the production of valuable goods, and its association with notable historical figures and geographical features within the perspective of Pliny the Elder during the 1st century AD in the context of the Roman Empire. These findings could also contribute to a better understanding of India's historical interactions with the broader ancient world.
 
@@ -270,7 +270,7 @@ In conclusion, the keywords extracted from the India-related text in the *Natura
 
 In addition to examining the keywords in the India-related texts, it is also valuable to explore the collocates that appear alongside the word "India" when mentioned in the book.
 
-To analyse the co-text surrounding the term "India," the [surf_cooc](https://masterclm.github.io/mclm/reference/create_cooc.html) function was employed, with "india" designated as the target item for the analysis. And following the same criteria as the previous keyword analysis, the collocation scores were filtered of having both PMI and G_signed scores of 2 or higher. By employing this approach, the prominent collocates of "india" were identified, providing a tangible understanding of the prevailing discourse and potentially reflecting Pliny the Elder's perspective on the region.
+To analyse the co-text surrounding the term "India," the `mclm::surf_cooc()` function was employed, with "india" designated as the target item for the analysis. And following the same criteria as the previous keyword analysis, the collocation scores were filtered of having both PMI and G_signed scores of 2 or higher. By employing this approach, the prominent collocates of "india" were identified, providing a tangible understanding of the prevailing discourse and potentially reflecting Pliny the Elder's perspective on the region.
 
 ```{r}
 #| label: collocation
@@ -331,11 +331,11 @@ top_scores_colloc %>%
 
 The top 20 collocates associated with the word "India," sorted by their $G^2$ scores, reveal three key dimensions:
 
-1.  **Geographical Connections**: The collocates such as "arabia", "ethiopia", "east," "south," "opposite," and "beyond" indicate the geographical relationships and proximity between India and these regions.
+1.  **Geographical Connections**: The collocates such as *arabia*, *ethiopia*, *east*, *south*, *opposite*, and *beyond* indicate the geographical relationships and proximity between India and these regions.
 
-2.  **Trading and Imports**: The presence of collocates like "imported", "produces", "produce" and "nations" suggests that India had a significant role in trade and the importation of goods. It also implies that India was known for producing various commodities that were sought after by other nations.
+2.  **Trading and Imports**: The presence of collocates like *imported*, *produces*, *produce* and *nations* suggests that India had a significant role in trade and the importation of goods. It also implies that India was known for producing various commodities that were sought after by other nations.
 
-3.  **Boundaries and Borders**: The collocates "boundary," "set" and "part" indicate the existence of defined boundaries or borders related to India. This suggests that there were recognized territorial demarcations associated with India during the referenced period.
+3.  **Boundaries and Borders**: The collocates *boundary*, *set* and *part* indicate the existence of defined boundaries or borders related to India. This suggests that there were recognized territorial demarcations associated with India during the referenced period.
 
 Within the context of Pliny the Elder's *Natural History* is a book with an encyclopedia scope written in Roman Empire, these collocates suggest the interconnecting role India played in the network of interactions, trade, or cultural exchanges between India and the Mediterranean regions during 1st century AD. They highlight India's significance as a trading partner, its geographical positioning, and the recognition of its territorial boundaries.
 
