@@ -1,6 +1,6 @@
 ---
 engine: knitr
-title: "Keyword and Collocation analysis on India-related text of Natural History"
+title: "Keyword and Collocation analysis on India-related text of *Natural History*"
 author: "Dawn, Lizao Zhuang (r0914937)"
 format: 
   html:
@@ -10,7 +10,6 @@ format:
     abstract-title: "Abstract"
 number-sections: true
 echo: false
-code-link: true
 bibliography:
   - references.bib
   - packages.bib  
@@ -24,19 +23,30 @@ library('mclm')
 library('here')
 library('kableExtra')
 library('leaflet')
+library('downlit')
 options(digits = 3)
 
 knitr::write_bib(
-  c("base", "mclm", "ggplot2", "tidyverse", "leaflet"),
+  c("base", "mclm", "ggplot2", "tidyverse", "leaflet", "downlit"),
   here("packages.bib")
 )
 ```
 
-# Research Question
+# Research Question[^1]
 
-Pliny the Elder's *Natural History* stands as a seminal work in the history of encyclopedias, serving as a gateway to understanding the knowledge and worldview of ancient Rome. Beyond its role as a compendium of diverse subjects, the text provides a captivating glimpse into the actual merchant exchanges [@dodd2021] of the Roman Empire while shedding a light on the spatial imagination of Pliny and the scholarly references of his time [@plinyth2011].
+[^1]: This study is a pilot study of my master thesis, so the description of the research question is connected with that of this [paper](https://raw.githack.com/lizaodawn/NH_thesis/main/NHthesis_structure.html#sec-introduction).
 
-The text of the whole book has been digitized and annotated with people's name, places' name and coordinates by [TOPOSText](https://topostext.org/the-project) project since 2012. This invaluable resource allows for the creation of a dataset that includes both the textual contents and geographical annotations, which can be utilized to investigate the distribution of place names in the entire text and examine the frequencies and patterns of geographically-related content.
+Pliny the Elder's *Natural History* is widely recognized as the earliest encyclopedia in the world. Written around AD 77, the work is thematically divided into 37 books, covering a diverse range of subjects including astronomy, geography, zoology, botany, medicine, and more. Driven by a pioneering attempt to catalogue human knowledge from his era, Pliny made a comprehensive reference to a wide range of Greek and Roman scholarships, and interwove his own literary interpretation or comments to the narratives in *Natural Hisrory*.
+
+*Natural History* stands as a seminal work in the history of encyclopedias, serving as a gateway to understanding the knowledge and worldview of ancient Rome. Beyond its role as a compendium of diverse subjects, the text provides a captivating glimpse into the knowledge, cultural, and merchandise exchange [@dodd2021] between the Roman Empire and other regions while shedding a light on the spatial perception and imagination of Pliny and the scholarly references of his time [@plinyth2011].
+
+As pointed out by @beagon2011, differentiating from his predecessors, Pliny showed a "terrestrial curiosity" in Natural History, emphasising recognition of the physical, material world. Drawing from the long-established topographical and ethnographic traditions, Pliny connects volumes dedicated to geography (books 3-6) with broader elements, activities, and cultural, historical, and societal contexts [@roller2022], exemplified in his portrayal of exotic plants, communities' habitats, imperial expeditions, and trade products. In this regard, geographical names mentioned in the text plays a pivotal role in distributing information, knowledge, and discussions throughout *Natural History*.
+
+*Natural History* is originally in Latin. For this study, an English translation by Henry T. Riley (1816-1878) and John Bostock (1773-1846), first published in 1855, is utilized. The translated text is obtained in a digitised version from the [TOPOSText project](https://topostext.org/the-project), having been sourced from the Perseus Project and governed by a Creative Commons Attribution-Share-Alike 3.0 U.S. License.
+
+In addition to the digitised textual content of *Natural History*, the place names mentioned in the text are annotated with their corresponding coordinates on TOPOXText. The annotations are available in an HTML format, which were sparsed and restructured into a dataset of geographical-related text in *Natural History* with [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) library in Python[^2]. The dataset structure, corpus scraping procedure and and corpus extention will be further elaborated in Corpus Description section (@sec-corpus).
+
+[^2]: The sparsing [code](https://github.com/lizaodawn/zhuang/blob/papertry/Natural%20History_corpus.ipynb) is uploaded to the same repository of the project.
 
 As a starting point, @fig-geoname reveals the Top 20 distinct geographical names mentioned within the text.
 
@@ -68,7 +78,7 @@ ggplot(top_20_summary_data, aes(x = reorder(Place_Name, -Count), y = Count)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
-An intriguing observation from this analysis, as depicted in @fig-map, is the prominence of India---a region outside the Mediterranean---despite its high frequency of mentions.
+An intriguing observation from this analysis, as depicted in @fig-map, is that India seems prominently mentioned in the work despite being outside the Mediterranean.
 
 ```{r}
 #| label: fig-map
@@ -95,15 +105,29 @@ m
 
 ```
 
-Building upon this observation, this paper aims to delve deeper into the themes associated with the India region referred in the text by employing keyword analysis and collocation analysis methods within the framework of corpus linguistics.
+Building upon this observation, the study focus is narrowed down to India-related text in *Natural History*, aiming to delve deeper into the themes associated with the Indian region referred in the text by employing keyword analysis and collocation analysis methods within the framework of corpus linguistics.
 
 The analysis is conducted in R environment [@R-base], and the main anlysing methods are applied through functions from [mclm](https://masterclm.github.io/mclm/) [@R-mclm] package. In addition, [tidyverse](https://www.tidyverse.org/) [@R-tidyverse] and [leaflet](https://rstudio.github.io/leaflet/) [@R-leaflet] are used for data manipulation and visualisation.
 
-# Corpus Description
+# Corpus Description {#sec-corpus}
 
-As mentioned earlier, the digitized text of *Natural History* with geographical annotations is readily accessible through the [TOPOSText](https://topostext.org/work/148 "Check Natural History on ToposText") project. In order to facilitate the analysis, I conducted a scraping of the full text, exporting it as a **reference corpus** in .txt format. Furthermore, I extracted the texts specifically associated with the India, utilizing the annotated coordinates, creating a **target corpus** of geographically related texts focused on India. The scraping was conducted with [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) library in Python, and the [code](https://github.com/lizaodawn/zhuang/blob/papertry/Natural%20History_corpus.ipynb) is uploaded to the same repository of the project.[^1]
+As mentioned, an English translation by Henry T. Riley (1816-1878) and John Bostock (1773-1846) of the original Latin text of *Natural History* is employed in the study. 
 
-[^1]: As this paper represents a preliminary investigation for my master's thesis, I utilized the corpus that had already been scraped using Python.
+The digitised text is avalible in paragraphs with geographical annotations on TOPOSText website as two parts, [book 1-11](https://topostext.org/work/148) and [book 12-37](https://topostext.org/work/153), both of which are in HTML format. Extracting all the "place" class in the HTML files, a dataset containing all annotated place names in the work, the URI and corresponding coordinates of the place, the book/chapter/paragraph number where it is mentioned, as well as the coordinating textual content are structured as a dataset of geographic-related text in *Natural History*. This dataset is used for an initial exploration of the prominent mentioned places in the text. 
+
+Since the research focus is narrowed down to India-related text after the initial exploration, a dataset including all Indian place names mentioned in the text is extracted from the geographical-related text dataset. With a reference to *Barrington Atlas of the Greek and Roman World* (@talbert2000a, @talbert2000b), the approximate coordinates defining the Indian region during the time of *Natural Hisoty* are as follows^[As indicated in the map-by-map directory, the range spans territories of “modern states of India (minus the Punjab), Bangladesh, Bhutan, Burma, Nepal, and Sri Lanka”.]:
+
+>Latitude: 5-35 degrees North 
+
+>Longitude: 65-95 degrees East 
+
+The records in geographical-related text dataset with corresponding coordinates falling within the specified range are extracted as the India-related text dataset. 
+
+Each distinct paragraph in the India-related text dataset is extracted and stored in TXT format as separate files within a corpus folder, comprising a total of 146 files as the **target corpus** for India-related text in *Natural History*. The file names contain information about the book, chapter, and paragraph numbers.
+
+And the full text of the entire work, segregrating in paragraphs, are scraped and stored in TXT format as a **reference corpus**. 
+
+The text are set into lower case in the corpus file extraction process.
 
 ```{r}
 #| label: prepare-corpus
@@ -120,25 +144,27 @@ fnames_indiatext <- get_fnames(tarcorpus_folder) %>%
 
 # build frequency list for reference corpus
 flist_ref <- fnames_wholetext %>%
-  freqlist(re_token_transf_in = "[[:punct:]]", # Match punctuation marks
-           token_transf_out = "")
+  freqlist()
 
 # build frequency list for target corpus
 flist_target_all <- fnames_indiatext %>%
-  freqlist(re_token_transf_in = "[[:punct:]]", # Match punctuation marks
-           token_transf_out = ""
-    ) 
+  freqlist() 
 ```
 
-The **target corpus** consists of all text related to India (with coordinates in range of *8°4'N-37°6'N and 68°7'E-97°25'E*), segregated by paragraphs, containing `r prettyNum(n_tokens(flist_target_all))` tokens and `r n_types(flist_target_all)` types, with the type-token ratio of `r round(n_types(flist_target_all)/n_tokens(flist_target_all), 2)`. [^2]
+The **target corpus** consists of all text related to India in paragraphs, containing `r prettyNum(n_tokens(flist_target_all))` tokens and `r n_types(flist_target_all)` types, with the type-token ratio of `r round(n_types(flist_target_all)/n_tokens(flist_target_all), 2)`. 
 
-[^2]: Given the challenges in precisely determining the coordinate range during the 1st century AD, the coordinate range of modern India is applied as a rough approximation.
+And the **reference corpus** consists of all texts in *Natural History* in paragraphs, consisting of `r prettyNum(n_tokens(flist_ref))` tokens and `r n_types(flist_ref)` types, with the type-token ratio of `r round(n_types(flist_ref)/n_tokens(flist_ref), 2)`.
 
-And the **reference corpus** consists of all texts in *Natural History*, segregated by paragraphs, consisting of `r prettyNum(n_tokens(flist_ref))` tokens and `r n_types(flist_ref)` types, with the type-token ratio of `r round(n_types(flist_ref)/n_tokens(flist_ref), 2)`.
 
-The punctuation marks are removed in the tokenization process.
+# Methodology
 
-# Keyword analysis on India-related texts
+## Keyword Analysis
+
+## Collocation Analysis
+
+# Data Analysis
+
+## Keyword in India-related text in *Natural History*
 
 As mentioned, the method of keyword analysis could help with a further discuss about the prominent theme and topic in the India-related texts.
 
@@ -177,7 +203,25 @@ top_scores_kw <- scores_kw %>%
 The following tables present the top 20 keywords in India-related texts as compared to the entire texts in *Natural History*. They are sorted based on their PMI (@tbl-kwtable_PMI) and G_signed scores (@tbl-kwtable_Gsigned), respectively. The initial sorting was carried out based on the PMI scores (@tbl-kwtable_PMI), since the it serves as a crucial indicator for measuring the keyness of words.
 
 ::: panel-tabset
-## Sorted by PMI
+### Sorted by absolute frequencies
+
+```{r}
+#| warning: false
+#| echo: false
+#| label: tbl-kwtable_absolute_freqencies
+#| tbl-cap-location: top
+#| tbl-cap: Top 20 Keywords on Indian Related Text in Natural History (sorted by PMI)
+
+top_scores_kw %>% 
+  as_tibble() %>%
+  select(type, a, PMI, G_signed) %>% 
+  slice_max(order_by = a, n = 20, with_ties = TRUE) %>%                       
+  kbl(col.names = c("Type", "Frequency", "PMI", r"(Signed $G^2$)")) %>% 
+  kable_minimal() %>% 
+  scroll_box(height = "400px")
+```
+
+### Sorted by PMI
 
 ```{r}
 #| warning: false
@@ -195,7 +239,7 @@ top_scores_kw %>%
   scroll_box(height = "400px")
 ```
 
-## Sorted by G_signed
+### Sorted by G_signed
 
 ```{r}
 #| warning: false
@@ -266,7 +310,7 @@ Additionally, a notable proportion of the keywords pertain to people, encompassi
 
 In conclusion, the keywords extracted from the India-related text in the *Natural History* shed light on India's role in trade, the production of valuable goods, and its association with notable historical figures and geographical features within the perspective of Pliny the Elder during the 1st century AD in the context of the Roman Empire. These findings could also contribute to a better understanding of India's historical interactions with the broader ancient world.
 
-# Collocation analysis on "India" in the whole corpus
+## Collocating word to "India" in *Natural History*
 
 In addition to examining the keywords in the India-related texts, it is also valuable to explore the collocates that appear alongside the word "India" when mentioned in the book.
 
@@ -291,7 +335,25 @@ top_scores_colloc <- scores_colloc %>%
 @tbl-coltable_Gsigned and @tbl-coltable_PMI display the top 20 collocates associated with the word "india" in the entire text, respectively sorted by G_signed and PMI scores. As the returned $G^2$ score helps gauge the strength of evidence regarding the independence between the two words [@methods], thereby facilitating the initial sorting.
 
 ::: panel-tabset
-## Sorted by G_singed
+### Sorted by absolute frequencies
+
+```{r}
+#| label: tbl-coltable_absolute_freqencies
+#| tbl-cap-location: top
+#| tbl-cap: Top 20 collocates to the word "india" in Natural History (sorted by G_signed)
+#| warning: false
+#| echo: false
+top_scores_colloc %>% 
+  as_tibble() %>%
+  select(type, a, PMI, G_signed) %>% 
+  slice_max(order_by = a, n = 20, with_ties = TRUE) %>%
+  kbl(col.names = c("Type", "Frequency", "PMI", r"(Signed $G^2$)"), escape = FALSE) %>%
+  kable_minimal() %>% 
+  scroll_box(height = "400px")
+
+```
+
+### Sorted by G_singed
 
 ```{r}
 #| label: tbl-coltable_Gsigned
@@ -309,7 +371,7 @@ top_scores_colloc %>%
 
 ```
 
-## Sorted by PMI
+### Sorted by PMI
 
 ```{r}
 #| label: tbl-coltable_PMI
