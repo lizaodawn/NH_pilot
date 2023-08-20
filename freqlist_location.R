@@ -4,6 +4,7 @@ install.packages('here')
 install.packages('kableExtra')
 install.packages("leaflet")
 install.packages("quarto")
+install.packages("downlit")
 
 
 library('tidyverse')
@@ -11,6 +12,7 @@ library('mclm')
 library('here')
 library('kableExtra')
 library('leaflet')
+library('downlit')
 
 data <- read.csv("geotext_whole.csv")
 
