@@ -76,7 +76,7 @@ fnames_wholetext_filtered <- fnames_wholetext[fnames_wholetext_short %in% fnames
 # build frequency list for reference corpus
 flist_ref <- fnames_wholetext_filtered %>%
   freqlist(re_token_transf_in = "'", 
-           token_transf_out = "")
+           token_transf_out = "") %>% print(20)
 
 # build frequency list for target corpus
 flist_target <- fnames_indiatext %>% 
