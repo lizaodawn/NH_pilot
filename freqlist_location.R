@@ -59,18 +59,29 @@ print(fnames_wholetext, 10, hide_path = corpus_folder_whole)
 
 corpus_folder_in <- here("NH_geotext_india")
 fnames_indiatext <- get_fnames(corpus_folder_in) %>% 
-  keep_re("[.]txt")
+  keep_re("[.]txt") 
 
 print(fnames_indiatext, 10, hide_path = corpus_folder_in)
 
+fnames_wholetext_short <- basename(fnames_wholetext)
+fnames_indiatext_short <- basename(fnames_indiatext)
+
+# Exclude short file names with the same name from target corpus in the reference corpus
+fnames_wholetext_short_filtered <- fnames_wholetext_short %>%
+  setdiff(fnames_indiatext_short)
+
+# Filter full file names based on filtered short names
+fnames_wholetext_filtered <- fnames_wholetext[fnames_wholetext_short %in% fnames_wholetext_short_filtered]
 
 # build frequency list for reference corpus
-flist_ref <- fnames_wholetext %>%
-  freqlist
+flist_ref <- fnames_wholetext_filtered %>%
+  freqlist(re_token_transf_in = "'", 
+           token_transf_out = "")
 
 # build frequency list for target corpus
 flist_target <- fnames_indiatext %>% 
-  freqlist
+  freqlist(re_token_transf_in = "'", 
+           token_transf_out = "")
 
 # calculate scores
 scores_kw <- assoc_scores(flist_target, flist_ref)
@@ -82,7 +93,7 @@ top_scores_kw %>%
   as_tibble() %>%
   select(type, a, PMI, G_signed) %>% 
   arrange(desc(PMI)) %>%             
-  slice_max(order_by = G_signed, n = 20, with_ties = TRUE) %>%                       
+  slice_max(order_by = PMI, n = 20, with_ties = TRUE) %>%                       
   kbl(col.names = c("Type", "Frequency", "PMI", r"(Signed $G^2$)")) %>% 
   kable_minimal() %>% 
   scroll_box(height = "400px") %>%  print()
@@ -114,9 +125,7 @@ ggplot(tag_counts, aes(x = n, y = reorder(Tag, -n), fill = Tag)) +
 
 
 coocs <- fnames_wholetext %>% 
-  surf_cooc("(?xi)  ^ india $",
-            re_token_transf_in = "[[:punct:]]", # Match punctuation marks
-            token_transf_out = "")
+  text_cooc("(?xi)  ^ india $")
 
 # calculate scores
 scores_colloc <- assoc_scores(coocs)

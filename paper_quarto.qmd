@@ -109,23 +109,47 @@ Building upon this observation, the study focus is narrowed down to India-relate
 
 The analysis is conducted in R environment [@R-base], and the main anlysing methods are applied through functions from [mclm](https://masterclm.github.io/mclm/) [@R-mclm] package. In addition, [tidyverse](https://www.tidyverse.org/) [@R-tidyverse] and [leaflet](https://rstudio.github.io/leaflet/) [@R-leaflet] are used for data manipulation and visualisation.
 
+# Methodology
+
+To investigate the prominent themes in the India-related content discussed in *Natural History*, methods of keyword analysis and collocation analysis are employed for this study. Both of the analyses rely on the `mclm::assoc_scores` objects of the [mclm](https://github.com/masterclm/mclm) package, which return frequencies and association scores of a certain event in a target context and in a reference context.
+
+Both of the methods will be examined by three association measurements, namely absolute frequency, PMI and $G^2$ signed, to discuss with the context in *Natural History* and the potential theme it indicates.
+
+PMI measures the association strength between two words by comparing their observed co-occurrence frequency with their expected co-occurrence frequency by chance. It highlights words that appear together more frequently than expected. High PMI values indicates strong associations. High $G^2$ values suggest that the co-occurrence is unlikely to occur by chance.
+
+$G^2$ is a statistical test that measures the independence or association between two categorical variables (words in this case). It compares the observed co-occurrence frequencies with the expected frequencies under the assumption of independence. Higher $G^2$ values suggest a stronger association.
+
+## Keyword Analysis
+
+Keyword analysis is a statistical method used in corpus linguistics to identify words that occur more frequently in a target corpus than in a reference corpus. Defined with different associate measurements, the "keyness" of words are calculated and indicated which words are statistically more frequent appeared in the target corpus comparing to that of the reference corpus.
+
+In this study, the *target corpus* includes all paragraphs in *Natural History* mentioning Indian regions, and the **reference corpus** contains all other paragraphs in the work. Lists of 20 words with the highest score in different association measurements are discussed with the textual context. As indicated by the measurements, the listed words tend to be more frequently occur in the context pertaining India than other parts of the work, hence they seem to be the potential keywords about India in *Natural History*.
+
+## Collocation Analysis
+
+Collocation analysis is a technique employed in corpus linguistics to identify words that often appear together in a language. This technique is rooted in the notion that particular words tend to appear together more often than would occur by chance. In the context of this study, lists of the highly possible co-occuring word with "India" in the text of *Natural History* can shed a light on the potential themes and topics about India discussed in the work.
+
+Combining the two methods, and integrating with a close reading of the text, this study aims to discuss what about "India" is discussed in *Natural History*.
+
 # Corpus Description {#sec-corpus}
 
-As mentioned, an English translation by Henry T. Riley (1816-1878) and John Bostock (1773-1846) of the original Latin text of *Natural History* is employed in the study. 
+As mentioned, an English translation by Henry T. Riley (1816-1878) and John Bostock (1773-1846) of the original Latin text of *Natural History* is employed in the study.
 
-The digitised text is avalible in paragraphs with geographical annotations on TOPOSText website as two parts, [book 1-11](https://topostext.org/work/148) and [book 12-37](https://topostext.org/work/153), both of which are in HTML format. Extracting all the "place" class in the HTML files, a dataset containing all annotated place names in the work, the URI and corresponding coordinates of the place, the book/chapter/paragraph number where it is mentioned, as well as the coordinating textual content are structured as a dataset of geographic-related text in *Natural History*. This dataset is used for an initial exploration of the prominent mentioned places in the text. 
+The digitised text is avalible in paragraphs with geographical annotations on TOPOSText website as two parts, [book 1-11](https://topostext.org/work/148) and [book 12-37](https://topostext.org/work/153), both of which are in HTML format. Extracting all the "place" class in the HTML files, a dataset containing all annotated place names in the work, the URI and corresponding coordinates of the place, the book/chapter/paragraph number where it is mentioned, as well as the coordinating textual content are structured as a dataset of geographic-related text in *Natural History*. This dataset is used for an initial exploration of the prominent mentioned places in the text.
 
-Since the research focus is narrowed down to India-related text after the initial exploration, a dataset including all Indian place names mentioned in the text is extracted from the geographical-related text dataset. With a reference to *Barrington Atlas of the Greek and Roman World* (@talbert2000a, @talbert2000b), the approximate coordinates defining the Indian region during the time of *Natural Hisoty* are as follows^[As indicated in the map-by-map directory, the range spans territories of “modern states of India (minus the Punjab), Bangladesh, Bhutan, Burma, Nepal, and Sri Lanka”.]:
+Since the research focus is narrowed down to India-related text after the initial exploration, a dataset including all Indian place names mentioned in the text is extracted from the geographical-related text dataset. With a reference to *Barrington Atlas of the Greek and Roman World* (@talbert2000a, @talbert2000b), the approximate coordinates defining the Indian region during the time of *Natural Hisoty* are as follows[^3]:
 
->Latitude: 5-35 degrees North 
+[^3]: As indicated in the map-by-map directory, the range spans territories of "modern states of India (minus the Punjab), Bangladesh, Bhutan, Burma, Nepal, and Sri Lanka".
 
->Longitude: 65-95 degrees East 
+> Latitude: 5-35 degrees North
+>
+> Longitude: 65-95 degrees East
 
-The records in geographical-related text dataset with corresponding coordinates falling within the specified range are extracted as the India-related text dataset. 
+The records in geographical-related text dataset with corresponding coordinates falling within the specified range are extracted as the India-related text dataset.
 
 Each distinct paragraph in the India-related text dataset is extracted and stored in TXT format as separate files within a corpus folder, comprising a total of 146 files as the **target corpus** for India-related text in *Natural History*. The file names contain information about the book, chapter, and paragraph numbers.
 
-And the full text of the entire work, segregrating in paragraphs, are scraped and stored in TXT format as a **reference corpus**. 
+And the full text of the entire work, segregating in paragraphs, are scraped and stored in TXT format and excluded the files in **target corpus** to serve as a **reference corpus**.
 
 The text are set into lower case in the corpus file extraction process.
 
@@ -142,25 +166,30 @@ tarcorpus_folder <-  here("NH_geotext_india")
 fnames_indiatext <- get_fnames(tarcorpus_folder) %>% 
   keep_re("[.]txt")
 
+fnames_wholetext_short <- basename(fnames_wholetext)
+fnames_indiatext_short <- basename(fnames_indiatext)
+
+# Exclude short file names with the same name from target corpus in the reference corpus
+fnames_wholetext_short_filtered <- fnames_wholetext_short %>%
+  setdiff(fnames_indiatext_short)
+
+# Filter full file names based on filtered short names
+fnames_wholetext_filtered <- fnames_wholetext[fnames_wholetext_short %in% fnames_wholetext_short_filtered]
+
 # build frequency list for reference corpus
-flist_ref <- fnames_wholetext %>%
-  freqlist()
+flist_ref <- fnames_wholetext_filtered %>%
+  freqlist(re_token_transf_in = "'", 
+           token_transf_out = "")
 
 # build frequency list for target corpus
-flist_target_all <- fnames_indiatext %>%
-  freqlist() 
+flist_target <- fnames_indiatext %>%
+  freqlist(re_token_transf_in = "'", 
+           token_transf_out = "") 
 ```
 
-The **target corpus** consists of all text related to India in paragraphs, containing `r prettyNum(n_tokens(flist_target_all))` tokens and `r n_types(flist_target_all)` types, with the type-token ratio of `r round(n_types(flist_target_all)/n_tokens(flist_target_all), 2)`. 
+The **target corpus** consists of all text related to India in paragraphs, containing `r prettyNum(n_tokens(flist_target))` tokens and `r n_types(flist_target)` types, with the type-token ratio of `r round(n_types(flist_target)/n_tokens(flist_target), 2)`.
 
 And the **reference corpus** consists of all texts in *Natural History* in paragraphs, consisting of `r prettyNum(n_tokens(flist_ref))` tokens and `r n_types(flist_ref)` types, with the type-token ratio of `r round(n_types(flist_ref)/n_tokens(flist_ref), 2)`.
-
-
-# Methodology
-
-## Keyword Analysis
-
-## Collocation Analysis
 
 # Data Analysis
 
@@ -175,22 +204,6 @@ During the calculation of word frequencies in the **target corpus**, the specifi
 ```{r}
 #| label: keyword
 #| warning: false
-
-
-# build frequency list for target corpus
-flist_target <- fnames_indiatext %>%
-  freqlist(
-    re_token_transf_in = "[[:punct:]]", # Match punctuation marks
-    token_transf_out = "", # Replace punctuation marks with an empty string
-    re_drop_token = "india"
-  )
-
-# build frequency list for reference corpus
-flist_ref <- fnames_wholetext %>%
-  freqlist(
-    re_token_transf_in = "[[:punct:]]", # Match punctuation marks
-    token_transf_out = ""
-  ) 
 
 # calculate scores
 scores_kw <- assoc_scores(flist_target, flist_ref)
@@ -258,6 +271,10 @@ top_scores_kw %>% # also valid for top_scores_colloc
 ```
 :::
 
+1.  $G^2$ signed highly overlapped with that of absolute frequency. (plot of corelation)
+2.  list the overlapped keywords
+3.  PMI sorting provides more information
+
 From these keywords, a manual examination was performed to determine their meaning and assign appropriate tags as based on their category. The resulting explanations for the top 20 keywords, sorted by PMI, can be found in @tbl-kwlist below.
 
 ```{r}
@@ -314,16 +331,14 @@ In conclusion, the keywords extracted from the India-related text in the *Natura
 
 In addition to examining the keywords in the India-related texts, it is also valuable to explore the collocates that appear alongside the word "India" when mentioned in the book.
 
-To analyse the co-text surrounding the term "India," the `mclm::surf_cooc()` function was employed, with "india" designated as the target item for the analysis. And following the same criteria as the previous keyword analysis, the collocation scores were filtered of having both PMI and G_signed scores of 2 or higher. By employing this approach, the prominent collocates of "india" were identified, providing a tangible understanding of the prevailing discourse and potentially reflecting Pliny the Elder's perspective on the region.
+To analyse the textual collocating bi-gram of word "India", the `mclm::text_cooc()` function was employed, with "india" designated as the target item for the analysis. And following the same criteria as the previous keyword analysis, the collocation scores were filtered of having both PMI and G_signed scores of 2 or higher. By employing this approach, the prominent collocates of "india" were identified, providing a tangible understanding of the prevailing discourse and potentially reflecting Pliny the Elder's perspective on the region.
 
 ```{r}
 #| label: collocation
 #| warning: false
 
 coocs <- fnames_wholetext %>% 
-  surf_cooc("(?xi)  ^ india $", 
-            re_token_transf_in = "[[:punct:]]", # Match punctuation marks
-            token_transf_out = "")
+  text_cooc("(?xi)  ^ india $")
 
 # calculate scores
 scores_colloc <- assoc_scores(coocs)
@@ -399,34 +414,11 @@ The top 20 collocates associated with the word "India," sorted by their $G^2$ sc
 
 3.  **Boundaries and Borders**: The collocates *boundary*, *set* and *part* indicate the existence of defined boundaries or borders related to India. This suggests that there were recognized territorial demarcations associated with India during the referenced period.
 
+1.  $G^2$ signed highly overlapped with that of absolute frequency. (plot of corelation)
+2.  list the overlapped keywords
+3.  PMI sorting provides more information
+
 Within the context of Pliny the Elder's *Natural History* is a book with an encyclopedia scope written in Roman Empire, these collocates suggest the interconnecting role India played in the network of interactions, trade, or cultural exchanges between India and the Mediterranean regions during 1st century AD. They highlight India's significance as a trading partner, its geographical positioning, and the recognition of its territorial boundaries.
-
-Furthermore, the concordance table of the word "india" as displayed in @tbl-concordance, presents a comprehensive overview of the instances where "india" appears throughout the text, showcasing the specific contexts as well as providing additional information regarding the references to "India." It serves as a valuable resource for understanding the various perspectives, descriptions, and associations attributed to India within the context of *Natural History*.
-
-```{r}
-#| label: tbl-concordance
-#| tbl-cap-location: top
-#| tbl-cap: Concordance table of word "india" in Natural History
-#| warning: false
-#| echo: false
-
-conc_data <- conc(fnames_wholetext, '\\bindia\\b')
-
-conc_data %>%
-  as_tibble() %>%
-  select(source, left, match, right) %>%
-  mutate(
-    source = short_names(source),
-    book = as.integer(gsub("^(\\d+).*", "\\1", source)),
-    chapter = as.numeric(gsub("^\\d+\\.(\\d+)\\.\\d+_text$", "\\1", source)),
-    paragraph = as.numeric(gsub("^\\d+\\.\\d+\\.(\\d+)_text$", "\\1", source))
-  ) %>%
-  arrange(book, chapter, paragraph) %>%
-  select(book, chapter, paragraph, left, match, right) %>%
-  kbl(align = c("r", "r", "r", "c", "l", "l", "l")) %>%
-  kable_paper(font_size = 15) %>%
-  scroll_box(height = "400px")
-```
 
 # Conclusion
 
