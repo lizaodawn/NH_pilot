@@ -7,12 +7,14 @@ install.packages("quarto")
 install.packages("downlit")
 
 
+
 library('tidyverse')
 library('mclm')
 library('here')
 library('kableExtra')
 library('leaflet')
 library('downlit')
+
 
 data <- read.csv("geotext_whole.csv")
 
@@ -87,7 +89,7 @@ flist_target <- fnames_indiatext %>%
 scores_kw <- assoc_scores(flist_target, flist_ref)
 
 top_scores_kw <- scores_kw %>% 
-  filter(PMI >= 2 & G_signed >= 2)
+  filter(PMI >= 2 & G_signed >= 3.84)
 
 top_scores_kw %>% 
   as_tibble() %>%
@@ -97,6 +99,14 @@ top_scores_kw %>%
   kbl(col.names = c("Type", "Frequency", "PMI", r"(Signed $G^2$)")) %>% 
   kable_minimal() %>% 
   scroll_box(height = "400px") %>%  print()
+
+top_scores_kw_df <- as_tibble(top_scores_kw)
+
+theme_set(theme_minimal(base_size = 15))
+g <- top_scores_kw_df %>%
+  ggplot(aes(x = G_signed, y = a)) +
+  labs(x = "G", y = "afr")
+g + geom_point()
 
 
 keyword_PMI_list <- data.frame(
@@ -122,6 +132,21 @@ ggplot(tag_counts, aes(x = n, y = reorder(Tag, -n), fill = Tag)) +
   labs(x = "Count", y = "Tag", fill = "Tag") +
   theme_minimal() +
   coord_flip()
+
+flist_ref_df <- as_tibble(flist_ref)
+words_to_check <- c("ganges", "beryls", "ichthyophagi", "megasthenes", "obsidian", "bdellium", "agates", "callaina", "condensation", "gerra", "jomanes", "nonius", "prasii", "alia", "carnelian", "cophes", "hypasis", "merchandize", "peppertree", "sacae", "sandastros", "thornbush")
+words_to_check1<- c("india", "hundred", "stones", "arabia", "indian", "alexander",
+                    "amber", "thousand", "elephants", "indus", "glass", "thence",
+                    "ganges", "rock-crystal", "ethiopia", "indians")
+for (word_to_check in words_to_check1){
+  freq <- NA  # Initialize with NA in case the word is not found
+  if (word_to_check %in% names(flist_ref_df)) {
+    freq <- flist_ref$[[word_to_check]]  # Adjust this based on your data structure
+  }
+  cat("Frequency of '", word_to_check, "':", freq, "\n")
+}
+
+flist_ref_df$abs_freq[flist_ref_df$type == 'elephants']
 
 
 coocs <- fnames_wholetext %>% 

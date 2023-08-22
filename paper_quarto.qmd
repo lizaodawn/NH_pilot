@@ -10,6 +10,8 @@ format:
     abstract-title: "Abstract"
 number-sections: true
 echo: false
+warning: false
+tbl-cap-location: top
 bibliography:
   - references.bib
   - packages.bib  
@@ -213,7 +215,7 @@ top_scores_kw <- scores_kw %>%
 
 ```
 
-The following tables present the top 20 keywords in India-related texts as compared to the entire texts in *Natural History*. They are sorted based on their PMI (@tbl-kwtable_PMI) and G_signed scores (@tbl-kwtable_Gsigned), respectively. The initial sorting was carried out based on the PMI scores (@tbl-kwtable_PMI), since the it serves as a crucial indicator for measuring the keyness of words.
+The following tables present the top 20 keywords in India-related texts as compared to the entire texts in *Natural History*. They are sorted based on their PMI (@tbl-kwtable_PMI), Absolute frequencies(@tbl-kwtable_absolute_freqencies) and G_signed scores (@tbl-kwtable_Gsigned), respectively. The initial sorting was carried out based on the PMI scores (@tbl-kwtable_PMI), since the it serves as a crucial indicator for measuring the keyness of words.
 
 ::: panel-tabset
 ### Sorted by absolute frequencies
@@ -264,16 +266,111 @@ top_scores_kw %>%
 top_scores_kw %>% # also valid for top_scores_colloc
   as_tibble() %>%
   select(type, a, PMI, G_signed) %>%         # sort by PMI (descending) 
-  slice_max(order_by = G_signed, n = 20, with_ties = TRUE) %>%   # select top 30 rows
+  slice_max(order_by = G_signed, n = 20, with_ties = TRUE) %>%   
   kbl(col.names = c("Type", "Frequency", "PMI", r"(Signed $G^2$)")) %>% 
   kable_minimal() %>% 
   scroll_box(height = "400px")
 ```
 :::
 
-1.  $G^2$ signed highly overlapped with that of absolute frequency. (plot of corelation)
-2.  list the overlapped keywords
-3.  PMI sorting provides more information
+In the list of three measurements, 16/20 of absolute frequency overlaps with that of $G^2$ Signed. As shown in the @fig-col_keyword, the $G^2$ score has a positive correlation with the absolute frequency.
+
+```{r}
+#| label: fig-col_keyword
+#| tbl-cap:  Scatterplot of G_signed by absolute frequency
+
+top_scores_kw_df <- as_tibble(top_scores_kw)
+
+theme_set(theme_minimal(base_size = 15))
+g <- top_scores_kw_df %>%
+  ggplot(aes(x = G_signed, y = a)) +
+  labs(x = "Signed G", y = "Absolute frequency")
+g + geom_point()
+```
+
+Combing the lists sorted by absolute frequency and signed G, it can be categorized as follows (those without specified are the overlapped words):
+
+**Geographical/Ethnic Group**: india, arabia, indian, ganges, indus, ethiopia, taprobane(G), thence, sail(A)
+
+**People**: alexander, indians, tribe(A), ichthyophagi(G), megasthenes(G)
+
+**Numeric**: hundred, thousand, fifty(A)
+
+**Precious Stone/Gem**: stones, amber, beryls, rock-crystal, glass, beryls(G)
+
+**Animal/Plant**: elephants, pepper(A)
+
+The categories partly highlights the potential themes in the target corpus, i.e. India-related text in *Natural History*, that a lot of geographical details, including land marks, locations and spatial transportation, as well as precious stones and introduction about tribes, historical figures and animal and plants. 
+
+It aligns with the general structure of the work, that catelouging the natural, material world in to chapters of geography, anthropology, natural creatures and mineralogy.
+
+And the high ranking words even have more appearences in the reference corpus, as shown in @tbl-kw_frequency_compare.
+
+```{r}
+#| label: tbl-kw_frequency_compare
+#| tbl-cap:  Comparison of overlapping keywords sorted by absolute frequency and G signed with that of reference corpus
+flist_ref_df <- as_tibble(flist_ref)
+words_to_check <- c("india", "hundred", "stones", "arabia", "indian", "alexander",
+                    "amber", "thousand", "elephants", "indus", "glass", "thence",
+                    "ganges", "rock-crystal", "ethiopia", "indians")
+
+
+filtered_top_scores <- top_scores_kw_df %>%
+  filter(type %in% words_to_check)
+
+abs_freq_lookup <- setNames(flist_ref_df$abs_freq, flist_ref_df$type)
+nrm_freq_lookup <- setNames(flist_ref_df$nrm_freq, flist_ref_df$type)
+
+results <- tibble(
+  Word = filtered_top_scores$type,
+  Target_Frequency = filtered_top_scores$a,
+  Reference_Abs_Frequency = abs_freq_lookup[filtered_top_scores$type],
+  Reference_Nrm_Frequency = nrm_freq_lookup[filtered_top_scores$type]
+) %>% 
+  kbl(col.names = c("Type", "Target_Frequency", "Reference_Abs_Frequency", "Reference_Nrm_Frequency")) %>% 
+  kable_minimal() %>% 
+  scroll_box(height = "400px")
+
+
+results
+
+```
+
+As PMI score indicates times of probability of the keyword in the target context higher than its probability in all the data taken together, it could serve as a more convincing indicator for the analysis of keywords. And in fact, in the sorted top 20 list of PMI, it does showed more detailed information about the context. Moreover, almost all of them shown none frequency in the reference corpus, which reinforces the indication that they are distinctly key to the target corpus comparing to that of the other context of the work, as shown in @tbl-kw_frequency_pmi.
+
+```{r}
+#| label: tbl-kw_frequency_pmi
+#| tbl-cap:  Comparison of overlapping keywords sorted by absolute frequency and G signed with that of reference corpus
+
+words_to_check_pmi <- c("india", "ganges", "beryls", "indus", "taprobane",
+                    "ichthyophagi", "megasthenes", "obsidian", "bdellium",
+                    "agates", "callaina", "condensation", "expeditions",
+                    "gerra", "jomanes", "nonius", "patala", "prasii", "alia",
+                    "bactra", "carnelian", "ceylon", "cophes", "hypasis",
+                    "merchandize", "pepper-tree", "sacae", "sandastros",
+                    "thorn-bush")
+
+filtered_top_scores1 <- top_scores_kw_df %>%
+  filter(type %in% words_to_check_pmi)
+
+abs_freq_lookup1 <- setNames(flist_ref_df$abs_freq, flist_ref_df$type)
+nrm_freq_lookup1 <- setNames(flist_ref_df$nrm_freq, flist_ref_df$type)
+
+results1 <- tibble(
+  Word = filtered_top_scores1$type,
+  Target_Frequency = filtered_top_scores1$a,
+  Reference_Abs_Frequency = abs_freq_lookup1[filtered_top_scores1$type],
+  Reference_Nrm_Frequency = nrm_freq_lookup1[filtered_top_scores1$type]
+)%>% 
+  kbl(col.names = c("Type", "Target_Frequency", "Reference_Abs_Frequency", "Reference_Nrm_Frequency")) %>% 
+  kable_minimal() %>% 
+  scroll_box(height = "400px")
+
+
+results1
+
+
+```
 
 From these keywords, a manual examination was performed to determine their meaning and assign appropriate tags as based on their category. The resulting explanations for the top 20 keywords, sorted by PMI, can be found in @tbl-kwlist below.
 
@@ -414,9 +511,11 @@ The top 20 collocates associated with the word "India," sorted by their $G^2$ sc
 
 3.  **Boundaries and Borders**: The collocates *boundary*, *set* and *part* indicate the existence of defined boundaries or borders related to India. This suggests that there were recognized territorial demarcations associated with India during the referenced period.
 
-1.  $G^2$ signed highly overlapped with that of absolute frequency. (plot of corelation)
-2.  list the overlapped keywords
-3.  PMI sorting provides more information
+4.  $G^2$ signed highly overlapped with that of absolute frequency. (plot of corelation)
+
+5.  list the overlapped keywords
+
+6.  PMI sorting provides more information
 
 Within the context of Pliny the Elder's *Natural History* is a book with an encyclopedia scope written in Roman Empire, these collocates suggest the interconnecting role India played in the network of interactions, trade, or cultural exchanges between India and the Mediterranean regions during 1st century AD. They highlight India's significance as a trading partner, its geographical positioning, and the recognition of its territorial boundaries.
 
