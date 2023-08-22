@@ -16,7 +16,7 @@ bibliography:
   - references.bib
   - packages.bib  
 csl: unified-style-sheet-for-linguistics.csl
-abstract: 'This paper presents a comprehensive analysis of keywords and collocates related to India in a corpus of Natural History by Pliny the Elder. The study focuses on uncovering prominent themes and topics associated with India in the context of the book. The research employs keyword analysis and collocate examination techniques to reveal significant insights into the perception and imagination of India, as a competent counterpart to the Roman Empire, by Pliny the Elder and the scholars of his time.'
+abstract: 'This paper presents a comprehensive analysis of keywords and collocates related to India in a corpus of Natural History by Pliny the Elder. The study focuses on uncovering prominent themes and topics associated with India in the context of the book. The research employs collocate examination techniques and keyword analysis to reveal significant insights into the perception and imagination of India, as a competent counterpart to the Roman Empire, by Pliny the Elder and the scholars of his time.'
 ---
 
 ```{r setup, include=FALSE}
@@ -107,13 +107,13 @@ m
 
 ```
 
-Building upon this observation, the study focus is narrowed down to India-related text in *Natural History*, aiming to delve deeper into the themes associated with the Indian region referred in the text by employing keyword analysis and collocation analysis methods within the framework of corpus linguistics.
+Building upon this observation, the study focus is narrowed down to India-related text in *Natural History*, aiming to delve deeper into the themes associated with the Indian region referred in the text by employing collocation analysis and keyword analysis methods within the framework of corpus linguistics.
 
 The analysis is conducted in R environment [@R-base], and the main anlysing methods are applied through functions from [mclm](https://masterclm.github.io/mclm/) [@R-mclm] package. In addition, [tidyverse](https://www.tidyverse.org/) [@R-tidyverse] and [leaflet](https://rstudio.github.io/leaflet/) [@R-leaflet] are used for data manipulation and visualisation.
 
 # Methodology
 
-To investigate the prominent themes in the India-related content discussed in *Natural History*, methods of keyword analysis and collocation analysis are employed for this study. Both of the analyses rely on the `mclm::assoc_scores` objects of the [mclm](https://github.com/masterclm/mclm) package, which return frequencies and association scores of a certain event in a target context and in a reference context.
+To investigate the prominent themes in the India-related content discussed in *Natural History*, methods of collocation analysis and keyword analysis are employed for this study. Both of the analyses rely on the `mclm::assoc_scores` objects of the [mclm](https://github.com/masterclm/mclm) package, which return frequencies and association scores of a certain event in a target context and in a reference context.
 
 Both of the methods will be examined by three association measurements, namely absolute frequency, PMI and $G^2$ signed, to discuss with the context in *Natural History* and the potential theme it indicates.
 
@@ -121,17 +121,17 @@ PMI measures the association strength between two words by comparing their obser
 
 $G^2$ is a statistical test that measures the independence or association between two categorical variables (words in this case). It compares the observed co-occurrence frequencies with the expected frequencies under the assumption of independence. Higher $G^2$ values suggest a stronger association.
 
-## Keyword Analysis
-
-Keyword analysis is a statistical method used in corpus linguistics to identify words that occur more frequently in a target corpus than in a reference corpus. Defined with different associate measurements, the "keyness" of words are calculated and indicated which words are statistically more frequent appeared in the target corpus comparing to that of the reference corpus.
-
-In this study, the *target corpus* includes all paragraphs in *Natural History* mentioning Indian regions, and the **reference corpus** contains all other paragraphs in the work. Lists of 20 words with the highest score in different association measurements are discussed with the textual context. As indicated by the measurements, the listed words tend to be more frequently occur in the context pertaining India than other parts of the work, hence they seem to be the potential keywords about India in *Natural History*.
-
 ## Collocation Analysis
 
 Collocation analysis is a technique employed in corpus linguistics to identify words that often appear together in a language. This technique is rooted in the notion that particular words tend to appear together more often than would occur by chance. In the context of this study, lists of the highly possible co-occuring word with "India" in the text of *Natural History* can shed a light on the potential themes and topics about India discussed in the work.
 
 Combining the two methods, and integrating with a close reading of the text, this study aims to discuss what about "India" is discussed in *Natural History*.
+
+## Keyword Analysis
+
+Keyword analysis is a statistical method used in corpus linguistics to identify words that occur more frequently in a target corpus than in a reference corpus. Defined with different associate measurements, the "keyness" of words are calculated and indicated which words are statistically more frequent appeared in the target corpus comparing to that of the reference corpus.
+
+In this study, the *target corpus* includes all paragraphs in *Natural History* mentioning Indian regions, and the **reference corpus** contains all other paragraphs in the work. Lists of 20 words with the highest score in different association measurements are discussed with the textual context. As indicated by the measurements, the listed words tend to be more frequently occur in the context pertaining India than other parts of the work, hence they seem to be the potential keywords about India in *Natural History*.
 
 # Corpus Description {#sec-corpus}
 
@@ -622,7 +622,7 @@ In conclusion, the keywords extracted from the India-related text in the *Natura
 
 # Conclusion
 
-In conclusion, this paper located the research question on potential theme and topics in texts about India in Pliny the Elder's *Natural History* based on the prominent distribution of "India" in the entire text comparing to other place names. The analysis was conducted with the keyword analysis and collocation analysis in a framework of corpus linguistics.
+In conclusion, this paper located the research question on potential theme and topics in texts about India in Pliny the Elder's *Natural History* based on the prominent distribution of "India" in the entire text comparing to other place names. The analysis was conducted with the collocation analysis and keyword analysis in a framework of corpus linguistics.
 
 The analysis of keywords in the India-related text revealed significant themes such as the rivers, gemstones, goods, and historical figures like Megasthenes. These findings emphasize the cultural, geographical, and historical importance of India in the scope of scholars in Roman Empire during 1st century AD.
 
