@@ -139,7 +139,7 @@ As mentioned, an English translation by Henry T. Riley (1816-1878) and John Bost
 
 The digitised text is avalible in paragraphs with geographical annotations on TOPOSText website as two parts, [book 1-11](https://topostext.org/work/148) and [book 12-37](https://topostext.org/work/153), both of which are in HTML format. Extracting all the "place" class in the HTML files, a dataset containing all annotated place names in the work, the URI and corresponding coordinates of the place, the book/chapter/paragraph number where it is mentioned, as well as the coordinating textual content are structured as a dataset of geographic-related text in *Natural History*. This dataset is used for an initial exploration of the prominent mentioned places in the text.
 
-Since the research focus is narrowed down to India-related text after the initial exploration, a dataset including all Indian place names mentioned in the text is extracted from the geographical-related text dataset. With a reference to *Barrington Atlas of the Greek and Roman World* (@talbert2000a, @talbert2000b), the approximate coordinates defining the Indian region during the time of *Natural Hisoty* are as follows[^3]:
+Since the research focus is narrowed down to India-related text after the initial exploration, a dataset including all Indian place names mentioned in the text is extracted from the geographical-related text dataset. With a reference to *Barrington Atlas of the Greek and Roman World* (@talbert2000, @talbert2000-1), the approximate coordinates defining the Indian region during the time of *Natural Hisoty* are as follows[^3]:
 
 [^3]: As indicated in the map-by-map directory, the range spans territories of "modern states of India (minus the Punjab), Bangladesh, Bhutan, Burma, Nepal, and Sri Lanka".
 
@@ -194,6 +194,201 @@ The **target corpus** consists of all text related to India in paragraphs, conta
 And the **reference corpus** consists of all texts in *Natural History* in paragraphs, consisting of `r prettyNum(n_tokens(flist_ref))` tokens and `r n_types(flist_ref)` types, with the type-token ratio of `r round(n_types(flist_ref)/n_tokens(flist_ref), 2)`.
 
 # Data Analysis
+
+## Collocating word to "India" in *Natural History*
+
+In addition to examining the keywords in the India-related texts, it is also valuable to explore the collocates that appear alongside the word "India" when mentioned in the book.
+
+To analyse the textual collocating bi-gram of word "India", the `mclm::text_cooc()` function was employed, with "india" designated as the target item for the analysis. Since the texual collocation of "India" is examinated, the span of the target word is set as the "textual units", to take the broader context into consideration.
+
+And following the same criteria as the previous keyword analysis, the collocation scores were filtered of having both PMI and G_signed scores of 2 or higher. By employing this approach, the prominent collocates of "india" were identified, providing a tangible understanding of the prevailing discourse and potentially reflecting Pliny the Elder's perspective on the region.
+
+```{r}
+#| label: collocation
+#| warning: false
+
+coocs <- fnames_wholetext %>% 
+  text_cooc("(?xi)  ^ india $")
+
+# calculate scores
+scores_colloc <- assoc_scores(coocs)
+
+top_scores_colloc <- scores_colloc %>% 
+  filter(PMI >= 2 & G_signed >= 2)
+```
+
+@tbl-coltable_Gsigned and @tbl-coltable_PMI display the top 20 collocates associated with the word "india" in the entire text, respectively sorted by G_signed and PMI scores. As the returned $G^2$ score helps gauge the strength of evidence regarding the independence between the two words [@methods], thereby facilitating the initial sorting.
+
+::: panel-tabset
+### Sorted by absolute frequencies
+
+```{r}
+#| label: tbl-coltable_absolute_freqencies
+#| tbl-cap-location: top
+#| tbl-cap: Top 20 collocates to the word "india" in Natural History (sorted by G_signed)
+#| warning: false
+#| echo: false
+top_scores_colloc %>% 
+  as_tibble() %>%
+  select(type, a, PMI, G_signed) %>% 
+  slice_max(order_by = a, n = 20, with_ties = TRUE) %>%
+  kbl(col.names = c("Type", "Frequency", "PMI", r"(Signed $G^2$)"), escape = FALSE) %>%
+  kable_minimal() %>% 
+  scroll_box(height = "400px")
+
+```
+
+### Sorted by G_singed
+
+```{r}
+#| label: tbl-coltable_Gsigned
+#| tbl-cap-location: top
+#| tbl-cap: Top 20 collocates to the word "india" in Natural History (sorted by G_signed)
+#| warning: false
+#| echo: false
+top_scores_colloc %>% 
+  as_tibble() %>%
+  select(type, a, PMI, G_signed) %>% 
+  slice_max(order_by = G_signed, n = 20, with_ties = TRUE) %>%
+  kbl(col.names = c("Type", "Frequency", "PMI", r"(Signed $G^2$)"), escape = FALSE) %>%
+  kable_minimal() %>% 
+  scroll_box(height = "400px")
+
+```
+
+### Sorted by PMI
+
+```{r}
+#| label: tbl-coltable_PMI
+#| tbl-cap-location: top
+#| tbl-cap: Top 20 collocates to the word "india" in Natural History (sorted by PMI)
+
+top_scores_colloc %>% 
+  as_tibble() %>%
+  select(type, a, PMI, G_signed) %>%
+  slice_max(order_by = PMI, n = 20, with_ties = TRUE) %>% 
+  kbl(col.names = c("Type", "Frequency", "PMI", r"(Signed $G^2$)"), escape = FALSE) %>% 
+  kable_minimal() %>% 
+  scroll_box(height = "400px") 
+
+```
+:::
+
+Similar to the results of keyword analysis, the top 20 sorted list of absolute frequency and G singed have a 11/20 overlapped outputs. As shown in @fig-col_colloc, the signed G score and absolute frequency in textual collocation has a positibe correlation.
+
+```{r}
+#| label: fig-col_colloc
+#| fig-cap: Correlation of signed G and absolute frequency in textual collocation
+
+
+top_scores_colloc_df <- as_tibble(top_scores_colloc)
+
+g1 <- top_scores_colloc_df %>%
+  ggplot(aes(x = G_signed, y = a)) +
+  labs(x = "signed G", y = "Absolute frequency") +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) 
+
+g1
+```
+
+The high-ranking words of textual collocation with "India" in the work are cateforized as follows, those without specifying the association measurement are the overlapped ones:
+
+**Geographical**: arabia, indian, ethiopia, ganges, indus(G)
+
+**Numeric**: hundred, thousand(A), whole(A)
+
+**Time**: year (A)
+
+**Merchandise exchange**: mart(G)
+
+**Precious Stone/Gem**: stones, rock-crystal, gems, pearls, gem(G), gemstone(G)
+
+**Animal/Plant**: elephants, gum(A), lustre(G)
+
+**Historical Figure**: alexander(A), megasthenes(G), onesicritus(G)
+
+**Descriptive expression**: numerous(A), luxury(A), closely(A), valuable(A), bright(A), identical(G), smaragdus(G)
+
+**Others**: shadow(A)
+
+The top 20 collocates associated with the word "India," sorted by their $G^2$ scores, reveal three key dimensions:
+
+1.  **Geographical Connections**: The collocates such as *arabia*, *ethiopia*, *east*, *south*, *opposite*, and *beyond* indicate the geographical relationships and proximity between India and these regions.
+
+2.  **Trading and Imports**: The presence of collocates like *imported*, *produces*, *produce* and *nations* suggests that India had a significant role in trade and the importation of goods. It also implies that India was known for producing various commodities that were sought after by other nations.
+
+3.  **Boundaries and Borders**: The collocates *boundary*, *set* and *part* indicate the existence of defined boundaries or borders related to India. This suggests that there were recognized territorial demarcations associated with India during the referenced period.
+
+```{r}
+coocs_ref_df <- as_tibble(coocs$ref_freqlist)
+words_to_check_colloc <- c("arabia", "indian", "ethiopia", "ganges", "rock-crystal", "hundred", "elephants", "megasthenes", "indians", "gem", "lustre", "stones", "identical", "'smaragdus", "indus", "gems", "gemstone", "pearls", "onesicritus", "mart")
+filtered_top_scores_colloc <- top_scores_colloc_df %>%
+  filter(type %in% words_to_check_colloc)
+
+abs_freq_lookup1 <- setNames(coocs_ref_df$abs_freq, coocs_ref_df$type)
+nrm_freq_lookup1 <- setNames(coocs_ref_df$nrm_freq, coocs_ref_df$type)
+
+results_colloc <- tibble(
+  Word = filtered_top_scores_colloc$type,
+  Target_Frequency = filtered_top_scores_colloc$a,
+  Reference_Abs_Frequency = abs_freq_lookup1[filtered_top_scores_colloc$type],
+  Reference_Nrm_Frequency = nrm_freq_lookup1[filtered_top_scores_colloc$type]
+) %>% 
+  kbl(col.names = c("Type", "Target_Frequency", "Reference_Abs_Frequency", "Reference_Nrm_Frequency")) %>% 
+  kable_minimal() %>% 
+  scroll_box(height = "400px")
+
+results_colloc
+
+```
+```{r}
+
+words_to_check_colloc_pmi <- c(
+  "megasthenes",
+  "thorn-bush",
+  "carnelian",
+  "obsidian",
+  "cophes",
+  "merchandize",
+  "mart",
+  "expeditions",
+  "patala",
+  "arii",
+  "ichthyophagi",
+  "pursuits",
+  "vermilion",
+  "biggest",
+  "onesicritus",
+  "identical",
+  "ganges",
+  "engrave",
+  "'smaragdus",
+  "honey-coloured",
+  "reflects"
+)
+
+filtered_top_scores_colloc <- top_scores_colloc_df %>%
+  filter(type %in% words_to_check_colloc_pmi)
+
+abs_freq_lookup1 <- setNames(coocs_ref_df$abs_freq, coocs_ref_df$type)
+nrm_freq_lookup1 <- setNames(coocs_ref_df$nrm_freq, coocs_ref_df$type)
+
+results_colloc_pmi <- tibble(
+  Word = filtered_top_scores_colloc$type,
+  Target_Frequency = filtered_top_scores_colloc$a,
+  Reference_Abs_Frequency = abs_freq_lookup1[filtered_top_scores_colloc$type],
+  Reference_Nrm_Frequency = nrm_freq_lookup1[filtered_top_scores_colloc$type]
+) %>% 
+  kbl(col.names = c("Type", "Target_Frequency", "Reference_Abs_Frequency", "Reference_Nrm_Frequency")) %>% 
+  kable_minimal() %>% 
+  scroll_box(height = "400px")
+
+results_colloc_pmi
+```
+
+
+Within the context of Pliny the Elder's *Natural History* is a book with an encyclopedia scope written in Roman Empire, these collocates suggest the interconnecting role India played in the network of interactions, trade, or cultural exchanges between India and the Mediterranean regions during 1st century AD. They highlight India's significance as a trading partner, its geographical positioning, and the recognition of its territorial boundaries.
 
 ## Keyword in India-related text in *Natural History*
 
@@ -277,7 +472,7 @@ In the list of three measurements, 16/20 of absolute frequency overlaps with tha
 
 ```{r}
 #| label: fig-col_keyword
-#| tbl-cap:  Scatterplot of G_signed by absolute frequency
+#| fig-cap: Scatterplot of G_signed by absolute frequency
 
 top_scores_kw_df <- as_tibble(top_scores_kw)
 
@@ -290,17 +485,17 @@ g + geom_point()
 
 Combing the lists sorted by absolute frequency and signed G, it can be categorized as follows (those without specified are the overlapped words):
 
-**Geographical/Ethnic Group**: india, arabia, indian, ganges, indus, ethiopia, taprobane(G), thence, sail(A)
+**Geographical**: india, arabia, indian, ganges, indus, ethiopia, taprobane(G), thence, sail(A)
 
 **People**: alexander, indians, tribe(A), ichthyophagi(G), megasthenes(G)
 
 **Numeric**: hundred, thousand, fifty(A)
 
-**Precious Stone/Gem**: stones, amber, beryls, rock-crystal, glass, beryls(G)
+**Precious Stone/Gem**: stones, amber, rock-crystal, glass, beryls(G)
 
 **Animal/Plant**: elephants, pepper(A)
 
-The categories partly highlights the potential themes in the target corpus, i.e. India-related text in *Natural History*, that a lot of geographical details, including land marks, locations and spatial transportation, as well as precious stones and introduction about tribes, historical figures and animal and plants. 
+The categories partly highlights the potential themes in the target corpus, i.e. India-related text in *Natural History*, that a lot of geographical details, including land marks, locations and spatial transportation, as well as precious stones and introduction about tribes, historical figures and animal and plants.
 
 It aligns with the general structure of the work, that catelouging the natural, material world in to chapters of geography, anthropology, natural creatures and mineralogy.
 
@@ -382,16 +577,16 @@ From these keywords, a manual examination was performed to determine their meani
 #| tbl-cap-location: top
 
 keyword_PMI_list <- data.frame(
-  Word = c("ganges", "beryls", "ichthyophagi", "megasthenes", "obsidian", "bdellium", "agates", "callaina", "condensation", "gerra", "jomanes", "nonius", "prasii", "alia", "carnelian", "cophes", "hypasis", "merchandize", "peppertree", "sacae", "sandastros", "thornbush"),
-  Exp = c("a major river in India", "a type of gemstone", "a group of people who primarily subsist on fish", "a Greek historian and diplomat", "a type of volcanic glass", "a fragrant resin obtained from certain trees", "a type of semiprecious gemstone", "pale green precious stone (lat)", "the process of vapor turning into a liquid state", "war (lat)", "a Roman nomen gentile, gens or \"family name\"", "a Roman nomen gentile, gens or \"family name\"", "prase, green coloured gem", "by another / different way / route (lat)", "a reddish-brown variety of chalcedony", "a river that rises in the ancient Paropamise range, eventually falling into the Indus river near its confluence with the Cophes river", "a river in north India", "goods or commodities", "a tree that produces peppercorns", "the easternmost nation of Elibe, situated to the south of Ilia and the north of Bern", "a precious stone found in India and Arabia", "any of many thorny or spiny shrubs and bushes"),
-  Tag = c("river", "goods", "people", "people", "goods", "goods", "goods", "goods", "activity", "activity", "people", "people", "goods", "route", "goods", "river", "river", "goods", "tree", "river", "goods", "tree"),
-  Sub_tag = c("N/A", "stone", "group of people", "famous people", "others", "others", "stone", "stone", "producing activity", "N/A", "human name", "human name", "stone", "N/A", "stone", "N/A", "N/A", "general", "origin of goods", "N/A", "stone", "N/A")
-) 
+  Word = c("india", "ganges", "beryls", "indus", "taprobane", "ichthyophagi", "megasthenes", "obsidian", "bdellium", "agates", "callaina", "condensation", "expeditions", "gerra", "jomanes", "nonius", "patala", "prasii", "alia", "bactra", "carnelian", "ceylon", "cophes", "hypasis", "merchandize", "peppertree", "sacae", "sandastros", "thornbush"),
+  Exp = c("name of the focused region of this study", "a major river in India", "a type of gemstone", "a major river in India", "Island in Sri Lanka", "a group of people who primarily subsist on fish", "a Greek historian and diplomat", "a type of volcanic glass", "a fragrant resin obtained from certain trees", "a type of semiprecious gemstone", "pale green precious stone (lat)", "the process of vapor turning into a liquid state", "referring to the expedition of Alexander the Great", "war (lat)", "name of a river", "a Roman nomen gentile, gens or \"family name\"", "refer to a city in Indian region", "prase, green coloured gem", "by another / different way / route (lat)", "name of a city in Asia Minor", "a reddish-brown variety of chalcedony", "name of an Island in Indian subcontinent", "a river that rises in the ancient Paropamise range, eventually falling into the Indus river near its confluence with the Cophes river", "a river in north India", "goods or commodities", "a tree that produces peppercorns", "the easternmost nation of Elibe, situated to the south of Ilia and the north of Bern", "a precious stone found in India and Arabia", "any of many thorny or spiny shrubs and bushes"),
+  Category = c("region", "river", "goods", "river", "region", "people", "people", "goods", "goods", "goods", "goods", "activity", "activity", "activity", "river", "people", "region", "goods", "route", "region", "goods", "region", "river", "river", "goods", "plant", "river", "goods", "plant"),
+  Remark = c("N/A", "N/A", "gemstone", "N/A", "N/A", "tribe", "referencing scholar", "other goods", "other goods", "gemstone", "gemstone", "producing activity", "N/A", "N/A", "N/A", "human name", "N/A", "gemstone", "N/A", "N/A", "gemstone", "N/A", "N/A", "N/A", "general goods", "origin of goods", "N/A", "gemstone", "N/A")
+)
 
 keyword_PMI_list %>% 
   as_tibble() %>%
-  select(Word, Exp, Tag, Sub_tag) %>%                        
-  kbl(col.names = c("Word", "Exp", "Category", "Sub_category")) %>% 
+  select(Word, Exp, Category, Remark) %>%                        
+  kbl(col.names = c("Word", "Exp", "Category", "Remark")) %>% 
   kable_minimal()
 ```
 
@@ -405,13 +600,13 @@ The distribution plot of categories, as demonstrated in @fig-kwtype, reveals the
 #| fig-cap-location: top
 
 tag_counts <- keyword_PMI_list %>%
-  count(Tag) %>%
+  count(Category) %>%
   arrange(desc(n))
 
 # Plot the tag distribution
-ggplot(tag_counts, aes(x = n, y = reorder(Tag, -n), fill = Tag)) +
+ggplot(tag_counts, aes(x = n, y = reorder(Category, -n), fill = Category)) +
   geom_bar(stat = "identity") +
-  labs(x = "Count", y = "Tag", fill = "Tag") +
+  labs(x = "Count", y = "Category", fill = "Category") +
   theme_minimal() +
   coord_flip()
 ```
@@ -424,100 +619,6 @@ Additionally, a notable proportion of the keywords pertain to people, encompassi
 
 In conclusion, the keywords extracted from the India-related text in the *Natural History* shed light on India's role in trade, the production of valuable goods, and its association with notable historical figures and geographical features within the perspective of Pliny the Elder during the 1st century AD in the context of the Roman Empire. These findings could also contribute to a better understanding of India's historical interactions with the broader ancient world.
 
-## Collocating word to "India" in *Natural History*
-
-In addition to examining the keywords in the India-related texts, it is also valuable to explore the collocates that appear alongside the word "India" when mentioned in the book.
-
-To analyse the textual collocating bi-gram of word "India", the `mclm::text_cooc()` function was employed, with "india" designated as the target item for the analysis. And following the same criteria as the previous keyword analysis, the collocation scores were filtered of having both PMI and G_signed scores of 2 or higher. By employing this approach, the prominent collocates of "india" were identified, providing a tangible understanding of the prevailing discourse and potentially reflecting Pliny the Elder's perspective on the region.
-
-```{r}
-#| label: collocation
-#| warning: false
-
-coocs <- fnames_wholetext %>% 
-  text_cooc("(?xi)  ^ india $")
-
-# calculate scores
-scores_colloc <- assoc_scores(coocs)
-
-top_scores_colloc <- scores_colloc %>% 
-  filter(PMI >= 2 & G_signed >= 2)
-```
-
-@tbl-coltable_Gsigned and @tbl-coltable_PMI display the top 20 collocates associated with the word "india" in the entire text, respectively sorted by G_signed and PMI scores. As the returned $G^2$ score helps gauge the strength of evidence regarding the independence between the two words [@methods], thereby facilitating the initial sorting.
-
-::: panel-tabset
-### Sorted by absolute frequencies
-
-```{r}
-#| label: tbl-coltable_absolute_freqencies
-#| tbl-cap-location: top
-#| tbl-cap: Top 20 collocates to the word "india" in Natural History (sorted by G_signed)
-#| warning: false
-#| echo: false
-top_scores_colloc %>% 
-  as_tibble() %>%
-  select(type, a, PMI, G_signed) %>% 
-  slice_max(order_by = a, n = 20, with_ties = TRUE) %>%
-  kbl(col.names = c("Type", "Frequency", "PMI", r"(Signed $G^2$)"), escape = FALSE) %>%
-  kable_minimal() %>% 
-  scroll_box(height = "400px")
-
-```
-
-### Sorted by G_singed
-
-```{r}
-#| label: tbl-coltable_Gsigned
-#| tbl-cap-location: top
-#| tbl-cap: Top 20 collocates to the word "india" in Natural History (sorted by G_signed)
-#| warning: false
-#| echo: false
-top_scores_colloc %>% 
-  as_tibble() %>%
-  select(type, a, PMI, G_signed) %>% 
-  slice_max(order_by = G_signed, n = 20, with_ties = TRUE) %>%
-  kbl(col.names = c("Type", "Frequency", "PMI", r"(Signed $G^2$)"), escape = FALSE) %>%
-  kable_minimal() %>% 
-  scroll_box(height = "400px")
-
-```
-
-### Sorted by PMI
-
-```{r}
-#| label: tbl-coltable_PMI
-#| tbl-cap-location: top
-#| tbl-cap: Top 20 collocates to the word "india" in Natural History (sorted by PMI)
-#| warning: false
-#| echo: false
-
-top_scores_colloc %>% 
-  as_tibble() %>%
-  select(type, a, PMI, G_signed) %>%
-  slice_max(order_by = PMI, n = 20, with_ties = TRUE) %>% 
-  kbl(col.names = c("Type", "Frequency", "PMI", r"(Signed $G^2$)"), escape = FALSE) %>% 
-  kable_minimal() %>% 
-  scroll_box(height = "400px") 
-
-```
-:::
-
-The top 20 collocates associated with the word "India," sorted by their $G^2$ scores, reveal three key dimensions:
-
-1.  **Geographical Connections**: The collocates such as *arabia*, *ethiopia*, *east*, *south*, *opposite*, and *beyond* indicate the geographical relationships and proximity between India and these regions.
-
-2.  **Trading and Imports**: The presence of collocates like *imported*, *produces*, *produce* and *nations* suggests that India had a significant role in trade and the importation of goods. It also implies that India was known for producing various commodities that were sought after by other nations.
-
-3.  **Boundaries and Borders**: The collocates *boundary*, *set* and *part* indicate the existence of defined boundaries or borders related to India. This suggests that there were recognized territorial demarcations associated with India during the referenced period.
-
-4.  $G^2$ signed highly overlapped with that of absolute frequency. (plot of corelation)
-
-5.  list the overlapped keywords
-
-6.  PMI sorting provides more information
-
-Within the context of Pliny the Elder's *Natural History* is a book with an encyclopedia scope written in Roman Empire, these collocates suggest the interconnecting role India played in the network of interactions, trade, or cultural exchanges between India and the Mediterranean regions during 1st century AD. They highlight India's significance as a trading partner, its geographical positioning, and the recognition of its territorial boundaries.
 
 # Conclusion
 

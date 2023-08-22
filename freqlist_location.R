@@ -141,12 +141,11 @@ words_to_check1<- c("india", "hundred", "stones", "arabia", "indian", "alexander
 for (word_to_check in words_to_check1){
   freq <- NA  # Initialize with NA in case the word is not found
   if (word_to_check %in% names(flist_ref_df)) {
-    freq <- flist_ref$[[word_to_check]]  # Adjust this based on your data structure
+    freq <- flist_ref_df$[[word_to_check]]  # Adjust this based on your data structure
   }
   cat("Frequency of '", word_to_check, "':", freq, "\n")
 }
 
-flist_ref_df$abs_freq[flist_ref_df$type == 'elephants']
 
 
 coocs <- fnames_wholetext %>% 
@@ -165,6 +164,80 @@ top_scores_colloc %>%
   kbl(col.names = c("Type", "Frequency", "PMI", r"(Signed $G^2$)"), escape = FALSE) %>%
   kable_minimal() %>% 
   scroll_box(height = "400px") %>% print()
+
+top_scores_colloc_df <- as_tibble(top_scores_colloc)
+g1 <- top_scores_colloc_df %>%
+  ggplot(aes(x = G_signed, y = a)) +
+  labs(x = "signed G", y = "Absolute frequency") +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) 
+
+
+
+coocs_ref_df <- as_tibble(coocs$ref_freqlist)
+words_to_check_colloc <- c("arabia", "indian", "ethiopia", "ganges", "rock-crystal", "hundred", "elephants", "megasthenes", "indians", "gem", "lustre", "stones", "identical", "'smaragdus", "indus", "gems", "gemstone", "pearls", "onesicritus", "mart")
+filtered_top_scores_colloc <- top_scores_colloc_df %>%
+  filter(type %in% words_to_check_colloc)
+
+abs_freq_lookup1 <- setNames(coocs_ref_df$abs_freq, coocs_ref_df$type)
+nrm_freq_lookup1 <- setNames(coocs_ref_df$nrm_freq, coocs_ref_df$type)
+
+results_colloc <- tibble(
+  Word = filtered_top_scores_colloc$type,
+  Target_Frequency = filtered_top_scores_colloc$a,
+  Reference_Abs_Frequency = abs_freq_lookup1[filtered_top_scores_colloc$type],
+  Reference_Nrm_Frequency = nrm_freq_lookup1[filtered_top_scores_colloc$type]
+) %>% 
+  kbl(col.names = c("Type", "Target_Frequency", "Reference_Abs_Frequency", "Reference_Nrm_Frequency")) %>% 
+  kable_minimal() %>% 
+  scroll_box(height = "400px")
+
+results_colloc
+
+words_to_check_colloc_pmi <- c(
+  "megasthenes",
+  "thorn-bush",
+  "carnelian",
+  "obsidian",
+  "cophes",
+  "merchandize",
+  "mart",
+  "expeditions",
+  "patala",
+  "arii",
+  "ichthyophagi",
+  "pursuits",
+  "vermilion",
+  "biggest",
+  "onesicritus",
+  "identical",
+  "ganges",
+  "engrave",
+  "'smaragdus",
+  "honey-coloured",
+  "reflects"
+)
+
+filtered_top_scores_colloc <- top_scores_colloc_df %>%
+  filter(type %in% words_to_check_colloc_pmi)
+
+abs_freq_lookup1 <- setNames(coocs_ref_df$abs_freq, coocs_ref_df$type)
+nrm_freq_lookup1 <- setNames(coocs_ref_df$nrm_freq, coocs_ref_df$type)
+
+results_colloc_pmi <- tibble(
+  Word = filtered_top_scores_colloc$type,
+  Target_Frequency = filtered_top_scores_colloc$a,
+  Reference_Abs_Frequency = abs_freq_lookup1[filtered_top_scores_colloc$type],
+  Reference_Nrm_Frequency = nrm_freq_lookup1[filtered_top_scores_colloc$type]
+) %>% 
+  kbl(col.names = c("Type", "Target_Frequency", "Reference_Abs_Frequency", "Reference_Nrm_Frequency")) %>% 
+  kable_minimal() %>% 
+  scroll_box(height = "400px")
+
+results_colloc_pmi
+
+
+
 
 
 conc_data <- conc(fnames_wholetext, '\\bindia\\b')
