@@ -185,9 +185,9 @@ flist_target <- fnames_indiatext %>%
            token_transf_out = "") 
 ```
 
-Each distinct paragraph in the India-related text dataset is extracted and stored in TXT format as separate files within a corpus folder, comprising a total of `length(fname_indiatext)` files as the **target corpus**. The file names contain information about the book, chapter, and paragraph number of the text.
+Each distinct paragraph in the India-related text dataset is extracted and stored in TXT format as separate files within a corpus folder, comprising a total of `r length(fnames_indiatext)` files as the **target corpus**. The file names contain information about the book, chapter, and paragraph number of the text.
 
-And the full text of the entire work, separated in paragraphs, are also scraped and stored in TXT format. Excluding those in **target corpus**, the other part of the work, containing `length(fname_wholetext_filtered)` files, serve as a **reference corpus**.
+And the full text of the entire work, separated in paragraphs, are also scraped and stored in TXT format. Excluding those in **target corpus**, the other part of the work, containing `r length(fnames_wholetext_filtered)` files, serve as a **reference corpus**.
 
 The text are set into lower case in the corpus file extraction process.
 
@@ -199,9 +199,9 @@ And the **reference corpus** consists of all texts in *Natural History* in parag
 
 ## Textual collocating word with "India" in *Natural History*
 
-To analyse the textual collocating word with "India", the `mclm::text_cooc()` function was employed, with "India" designated as the target item for the analysis. Since the textual collocation of "India" is examined, the span of the target word is set as the "textual units", to take the broader context into consideration.
+Textual collocation refers to the frequently occurring word with the target word in the context. Different from the surface collocation, which only taking the word left and right to the target word, the word span in this case refers to the "textual units" around the target word. Setting "India" as the target word in the corpus of all paragraphs in *Natural History*, the `mclm::text_cooc()` function returns the frequency of words observed in the context of "India". As mentioned in the Methodology Section (@sec-method), the returned scores were filtered for those having PMI scores higher than 2 and signed $G^2$ scores higher than 3.84, in order to gain a strong and significant word list co-occurring with word "India" in the context. 
 
-As mentioned in the Methodology Section (@sec-method), the collocation scores were filtered for those having PMI scores higher than 2 and signed $G^2$ scores higher than 3.84. By employing this approach, the prominent collocates of "India" were identified, providing a tangible understanding of the prevailing discourse and potentially reflecting Pliny the Elder's perspective on the region.
+The prominent textual collocates of "India" identified with this approach suggests the potential themes about Indian region in the narrative of Pliny.
 
 ```{r}
 #| label: collocation
