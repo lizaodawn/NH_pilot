@@ -12,6 +12,7 @@ number-sections: true
 echo: false
 warning: false
 tbl-cap-location: top
+fig-cap-location: top
 bibliography:
   - references.bib
   - packages.bib  
@@ -141,7 +142,7 @@ As mentioned, an English translation by Henry T. Riley (1816-1878) and John Bost
 
 The digitized text is available in paragraphs with geographical annotations on TOPOSText website as two parts, [book 1-11](https://topostext.org/work/148) and [book 12-37](https://topostext.org/work/153), both of which are in HTML format. Extracting all "place" class in the HTML files, information of all annotated place names in the work, the URI and corresponding coordinates of the place, the book/chapter/paragraph number where it is mentioned, as well as the coordinating textual content is structured as a dataset of geographical-related text in *Natural History*. This dataset is used for an initial exploration of the prominent mentioned places in the text.
 
-The initial obeservation shown in @fig-top20geoname and @fig-geonamemap leads to a focus to the India-related text for this study. With a reference to *Barrington Atlas of the Greek and Roman World* (@talbert2000; @talbert2000-1), the approximate geographical coordinates defining the Indian region during the time of *Natural Hisoty* are as follows[^3]:
+The initial obeservation shown in @fig-top20geoname and @fig-geonamemap leads to a focus to the India-related text for this study. With a reference to *Barrington Atlas of the Greek and Roman World* [@talbert2000; @talbert2000-1], the approximate geographical coordinates defining the Indian region during the time of *Natural Hisoty* are as follows[^3]:
 
 [^3]: As indicated in the map-by-map directory, the range spans territories of "modern states of India (minus the Punjab), Bangladesh, Bhutan, Burma, Nepal, and Sri Lanka".
 
@@ -199,7 +200,7 @@ And the **reference corpus** consists of all texts in *Natural History* in parag
 
 ## Textual collocating word with "India" in *Natural History*
 
-Textual collocation refers to the frequently occurring word with the target word in the context. Different from the surface collocation, which only taking the word left and right to the target word, the word span in this case refers to the "textual units" around the target word. Setting "India" as the target word in the corpus of all paragraphs in *Natural History*, the `mclm::text_cooc()` function returns the frequency of words observed in the context of "India". As mentioned in the Methodology Section (@sec-method), the returned scores were filtered for those having PMI scores higher than 2 and signed $G^2$ scores higher than 3.84, in order to gain a strong and significant word list co-occurring with word "India" in the context. 
+Textual collocation refers to the observation of some words frequently occurring with the target word in the context. Different from the surface collocation, which taking the collocating span, i.e. the certain words left and right to the target word into consideration [@evert2009], the word span in this case refers to the textual unit around the target word. Setting "India" as the target word in the corpus of all paragraphs in *Natural History*, the `mclm::text_cooc()` function returns the frequency of words appeared in the context of "India". As mentioned in the Methodology Section (@sec-method), the returned scores are filtered with a statistical criteria for gaining a list of the most frequently observed words in the context of word "India" with strong significance. 
 
 The prominent textual collocates of "India" identified with this approach suggests the potential themes about Indian region in the narrative of Pliny.
 
@@ -217,9 +218,10 @@ top_scores_colloc <- scores_colloc %>%
   filter(PMI >= 2 & G_signed >= 3.84)
 ```
 
-@tbl-coltable_Gsigned and @tbl-coltable_PMI display the top 20 collocates associated with the word "india" in the entire text, respectively sorted by G_signed and PMI scores. As the returned $G^2$ score helps gauge the strength of evidence regarding the independence between the two words [@montes2022], thereby facilitating the initial sorting.
+@tbl-coltable_absolute_freqencies, @tbl-coltable_Gsigned and @tbl-coltable_PMI display the top 20 contextual collocates associated with the word "india", respectively sorted by PMI, absolute frequency signed $G^2$ scores. 
 
 ::: panel-tabset
+
 ### Sorted by absolute frequencies
 
 ```{r}
@@ -238,7 +240,7 @@ top_scores_colloc %>%
 
 ```
 
-### Sorted by G_singed
+### Sorted by Signed $G^2$
 
 ```{r}
 #| label: tbl-coltable_Gsigned
@@ -272,13 +274,14 @@ top_scores_colloc %>%
   scroll_box(height = "400px") 
 
 ```
+
 :::
 
-Similar to the results of keyword analysis, the top 20 sorted list of absolute frequency and G singed have a 11/20 overlapped outputs. As shown in @fig-col_colloc, the signed G score and absolute frequency in textual collocation has a positibe correlation.
+The top 20 ranking lists of absolute frequency and signed $G^2$ scores have a 11/20 overlapped outputs. As shown in @fig-col_colloc, the signed $G^2$ score and absolute frequency in textual collocation analysis shows a positive correlation.
 
 ```{r}
 #| label: fig-col_colloc
-#| fig-cap: Correlation of signed G and absolute frequency in textual collocation
+#| fig-cap: Scatter plot of signed $G^2$ scores and absolute frequency in textual collocation analysis
 
 
 top_scores_colloc_df <- as_tibble(top_scores_colloc)
@@ -292,35 +295,30 @@ g1 <- top_scores_colloc_df %>%
 g1
 ```
 
-The high-ranking words of textual collocation with "India" in the work are cateforized as follows, those without specifying the association measurement are the overlapped ones:
+The high-ranking words in textual collocation with "India" sorted by absolute frequency and signed $G^2$ scores are categorized as follows, those without specifying the association measures ("A" stands for "absolute frequency" and "G" stands for "signed $G^2$ scores") are the overlapped ones. These words listed out comprises the strongest evidence of collocating with "India" in the context.
 
-**Geographical**: arabia, indian, ethiopia, ganges, indus(G)
+**Geographical connections**: *arabia*, *indian*, *ethiopia*, *ganges*, *indus*(G)
 
-**Numeric**: hundred, thousand(A), whole(A)
+**Animal/Plant**: *elephants*, *gum*(A), *lustre*(G)
 
-**Time**: year (A)
+**Precious Stone**: *stones*, *rock-crystal*, *gems*, *gem*(G), *gemstone*(G), *pearls*
 
-**Merchandise exchange**: mart(G)
+**Historical Figure**: *alexander*(A), *megasthenes*(G), *onesicritus*(G)
 
-**Precious Stone/Gem**: stones, rock-crystal, gems, pearls, gem(G), gemstone(G)
+**Merchandise exchange**: *mart*(G)
 
-**Animal/Plant**: elephants, gum(A), lustre(G)
+**Descriptive expression**: *hundred*, *thousand*(A), *whole*(A), *numerous*(A), *luxury*(A), *closely*(A), *valuable*(A), *bright*(A), *identical*(G), *smaragdus*(G)
 
-**Historical Figure**: alexander(A), megasthenes(G), onesicritus(G)
+**Others**: *shadow*(A), *year*(A)
 
-**Descriptive expression**: numerous(A), luxury(A), closely(A), valuable(A), bright(A), identical(G), smaragdus(G)
+These categories indicates that the narrative about "India" in *Natural History* covers three major dimensions. The first dimension is its geographical situation, including its connection to other places (mainly Arabia and Ethiopia), the two major rivers, Ganges and Indus within the region, and the animals, plants and precious stones originated in it. And it is often mentioned with historical figures, some related to the conquest history of the Roman Empire (in the case of *alexander*, referring to Alexander the Great, who had conducted several expeditions to Indian subcontinent), and some related to the referencing scholarship Pliny made his dialogue with. Moreover, the collocating word *mart* and the descriptive expressions highlights the merchandise exchanges introduced and discussed in the India-related content in the work.
 
-**Others**: shadow(A)
-
-The top 20 collocates associated with the word "India," sorted by their $G^2$ scores, reveal three key dimensions:
-
-1.  **Geographical Connections**: The collocates such as *arabia*, *ethiopia*, *east*, *south*, *opposite*, and *beyond* indicate the geographical relationships and proximity between India and these regions.
-
-2.  **Trading and Imports**: The presence of collocates like *imported*, *produces*, *produce* and *nations* suggests that India had a significant role in trade and the importation of goods. It also implies that India was known for producing various commodities that were sought after by other nations.
-
-3.  **Boundaries and Borders**: The collocates *boundary*, *set* and *part* indicate the existence of defined boundaries or borders related to India. This suggests that there were recognized territorial demarcations associated with India during the referenced period.
+In the `mclm::text_cooc()` function, the given text will be separated as target context (text surrounding the target node) and reference context (text not surrounding the target node). As checked in the @tbl-colloc_freq_compare_AFG, not all words with both high absolute frequency and signed $G^2$ scores showing more frequency than that in the reference context.  
 
 ```{r}
+#| label: tbl-colloc_freq_compare_AFG
+#| tbl-cap:  Frequency comparison of overlapping textual collocating words sorted by absolute frequency and signed $G^2$ score in the top 20 ranking in target and reference context
+
 coocs_ref_df <- as_tibble(coocs$ref_freqlist)
 words_to_check_colloc <- c("arabia", "indian", "ethiopia", "ganges", "rock-crystal", "hundred", "elephants", "megasthenes", "indians", "gem", "lustre", "stones", "identical", "'smaragdus", "indus", "gems", "gemstone", "pearls", "onesicritus", "mart")
 filtered_top_scores_colloc <- top_scores_colloc_df %>%
@@ -335,6 +333,7 @@ results_colloc <- tibble(
   Reference_Abs_Frequency = abs_freq_lookup1[filtered_top_scores_colloc$type],
   Reference_Nrm_Frequency = nrm_freq_lookup1[filtered_top_scores_colloc$type]
 ) %>% 
+  arrange(desc(Target_Frequency)) %>% 
   kbl(col.names = c("Type", "Target_Frequency", "Reference_Abs_Frequency", "Reference_Nrm_Frequency")) %>% 
   kable_minimal() %>% 
   scroll_box(height = "400px")
@@ -343,7 +342,10 @@ results_colloc
 
 ```
 
+While in the top 20 list sorted with PMI scores, as shown in @tbl-colloc_frequency_compare_PMI, all of the results shows higher frequency than that in the reference context.
 ```{r}
+#| label: tbl-colloc_frequency_compare_PMI
+#| tbl-cap:  Frequency comparison of top 20 textual collocating words sorted by PMI score in target and reference context
 
 words_to_check_colloc_pmi <- c(
   "megasthenes",
@@ -381,12 +383,17 @@ results_colloc_pmi <- tibble(
   Reference_Abs_Frequency = abs_freq_lookup1[filtered_top_scores_colloc$type],
   Reference_Nrm_Frequency = nrm_freq_lookup1[filtered_top_scores_colloc$type]
 ) %>% 
+  arrange(desc(Target_Frequency)) %>%
   kbl(col.names = c("Type", "Target_Frequency", "Reference_Abs_Frequency", "Reference_Nrm_Frequency")) %>% 
   kable_minimal() %>% 
   scroll_box(height = "400px")
 
 results_colloc_pmi
 ```
+
+The PMI word list shows more descriptive information about the theme related to India in *Natural History*.
+
+
 
 Within the context of Pliny the Elder's *Natural History* is a book with an encyclopedia scope written in Roman Empire, these collocates suggest the interconnecting role India played in the network of interactions, trade, or cultural exchanges between India and the Mediterranean regions during 1st century AD. They highlight India's significance as a trading partner, its geographical positioning, and the recognition of its territorial boundaries.
 
