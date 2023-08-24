@@ -78,7 +78,7 @@ fnames_wholetext_filtered <- fnames_wholetext[fnames_wholetext_short %in% fnames
 # build frequency list for reference corpus
 flist_ref <- fnames_wholetext_filtered %>%
   freqlist(re_token_transf_in = "'", 
-           token_transf_out = "") %>% print(20)
+           token_transf_out = "") 
 
 # build frequency list for target corpus
 flist_target <- fnames_indiatext %>% 
@@ -155,7 +155,7 @@ coocs <- fnames_wholetext %>%
 scores_colloc <- assoc_scores(coocs)
 
 top_scores_colloc <- scores_colloc %>% 
-  filter(PMI >= 2 & G_signed >= 2)
+  filter(PMI >= 2 & G_signed >= 3.84)
 
 top_scores_colloc %>% 
   as_tibble() %>%
