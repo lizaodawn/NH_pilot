@@ -1,6 +1,6 @@
 ---
 engine: knitr
-title: "Keyword and Collocation analysis on India-related text of *Natural History*"
+title: "Collocation and keyword analysis on India-related text of *Natural History*"
 author: "Dawn, Lizao Zhuang (r0914937)"
 format: 
   html:
@@ -41,7 +41,7 @@ knitr::write_bib(
 
 Pliny the Elder's *Natural History* is widely recognized as the earliest encyclopedia in the world. Written around AD 77, the work is thematically divided into 37 books, covering a diverse range of subjects including astronomy, geography, zoology, botany, medicine, and more. Driven by a pioneering attempt to catalog human knowledge from his era, Pliny made a comprehensive reference to a wide range of Greek and Roman scholarships, and interwove his own literary interpretation or comments to the narratives in *Natural History*.
 
-*Natural History* stands as a seminal work in the history of encyclopedias, serving as a gateway to understanding the knowledge and worldview of ancient Rome. Beyond its role as a compendium of diverse subjects, the text provides a captivating glimpse into the knowledge, cultural, and merchandise exchange [@dodd2021] between the Roman Empire and other regions [@plinyth2011].
+*Natural History* stands as a seminal work in the history of encyclopedias, serving as a gateway to understanding the knowledge and worldview of ancient Rome. Beyond its role as a compendium of diverse subjects, the text provides a captivating glimpse into the knowledge, cultural, and merchandize exchange [@dodd2021] between the Roman Empire and other regions [@plinyth2011].
 
 As pointed out by @beagon2011, differentiating from his predecessors, Pliny showed a "terrestrial curiosity" in *Natural History*, emphasizing recognition of the physical, material world. Drawing from the long-established topographical and ethnographic traditions, Pliny connects volumes dedicated to geography (books 3-6) with broader natural elements, human activities, and cultural, historical, and societal contexts [@roller2022], exemplified in his description of plants, tribe habitats, imperial expeditions, and trade products. In this regard, this study aims to analyse the text of *Natural History* in a spatial scope, as geographical names mentioned in the text plays a pivotal role in distributing information, knowledge, and discussions throughout the work.
 
@@ -120,7 +120,7 @@ PMI (Pointwise Mutual Information) is one of effect size measures for associatio
 
 $G^2$ refers to the log-likelihood ratio for measuring the strength of statistical evidence of the observasion [@blume2017]. In the context of this study, it indicates how significant the association between the two factors (either for two words or for keywords associating with a target corpus) is. Specificly, the signed $G^2$ score returned by `mclm::assoc_scores` shows the strength of evidence for attraction, i.e. co-occurrence. High signed $G^2$ values suggest that the co-occurrence is unlikely to occur by chance.
 
-Since a PMI score higher than two indicates a four times higher probability of association, and a signed $G^2$ score higher than 3.84 indicates a significant association at a 95% confidence level [@montes2022], a filter of "PMI \>= 2 & G_signed \>= 3.84" is applied for the returned objects of `mclm::assoc_scores` for both of the methods, in order to gain strong and significant association outputs for further discussion.
+Since a PMI score higher than two indicates a four times higher probability of association, and a signed $G^2$ score higher than 3.84 indicates a significant association at a 95% confidence level [@montes2022], a filter of "PMI \>= 2 & signed $G^2$ \>= 3.84" is applied for the returned objects of `mclm::assoc_scores` for both of the methods, in order to gain strong and significant association outputs for further discussion.
 
 ## Collocation Analysis
 
@@ -218,7 +218,7 @@ top_scores_colloc <- scores_colloc %>%
   filter(PMI >= 2 & G_signed >= 3.84)
 ```
 
-@tbl-coltable_absolute_freqencies, @tbl-coltable_Gsigned and @tbl-coltable_PMI display the top 20 contextual collocates associated with the word "india", respectively sorted by PMI, absolute frequency signed $G^2$ scores. 
+@tbl-coltable_absolute_freqencies, @tbl-coltable_Gsigned and @tbl-coltable_PMI display the top 20 contextual collocates associated with the word "india", respectively sorted by absolute frequency, signed $G^2$ scores and PMI scores. 
 
 ::: panel-tabset
 
@@ -227,7 +227,7 @@ top_scores_colloc <- scores_colloc %>%
 ```{r}
 #| label: tbl-coltable_absolute_freqencies
 #| tbl-cap-location: top
-#| tbl-cap: Top 20 collocates to the word "india" in Natural History (sorted by G_signed)
+#| tbl-cap: Top 20 collocates to the word "india" in Natural History (sorted by absolute freqencies)
 #| warning: false
 #| echo: false
 top_scores_colloc %>% 
@@ -245,7 +245,7 @@ top_scores_colloc %>%
 ```{r}
 #| label: tbl-coltable_Gsigned
 #| tbl-cap-location: top
-#| tbl-cap: Top 20 collocates to the word "india" in Natural History (sorted by G_signed)
+#| tbl-cap: Top 20 collocates to the word "india" in Natural History (sorted by signed $G^2$)
 #| warning: false
 #| echo: false
 top_scores_colloc %>% 
@@ -281,14 +281,15 @@ The top 20 ranking lists of absolute frequency and signed $G^2$ scores have a 11
 
 ```{r}
 #| label: fig-col_colloc
-#| fig-cap: Scatter plot of signed $G^2$ scores and absolute frequency in textual collocation analysis
+#| fig-cap: Scatter plot of signed $G^2$ scores by absolute frequency in textual collocation analysis
 
 
 top_scores_colloc_df <- as_tibble(top_scores_colloc)
 
+theme_set(theme_minimal(base_size = 15))
 g1 <- top_scores_colloc_df %>%
   ggplot(aes(x = G_signed, y = a)) +
-  labs(x = "signed G", y = "Absolute frequency") +
+  labs(x = "signed $G^2$", y = "Absolute frequency") +
   geom_point() +
   geom_smooth(method = "lm", se = FALSE) 
 
@@ -301,109 +302,105 @@ The high-ranking words in textual collocation with "India" sorted by absolute fr
 
 **Animal/Plant**: *elephants*, *gum*(A), *lustre*(G)
 
-**Precious Stone**: *stones*, *rock-crystal*, *gems*, *gem*(G), *gemstone*(G), *pearls*
+**Precious stone**: *stones*, *rock-crystal*, *gems*, *gem*(G), *gemstone*(G), *pearls*
 
-**Historical Figure**: *alexander*(A), *megasthenes*(G), *onesicritus*(G)
+**Historical figure**: *alexander*(A), *megasthenes*(G), *onesicritus*(G)
 
-**Merchandise exchange**: *mart*(G)
+**Merchandize exchange**: *mart*(G)
 
 **Descriptive expression**: *hundred*, *thousand*(A), *whole*(A), *numerous*(A), *luxury*(A), *closely*(A), *valuable*(A), *bright*(A), *identical*(G), *smaragdus*(G)
 
 **Others**: *shadow*(A), *year*(A)
 
-These categories indicates that the narrative about "India" in *Natural History* covers three major dimensions. The first dimension is its geographical situation, including its connection to other places (mainly Arabia and Ethiopia), the two major rivers, Ganges and Indus within the region, and the animals, plants and precious stones originated in it. And it is often mentioned with historical figures, some related to the conquest history of the Roman Empire (in the case of *alexander*, referring to Alexander the Great, who had conducted several expeditions to Indian subcontinent), and some related to the referencing scholarship Pliny made his dialogue with. Moreover, the collocating word *mart* and the descriptive expressions highlights the merchandise exchanges introduced and discussed in the India-related content in the work.
+These categories indicates that the narrative about "India" in *Natural History* covers three major dimensions. The first dimension is its geographical situation, including its connection to other places (mainly Arabia and Ethiopia), the two major rivers, Ganges and Indus within the region, and the animals, plants and precious stones originated in it. And it is often mentioned with historical figures, some related to the conquest history of the Roman Empire (in the case of *alexander*, referring to Alexander the Great, who had conducted several expeditions to Indian subcontinent), and some related to the referencing scholarship Pliny made his dialogue with. Moreover, the collocating word *mart* and the descriptive expressions highlights the merchandize exchanges introduced and discussed in the India-related content in the work.
 
-In the `mclm::text_cooc()` function, the given text will be separated as target context (text surrounding the target node) and reference context (text not surrounding the target node). As checked in the @tbl-colloc_freq_compare_AFG, not all words with both high absolute frequency and signed $G^2$ scores showing more frequency than that in the reference context.  
+In the `mclm::text_cooc()` function, the given text will be separated as target context (text surrounding the target node) and reference context (text not surrounding the target node). The normalized frequency of the top ranking words with the highest frequency and strongest evidence in the target context are at least 20 times higher than that of the reference context, as shown in @tbl-colloc_freq_compare_AFG.  
 
 ```{r}
 #| label: tbl-colloc_freq_compare_AFG
 #| tbl-cap:  Frequency comparison of overlapping textual collocating words sorted by absolute frequency and signed $G^2$ score in the top 20 ranking in target and reference context
 
 coocs_ref_df <- as_tibble(coocs$ref_freqlist)
+coocs_tar_df <- as_tibble(coocs$target_freqlist)
+
 words_to_check_colloc <- c("arabia", "indian", "ethiopia", "ganges", "rock-crystal", "hundred", "elephants", "megasthenes", "indians", "gem", "lustre", "stones", "identical", "'smaragdus", "indus", "gems", "gemstone", "pearls", "onesicritus", "mart")
-filtered_top_scores_colloc <- top_scores_colloc_df %>%
+
+filtered_top_scores_colloc <- coocs_tar_df %>%
   filter(type %in% words_to_check_colloc)
 
-abs_freq_lookup1 <- setNames(coocs_ref_df$abs_freq, coocs_ref_df$type)
+tar_nrm_freq_lookup1 <- setNames(coocs_tar_df$nrm_freq, coocs_tar_df$type)
 nrm_freq_lookup1 <- setNames(coocs_ref_df$nrm_freq, coocs_ref_df$type)
 
 results_colloc <- tibble(
   Word = filtered_top_scores_colloc$type,
-  Target_Frequency = filtered_top_scores_colloc$a,
-  Reference_Abs_Frequency = abs_freq_lookup1[filtered_top_scores_colloc$type],
+  Target_Nrm_Frequency = tar_nrm_freq_lookup1[filtered_top_scores_colloc$type],
   Reference_Nrm_Frequency = nrm_freq_lookup1[filtered_top_scores_colloc$type]
 ) %>% 
-  arrange(desc(Target_Frequency)) %>% 
-  kbl(col.names = c("Type", "Target_Frequency", "Reference_Abs_Frequency", "Reference_Nrm_Frequency")) %>% 
+  arrange(desc(Target_Nrm_Frequency)) %>% 
+  kbl(col.names = c("Type", "Target_Nrm_Frequency", "Reference_Nrm_Frequency")) %>% 
   kable_minimal() %>% 
   scroll_box(height = "400px")
+
 
 results_colloc
 
 ```
 
-While in the top 20 list sorted with PMI scores, as shown in @tbl-colloc_frequency_compare_PMI, all of the results shows higher frequency than that in the reference context.
+When checking about the normalized frequency of the top 20 list sorted with PMI scores, as shown in @tbl-colloc_frequency_compare_PMI, all of the results show higher frequency than that in the reference context as well.
 ```{r}
 #| label: tbl-colloc_frequency_compare_PMI
 #| tbl-cap:  Frequency comparison of top 20 textual collocating words sorted by PMI score in target and reference context
 
-words_to_check_colloc_pmi <- c(
-  "megasthenes",
-  "thorn-bush",
-  "carnelian",
-  "obsidian",
-  "cophes",
-  "merchandize",
-  "mart",
-  "expeditions",
-  "patala",
-  "arii",
-  "ichthyophagi",
-  "pursuits",
-  "vermilion",
-  "biggest",
-  "onesicritus",
-  "identical",
-  "ganges",
-  "engrave",
-  "'smaragdus",
-  "honey-coloured",
-  "reflects"
+words_to_check_colloc_pmi <- c("megasthenes", "thorn-bush", "carnelian", "obsidian", "cophes", "merchandize", "mart", "expeditions", "patala",   "arii", "ichthyophagi", "pursuits", "vermilion", "biggest", "onesicritus", "identical", "ganges", "engrave", "'smaragdus", "honey-coloured",   "reflects"
 )
 
-filtered_top_scores_colloc <- top_scores_colloc_df %>%
+filtered_top_scores_colloc_pmi <- coocs_tar_df %>%
   filter(type %in% words_to_check_colloc_pmi)
 
-abs_freq_lookup1 <- setNames(coocs_ref_df$abs_freq, coocs_ref_df$type)
-nrm_freq_lookup1 <- setNames(coocs_ref_df$nrm_freq, coocs_ref_df$type)
 
 results_colloc_pmi <- tibble(
-  Word = filtered_top_scores_colloc$type,
-  Target_Frequency = filtered_top_scores_colloc$a,
-  Reference_Abs_Frequency = abs_freq_lookup1[filtered_top_scores_colloc$type],
-  Reference_Nrm_Frequency = nrm_freq_lookup1[filtered_top_scores_colloc$type]
+  Word = filtered_top_scores_colloc_pmi$type,
+  Target_Nrm_Frequency = tar_nrm_freq_lookup1[filtered_top_scores_colloc_pmi$type],
+  Reference_Nrm_Frequency = nrm_freq_lookup1[filtered_top_scores_colloc_pmi$type]
 ) %>% 
-  arrange(desc(Target_Frequency)) %>%
-  kbl(col.names = c("Type", "Target_Frequency", "Reference_Abs_Frequency", "Reference_Nrm_Frequency")) %>% 
+  arrange(desc(Target_Nrm_Frequency)) %>%
+  kbl(col.names = c("Type", "Target_Nrm_Frequency", "Reference_Nrm_Frequency")) %>% 
   kable_minimal() %>% 
   scroll_box(height = "400px")
 
 results_colloc_pmi
+
 ```
 
-The PMI word list shows more descriptive information about the theme related to India in *Natural History*.
+The PMI word list, indicating the words with relatively strongest attraction to the word "India" in the context, shows more descriptive information about the theme related to India in *Natural History*. Most of them can be classified to the categories set for the overlapping high ranking absolute frequency and signed $G^2$ scores, and some words contribute to a new category relating to the exsisting categories, as shown in the classification as follows:
 
+**Geographical connections**: *cophes*, *patala*, *ganges*
 
+**Animal/Plant**: *thorn-bush*
 
-Within the context of Pliny the Elder's *Natural History* is a book with an encyclopedia scope written in Roman Empire, these collocates suggest the interconnecting role India played in the network of interactions, trade, or cultural exchanges between India and the Mediterranean regions during 1st century AD. They highlight India's significance as a trading partner, its geographical positioning, and the recognition of its territorial boundaries.
+**Precious stone**: *carnelian*, *obsidian*, *'smaragdus*
+
+**Historical figure**: *megasthenes*, *onesicritus*
+
+**Merchandize exchange**: *merchandize*, *mart*
+
+**Descriptive expression**: *vermilion*, *biggest*, *identical*, *honey-coloured*
+
+**Others**: *reflects*
+
+**Activity (new category)**: *expeditions*, *pursuits*, *engrave*
+
+**Ethnic group (new category)**: *arii*, *ichthyophagi*
+
+Except for showing more specified geographical connections, plants and gemstone names, the descriptive expressions in the list relates to the description of stones, and the special traits of natural creatures originated in India in *Natural History*. The words of the new categories relates to the existing categories. For example, the words of activity relates to the Indian-subcontinent expedition of Alexander the Great, the need for merchandize exchange, and the product processing of gemstones, and the words of ethnic group relates to the geographical introduction about Indian and its connected regions, which reinforced the previous conclusion, that the context of "India" in the work shows focuses on the geographical introduction about India and the trade relation between it and the Roman Empire.
+
+Combining the observation of the three top ranking word lists of textual collocation to word "Inida" in *Natural History*, these collocates suggest the interconnecting role India played in the network of interactions, trade, and cultural exchanges in the narrative.
 
 ## Keyword in India-related text in *Natural History*
 
-As mentioned, the method of keyword analysis could help with a further discuss about the prominent theme and topic in the India-related texts.
+Additionally, in order to examine the significant phrases, i.e. "keyword", in the India-related content in the work, as a comparison and supplement to the conclusion of textual collocation analysis, a keyword analysis is employed for the India-related text.
 
-The frequency lists for the **target corpus** (India-related texts) and **reference corpus** (whole text) are generated respectively, and the association scores are calculated through the `mclm::assoc_scores()` function. The association score is filtered based on the criteria of both PMI and $G^2$ scores, requiring a minimum score of 2. This criterion ensures that the selected words have a probability at least four times higher than the overall data, along with statistically significant supporting evidence [@montes2022], allowing to identify the most statistically significant keywords in India-related texts when compared to the reference corpus.
-
-During the calculation of word frequencies in the **target corpus**, the specific word "India" itself was excluded from the analysis. This exclusion was intentional, aiming to focus on more descriptive words within the corpus and efficiently identify potential thematic keywords in the **target corpus**.
+The frequency lists for the **target corpus** (India-related texts) and **reference corpus** (whole text) are generated respectively, and the association scores are calculated through the `mclm::assoc_scores()` function. Similar to the collocation analysis, the returned scores are filtered with a criterion of PMI >= 2 and signed $G^2$ >= 3.84, to ensure the selected words for further discussion have a strong attraction to the target corpus with statistical significance [@montes2022].
 
 ```{r}
 #| label: keyword
@@ -417,16 +414,13 @@ top_scores_kw <- scores_kw %>%
 
 ```
 
-The following tables present the top 20 keywords in India-related texts as compared to the entire texts in *Natural History*. They are sorted based on their PMI (@tbl-kwtable_PMI), Absolute frequencies (@tbl-kwtable_absolute_freqencies) and G_signed scores (@tbl-kwtable_Gsigned), respectively. The initial sorting was carried out based on the PMI scores (@tbl-kwtable_PMI), since the it serves as a crucial indicator for measuring the keyness of words.
+The following tables present the top 20 keywords in India-related texts as compared to the entire texts in *Natural History*. They are sorted based on their absolute frequencies (@tbl-kwtable_absolute_freqencies), signed $G^2$ scores (@tbl-kwtable_Gsigned) and PMI scores (@tbl-kwtable_PMI) respectively.
 
 ::: panel-tabset
 ### Sorted by absolute frequencies
 
 ```{r}
-#| warning: false
-#| echo: false
 #| label: tbl-kwtable_absolute_freqencies
-#| tbl-cap-location: top
 #| tbl-cap: Top 20 Keywords on Indian Related Text in Natural History (sorted by PMI)
 
 top_scores_kw %>% 
@@ -438,13 +432,28 @@ top_scores_kw %>%
   scroll_box(height = "400px")
 ```
 
-### Sorted by PMI
+### Sorted by signed $G^2$
 
 ```{r}
 #| warning: false
 #| echo: false
-#| label: tbl-kwtable_PMI
+#| label: tbl-kwtable_Gsigned
 #| tbl-cap-location: top
+#| tbl-cap: Top 20 Keywords on Indian Related Text in Natural History (sorted by signed $G^2$)
+
+top_scores_kw %>% # also valid for top_scores_colloc
+  as_tibble() %>%
+  select(type, a, PMI, G_signed) %>%         # sort by PMI (descending) 
+  slice_max(order_by = G_signed, n = 20, with_ties = TRUE) %>%   
+  kbl(col.names = c("Type", "Frequency", "PMI", r"(Signed $G^2$)")) %>% 
+  kable_minimal() %>% 
+  scroll_box(height = "400px")
+```
+
+### Sorted by PMI
+
+```{r}
+#| label: tbl-kwtable_PMI
 #| tbl-cap: Top 20 Keywords on Indian Related Text in Natural History (sorted by PMI)
 
 top_scores_kw %>% 
@@ -455,81 +464,69 @@ top_scores_kw %>%
   kable_minimal() %>% 
   scroll_box(height = "400px")
 ```
-
-### Sorted by G_signed
-
-```{r}
-#| warning: false
-#| echo: false
-#| label: tbl-kwtable_Gsigned
-#| tbl-cap-location: top
-#| tbl-cap: Top 20 Keywords on Indian Related Text in Natural History (sorted by G_Signed)
-
-top_scores_kw %>% # also valid for top_scores_colloc
-  as_tibble() %>%
-  select(type, a, PMI, G_signed) %>%         # sort by PMI (descending) 
-  slice_max(order_by = G_signed, n = 20, with_ties = TRUE) %>%   
-  kbl(col.names = c("Type", "Frequency", "PMI", r"(Signed $G^2$)")) %>% 
-  kable_minimal() %>% 
-  scroll_box(height = "400px")
-```
 :::
 
-In the list of three measurements, 16/20 of absolute frequency overlaps with that of $G^2$ Signed. As shown in the @fig-col_keyword, the $G^2$ score has a positive correlation with the absolute frequency.
+Among the three lists sorting by different measurements, 16/20 words of absolute frequency top ranking list overlaps with that of the signed $G^2$ scores. As shown in the @fig-col_keyword, the signed $G^2$ score has a positive correlation with the absolute frequency in this case.
 
 ```{r}
 #| label: fig-col_keyword
-#| fig-cap: Scatterplot of G_signed by absolute frequency
+#| fig-cap: Scatter plot of signed $G^2$ scores by absolute frequency in keyword analysis
 
 top_scores_kw_df <- as_tibble(top_scores_kw)
 
 theme_set(theme_minimal(base_size = 15))
 g <- top_scores_kw_df %>%
   ggplot(aes(x = G_signed, y = a)) +
-  labs(x = "Signed G", y = "Absolute frequency")
-g + geom_point()
+  labs(x = "signed $G^2$", y = "Absolute frequency") +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) 
+
+g 
 ```
 
-Combing the lists sorted by absolute frequency and signed G, it can be categorized as follows (those without specified are the overlapped words):
+Combing the top ranking keyword lists sorted by absolute frequency and signed $G^2$ scores, it can be classified into categories similar to that in the previous collocation analysis. In the categorized groups below, those without specifying the association measures ("A" stands for "absolute frequency" and "G" stands for "signed $G^2$ scores") are the overlapped ones.
 
-**Geographical**: india, arabia, indian, ganges, indus, ethiopia, taprobane(G), thence, sail(A)
-
-**People**: alexander, indians, tribe(A), ichthyophagi(G), megasthenes(G)
-
-**Numeric**: hundred, thousand, fifty(A)
-
-**Precious Stone/Gem**: stones, amber, rock-crystal, glass, beryls(G)
+**Geographical connections**: india, arabia, indian, ganges, indus, ethiopia, taprobane(G), thence, sail(A)
 
 **Animal/Plant**: elephants, pepper(A)
 
-The categories partly highlights the potential themes in the target corpus, i.e. India-related text in *Natural History*, that a lot of geographical details, including land marks, locations and spatial transportation, as well as precious stones and introduction about tribes, historical figures and animal and plants.
+**Precious stone**: stones, amber, rock-crystal, glass, beryls(G)
 
-It aligns with the general structure of the work, that catelouging the natural, material world in to chapters of geography, anthropology, natural creatures and mineralogy.
+**Historical figure**: alexander, ichthyophagi(G), megasthenes(G)
 
-And the high ranking words even have more appearences in the reference corpus, as shown in @tbl-kw_frequency_compare.
+**Ethnic group**: indians, tribe(A)
+
+**Descriptive expression (numeric)**: hundred, thousand, fifty(A)
+
+The words in each group partly overlaps with the results in collocation analysis, which on the one hand confirms the potential themes in the India-related content as concluded previously, and on the other hand, suggests that the high evidence ranking textual collocates of "India" also possibly serve as the keywords in the target corpus.
+
+In the comparison of normalized frequency of these words in the target and reference corpra, they all show notably higer frequencies in the target corpus, as shown in @tbl-kw_frequency_compare.
 
 ```{r}
 #| label: tbl-kw_frequency_compare
 #| tbl-cap:  Comparison of overlapping keywords sorted by absolute frequency and G signed with that of reference corpus
 flist_ref_df <- as_tibble(flist_ref)
+flist_target_df <- as_tibble(flist_target)
+
 words_to_check <- c("india", "hundred", "stones", "arabia", "indian", "alexander",
                     "amber", "thousand", "elephants", "indus", "glass", "thence",
                     "ganges", "rock-crystal", "ethiopia", "indians")
 
 
-filtered_top_scores <- top_scores_kw_df %>%
+filtered_top_scores <- flist_target_df %>%
   filter(type %in% words_to_check)
 
-abs_freq_lookup <- setNames(flist_ref_df$abs_freq, flist_ref_df$type)
+tar_nrm_freq_lookup <- setNames(flist_target_df$nrm_freq, flist_target_df$type)
+
 nrm_freq_lookup <- setNames(flist_ref_df$nrm_freq, flist_ref_df$type)
 
 results <- tibble(
   Word = filtered_top_scores$type,
-  Target_Frequency = filtered_top_scores$a,
-  Reference_Abs_Frequency = abs_freq_lookup[filtered_top_scores$type],
+  Target_Nrm_Frequency = tar_nrm_freq_lookup[filtered_top_scores$type],
   Reference_Nrm_Frequency = nrm_freq_lookup[filtered_top_scores$type]
 ) %>% 
-  kbl(col.names = c("Type", "Target_Frequency", "Reference_Abs_Frequency", "Reference_Nrm_Frequency")) %>% 
+  arrange(desc(Target_Nrm_Frequency)) %>%
+  kbl(col.names = c("Type", "Target_Nrm_Frequency", "Reference_Nrm_Frequency")) %>% 
   kable_minimal() %>% 
   scroll_box(height = "400px")
 
@@ -538,7 +535,9 @@ results
 
 ```
 
-As PMI score indicates times of probability of the keyword in the target context higher than its probability in all the data taken together, it could serve as a more convincing indicator for the analysis of keywords. And in fact, in the sorted top 20 list of PMI, it does showed more detailed information about the context. Moreover, almost all of them shown none frequency in the reference corpus, which reinforces the indication that they are distinctly key to the target corpus comparing to that of the other context of the work, as shown in @tbl-kw_frequency_pmi.
+Furthermore, as PMI score indicates the times of probability of the selected keyword occur in the target corpus higher than that in the reference corpus, it could serve as a more convincing indicator for the analysis of keywords. 
+
+When checking about the normalized frequency of the top 20 keywords with the most PMI score, as shown in @tbl-kw_frequency_pmi, almost all of them are seem distinct in the India-related text, which reinforces the indication that they are especially key to the target corpus comparing to the other parts of the work.
 
 ```{r}
 #| label: tbl-kw_frequency_pmi
@@ -552,19 +551,17 @@ words_to_check_pmi <- c("india", "ganges", "beryls", "indus", "taprobane",
                     "merchandize", "pepper-tree", "sacae", "sandastros",
                     "thorn-bush")
 
-filtered_top_scores1 <- top_scores_kw_df %>%
+filtered_top_scores_pmi <- top_scores_kw_df %>%
   filter(type %in% words_to_check_pmi)
 
-abs_freq_lookup1 <- setNames(flist_ref_df$abs_freq, flist_ref_df$type)
-nrm_freq_lookup1 <- setNames(flist_ref_df$nrm_freq, flist_ref_df$type)
 
 results1 <- tibble(
-  Word = filtered_top_scores1$type,
-  Target_Frequency = filtered_top_scores1$a,
-  Reference_Abs_Frequency = abs_freq_lookup1[filtered_top_scores1$type],
-  Reference_Nrm_Frequency = nrm_freq_lookup1[filtered_top_scores1$type]
+  Word = filtered_top_scores_pmi$type,
+  Target_Nrm_Frequency = tar_nrm_freq_lookup[filtered_top_scores_pmi$type],
+  Reference_Nrm_Frequency = nrm_freq_lookup[filtered_top_scores_pmi$type]
 )%>% 
-  kbl(col.names = c("Type", "Target_Frequency", "Reference_Abs_Frequency", "Reference_Nrm_Frequency")) %>% 
+  arrange(desc(Target_Nrm_Frequency)) %>%
+  kbl(col.names = c("Type", "Target_Nrm_Frequency", "Reference_Nrm_Frequency")) %>% 
   kable_minimal() %>% 
   scroll_box(height = "400px")
 
@@ -574,14 +571,11 @@ results1
 
 ```
 
-From these keywords, a manual examination was performed to determine their meaning and assign appropriate tags as based on their category. The resulting explanations for the top 20 keywords, sorted by PMI, can be found in @tbl-kwlist below.
+For these keywords, a manual examination was performed to determine their meaning and assign classification tags based on their category. The explanations for the top 20 keywords with the highest PMI scores is displayed in @tbl-kwlist below.
 
 ```{r}
-#| warning: false
-#| echo: false
 #| label: tbl-kwlist
 #| tbl-cap: Top 20 keywords with meaning sorted by PMI
-#| tbl-cap-location: top
 
 keyword_PMI_list <- data.frame(
   Word = c("india", "ganges", "beryls", "indus", "taprobane", "ichthyophagi", "megasthenes", "obsidian", "bdellium", "agates", "callaina", "condensation", "expeditions", "gerra", "jomanes", "nonius", "patala", "prasii", "alia", "bactra", "carnelian", "ceylon", "cophes", "hypasis", "merchandize", "peppertree", "sacae", "sandastros", "thornbush"),
@@ -618,7 +612,7 @@ ggplot(tag_counts, aes(x = n, y = reorder(Category, -n), fill = Category)) +
   coord_flip()
 ```
 
-Significantly, a substantial number of the keywords in the India-related text revolve around goods, particularly precious stones, suggesting a prominent thematic focus. The presence of keywords such as *beryls*, *obsidian*, *bdellium*, *agates*, *callaina*, *prasii*, *carnelian* and *sandastros* indicates the involvement of various gemstones and goods associated with India. These findings are complemented by the presence of keywords like *condensation*, *merchandize* and *peppertree* which suggest the production and trade of goods between the Roman Empire and the Indian regions during that era.
+Significantly, a substantial number of the keywords in the India-related text revolve around goods, particularly precious stones, suggesting a prominent thematic focus. The presence of keywords such as *beryls*, *obsidian*, *bdellium*, *agates*, *callaina*, *prasii*, *carnelian* and *sandastros* indicates the involvement of various gemstones and goods associated with India. These findings are complemented by the presence of keywords like *condensation*, *merchandize* and *pepper tree* which suggest the production and trade of goods between the Roman Empire and the Indian regions during that era.
 
 Furthermore, the keywords related to rivers in India, such as *ganges*, *cophes*, *hypasis*, and *sacae* indicate their significance as sources of goods or as integral parts of trading routes. Since Pliny the Elder's contextual framework includes critical descriptions of the geographical surroundings like rivers, as evident in his references to the Po River and the Nile River [@pollard2009; @murphy2003], a deeper investigation into the portrayal and role of Indian rivers within this context would provide valuable insights.
 
