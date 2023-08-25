@@ -134,6 +134,7 @@ ggplot(tag_counts, aes(x = n, y = reorder(Tag, -n), fill = Tag)) +
   coord_flip()
 
 flist_ref_df <- as_tibble(flist_ref)
+flist_target_df <- as_tibble(flist_target)
 words_to_check <- c("ganges", "beryls", "ichthyophagi", "megasthenes", "obsidian", "bdellium", "agates", "callaina", "condensation", "gerra", "jomanes", "nonius", "prasii", "alia", "carnelian", "cophes", "hypasis", "merchandize", "peppertree", "sacae", "sandastros", "thornbush")
 words_to_check1<- c("india", "hundred", "stones", "arabia", "indian", "alexander",
                     "amber", "thousand", "elephants", "indus", "glass", "thence",
