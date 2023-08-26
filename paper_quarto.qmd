@@ -35,7 +35,7 @@ knitr::write_bib(
 )
 ```
 
-# Research Question[^1]
+# Introduction[^1]
 
 [^1]: The present paper is a pilot study of my master thesis, *Mapping India in Pliny the Elder's Natural History*, thus the description of the research question is connected with the content in this [thesis](https://raw.githack.com/lizaodawn/NH_thesis/main/NHthesis_structure.html#sec-introduction).
 
@@ -106,7 +106,9 @@ m
 
 An intriguing observation from these figures is that India seems being prominently mentioned in the work despite locating outside the Mediterranean.
 
-Building upon this observation, the study focus is narrowed down to India-related text in *Natural History*. By delving deeper into the themes associated with the Indian region referred in the text, this study aims to examine the portrayal of India by Pliny the Elder, which potentially shed a light on the spatial perception and imagination of the representative writers and scholars of ancient Rome.
+Building upon this observation, the study focus is narrowed down to India-related text in *Natural History* to investigate what and how is India described in the work. By delving into the themes associated with Indian region with the methods of collocation and keyword analysis, this study aims to examine the portrayal of India by Pliny the Elder, which potentially shed a light on the spatial perception and imagination of the representative writers and scholars of ancient Rome.
+
+The subsequent sections provide detailed explanation of the methodology and corpus employed, interpretation and discussion of the results of the collocation and keyword analysis, and an overall conclusion responding to the captioned research questions. 
 
 # Methodology {#sec-method}
 
