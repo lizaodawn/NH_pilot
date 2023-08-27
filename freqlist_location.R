@@ -102,12 +102,6 @@ top_scores_kw %>%
 
 top_scores_kw_df <- as_tibble(top_scores_kw)
 
-theme_set(theme_minimal(base_size = 15))
-g <- top_scores_kw_df %>%
-  ggplot(aes(x = G_signed, y = a)) +
-  labs(x = "G", y = "afr")
-g + geom_point()
-
 
 keyword_PMI_list <- data.frame(
   Word = c("ganges", "beryls", "ichthyophagi", "megasthenes", "obsidian", "bdellium", "agates", "callaina", "condensation", "gerra", "jomanes", "nonius", "prasii", "alia", "carnelian", "cophes", "hypasis", "merchandize", "peppertree", "sacae", "sandastros", "thornbush"),
@@ -126,12 +120,6 @@ tag_counts <- keyword_PMI_list %>%
   count(Tag) %>%
   arrange(desc(n))
 
-# Plot the tag distribution
-ggplot(tag_counts, aes(x = n, y = reorder(Tag, -n), fill = Tag)) +
-  geom_bar(stat = "identity") +
-  labs(x = "Count", y = "Tag", fill = "Tag") +
-  theme_minimal() +
-  coord_flip()
 
 flist_ref_df <- as_tibble(flist_ref)
 flist_target_df <- as_tibble(flist_target)
@@ -139,13 +127,7 @@ words_to_check <- c("ganges", "beryls", "ichthyophagi", "megasthenes", "obsidian
 words_to_check1<- c("india", "hundred", "stones", "arabia", "indian", "alexander",
                     "amber", "thousand", "elephants", "indus", "glass", "thence",
                     "ganges", "rock-crystal", "ethiopia", "indians")
-for (word_to_check in words_to_check1){
-  freq <- NA  # Initialize with NA in case the word is not found
-  if (word_to_check %in% names(flist_ref_df)) {
-    freq <- flist_ref_df$[[word_to_check]]  # Adjust this based on your data structure
-  }
-  cat("Frequency of '", word_to_check, "':", freq, "\n")
-}
+
 
 
 
@@ -167,15 +149,9 @@ top_scores_colloc %>%
   scroll_box(height = "400px") %>% print()
 
 top_scores_colloc_df <- as_tibble(top_scores_colloc)
-g1 <- top_scores_colloc_df %>%
-  ggplot(aes(x = G_signed, y = a)) +
-  labs(x = "signed G", y = "Absolute frequency") +
-  geom_point() +
-  geom_smooth(method = "lm", se = FALSE) 
-
-
 
 coocs_ref_df <- as_tibble(coocs$ref_freqlist)
+
 words_to_check_colloc <- c("arabia", "indian", "ethiopia", "ganges", "rock-crystal", "hundred", "elephants", "megasthenes", "indians", "gem", "lustre", "stones", "identical", "'smaragdus", "indus", "gems", "gemstone", "pearls", "onesicritus", "mart")
 filtered_top_scores_colloc <- top_scores_colloc_df %>%
   filter(type %in% words_to_check_colloc)
@@ -236,27 +212,6 @@ results_colloc_pmi <- tibble(
   scroll_box(height = "400px")
 
 results_colloc_pmi
-
-
-
-
-
-conc_data <- conc(fnames_wholetext, '\\bindia\\b')
-
-conc_data %>%
-  as_tibble() %>%
-  select(source, left, match, right) %>%
-  mutate(
-    source = short_names(source),
-    book = as.integer(gsub("^(\\d+).*", "\\1", source)),
-    chapter = as.numeric(gsub("^\\d+\\.(\\d+)\\.\\d+_text$", "\\1", source)),
-    paragraph = as.numeric(gsub("^\\d+\\.\\d+\\.(\\d+)_text$", "\\1", source))
-  ) %>%
-  arrange(book, chapter, paragraph) %>%
-  select(book, chapter, paragraph, left, match, right) %>%
-  kbl(align = c("r", "r", "r", "c", "l", "l", "l")) %>%
-  kable_paper(font_size = 15) %>%
-  scroll_box(height = "400px")
 
  
 quarto::render("paper_quarto.md", to = "html", verbose = TRUE)
