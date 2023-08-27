@@ -13,5 +13,5 @@ This repository contains an R project with the following subfolders and files ar
 - paper_quarto.html: the output in HTML format
 ### Helpers
 - references.bib: the bibtex file for literature references
-- packages.bib: the bibtex file for packages, written by write_bib() in sample-paper.qmd (after creating a blank file.)
+- packages.bib: the bibtex file for packages, written by write_bib() in paper_quarto.qmd (after creating a blank file.)
 - unified-style-sheet-for-linguistics.csl: the stylesheet for references
