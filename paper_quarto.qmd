@@ -17,8 +17,11 @@ bibliography:
   - references.bib
   - packages.bib  
 csl: unified-style-sheet-for-linguistics.csl
-abstract: 'This paper presents a comprehensive analysis of textual collocations and keywords related to "India" in a corpus of *Natural History*, the earliest known encyclopedia written by Pliny the Elder in the 1st century AD. By analyzing these word associations and significant terms, this study seeks to identify the main themes and topics related to the Indian region within the text. This will shed light on how Pliny depicts and imagines this geographical area, providing insights into the spatial representation and imagination in the work.'
+abstract: 'This paper presents a comprehensive analysis of textual collocations and keywords related to "India" in a corpus of *Natural History*, the earliest known encyclopedia written by Pliny the Elder in the 1st century AD. By analyzing these word associations and significant terms, this study seeks to identify the main themes and topics related to the Indian region within the text. The investigation of how Pliny depicts India in *Natural Hisotry* could potentially contribute to the discussion of the spatial representation and imagination in the work.'
 ---
+
+<script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [["$","$"]]}})</script>
+<script async src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
 ```{r setup, include=FALSE}
 library('tidyverse')
@@ -154,6 +157,7 @@ The records in geographical-related text dataset with corresponding coordinates 
 ```{r}
 #| label: prepare-corpus
 
+# read file names of the corpra
 refcorpus_folder <- here("NH_wholetext")
 fnames_wholetext <- get_fnames(refcorpus_folder) %>% 
   keep_re("[.]txt")
@@ -166,11 +170,11 @@ fnames_indiatext <- get_fnames(tarcorpus_folder) %>%
 fnames_wholetext_short <- basename(fnames_wholetext)
 fnames_indiatext_short <- basename(fnames_indiatext)
 
-# Exclude short file names with the same name from target corpus in the reference corpus
+# exclude short file names with the same name from target corpus in the reference corpus
 fnames_wholetext_short_filtered <- fnames_wholetext_short %>%
   setdiff(fnames_indiatext_short)
 
-# Filter full file names based on filtered short names
+# filter full file names based on filtered short names
 fnames_wholetext_filtered <- fnames_wholetext[fnames_wholetext_short %in% fnames_wholetext_short_filtered]
 
 # build frequency list for reference corpus
@@ -188,21 +192,19 @@ Each distinct paragraph in the India-related text dataset is extracted and store
 
 And the full text of the entire work, separated in paragraphs, are also scraped and stored in TXT format. Excluding those in target corpus, the other part of the work, containing `r length(fnames_wholetext_filtered)` files, serve as a **reference corpus**. The **reference corpus** contains `r prettyNum(n_tokens(flist_ref))` tokens and `r n_types(flist_ref)` types, with the type-token ratio of `r round(n_types(flist_ref)/n_tokens(flist_ref), 2)`.
 
-During the extraction process of the corpus files, the texts are already converted to lower case.
+During the extraction process of the corpus files, the texts are already converted to lower case. In addition, the closing quotation mark "'", which ranks high while provides limited information in the initial observation of the returned frequency lists, is replaced by an empty string for a more informative return for further discussions. 
 
 # Data Analysis {#sec-data_analysis}
 
 ## Textual collocating word with "India" in *Natural History*
-
-Textual collocation refers to the observation of some words frequently occurring with the target word in the context. Different from the surface collocation, which taking the collocating span, i.e. the certain words left and right to the target word into consideration [@evert2009], the word span in this case refers to the textual unit around the target word. Setting "India" as the target word in the corpus of all paragraphs in *Natural History*, the `mclm::text_cooc()` function returns the frequency of words appeared in the context of "India". As mentioned in the Methodology Section (@sec-method), the returned scores are filtered with a statistical criteria for gaining a list of the most frequently observed words in the context of word "India" with strong significance.
-
-The prominent textual collocates of "India" identified with this approach suggests the potential themes about Indian region in the narrative of Pliny.
 
 Collocation analysis traces the frequent occurrence of certain words or phrases in close proximity to each other within a given context. Unlike surface collocation, which considers the collocating span, i.e., the specific words to the left and right of the target word [@evert2009], the span in textual collocation refers to the textual unit around the target word. Setting "India" as the target word for tracing in the corpus of all paragraphs in *Natural History*, the `mclm::text_cooc()` function returns the frequency of words appearing in the context of "India". As mentioned in the Methodology section (@sec-method), the returned results are filtered with a statistical criterion to obtain a list of the most frequently collocated words with the word "India" with strong evidence.
 
 The prominent textual collocates of "India" identified with this approach suggest the potential themes about the Indian region in the narrative of Pliny.
 
 ```{r}
+#| lable: obtain and filter collocation association scores
+
 coocs <- fnames_wholetext %>% 
   text_cooc("(?xi)  ^ india $")
 
@@ -276,7 +278,7 @@ top_scores_colloc_df <- as_tibble(top_scores_colloc)
 theme_set(theme_minimal(base_size = 15))
 g1 <- top_scores_colloc_df %>%
   ggplot(aes(x = G_signed, y = a)) +
-  labs(x = "signed $G^2$", y = "Absolute frequency") +
+  labs(x = r"(Signed G)", y = "Absolute frequency") +
   geom_point() +
   geom_smooth(method = "lm", se = FALSE) 
 
@@ -386,16 +388,12 @@ The observations from the top ranking "India"-collocating word lists of the thre
 
 ## Keyword in India-related text in *Natural History*
 
-Additionally, in order to examine the significant phrases, i.e. "keyword", in the India-related content in the work, as a comparison and supplement to the conclusion of textual collocation analysis, a keyword analysis is employed for the India-related text.
-
-The frequency lists for the **target corpus** (India-related texts) and **reference corpus** (whole text) are generated respectively, and the association scores are calculated through the `mclm::assoc_scores()` function. Similar to the collocation analysis, the returned scores are filtered with a criterion of PMI \>= 2 and signed $G^2$ \>= 3.84, to ensure the selected words for further discussion have a strong attraction to the target corpus with statistical significance [@montes2022].
-
 Additionally, in order to examine the significant phrases, i.e. "keyword", in the India-related content in the work, a keyword analysis for the India-related text is employed as a comparison and complement to the conclusion of the textual collocation analysis.
 
 The word frequency and their association scores in the **target corpus** (India-related texts) and **reference corpus** (other parts of *Natural History* excluding the India-related texts) are obtained with the `mclm::assoc_scores()` function. Similar to the collocation analysis, the returned scores are filtered with a criterion of PMI \>= 2 and signed $G^2$ \>= 3.84 to ensure that the words selected for further discussion have a strong attraction to the target corpus with statistical significance [@montes2022].
 
 ```{r}
-#| label: keyword
+#| label: obtain and filter keywords association scores
 
 scores_kw <- assoc_scores(flist_target, flist_ref)
 
@@ -428,7 +426,7 @@ top_scores_kw %>%
 #| label: tbl-kwtable_Gsigned
 #| tbl-cap: Top 20 keywords of India-related text in *Natural History* (sorted by signed $G^2$)
 
-top_scores_kw %>% # also valid for top_scores_colloc
+top_scores_kw %>% 
   as_tibble() %>%
   select(type, a, PMI, G_signed) %>%         # sort by PMI (descending) 
   slice_max(order_by = G_signed, n = 20, with_ties = TRUE) %>%   
@@ -464,7 +462,7 @@ top_scores_kw_df <- as_tibble(top_scores_kw)
 theme_set(theme_minimal(base_size = 15))
 g <- top_scores_kw_df %>%
   ggplot(aes(x = G_signed, y = a)) +
-  labs(x = "signed $G^2$", y = "Absolute frequency") +
+  labs(x = r"(Signed G)", y = "Absolute frequency") +
   geom_point() +
   geom_smooth(method = "lm", se = FALSE) 
 
@@ -473,17 +471,17 @@ g
 
 The top 20 keyword lists, sorted by absolute frequency and signed $G^2$ score, can be categorized similarly to the previous collocation analysis. In the categorized groups below, those without association measures remarks ("A" stands for "absolute frequency" and "G" for "signed $G^2$ score") are the overlapping ones.
 
-**Geographical connections**: india, arabia, indian, ganges, indus, ethiopia, taprobane(G), thence, sail(A)
+**Geographical connections**: *india*, *arabia*, *indian*, *ganges*, *indus*, *ethiopia*, *taprobane*(G), *thence*, *sail*(A)
 
-**Animal/Plant**: elephants, pepper(A)
+**Animal/Plant**: *elephants*, *pepper*(A)
 
-**Precious stone**: stones, amber, rock-crystal, glass, beryls(G)
+**Precious stone**: *stones*, *amber*, *rock-crystal*, *glass*, *beryls*(G)
 
-**Historical figure**: alexander, ichthyophagi(G), megasthenes(G)
+**Historical figure**: *alexander*, *ichthyophagi*(G), *megasthenes*(G)
 
-**Ethnic group**: indians, tribe(A)
+**Ethnic group**: *indians*, *tribe*(A)
 
-**Descriptive expression (numeric)**: hundred, thousand, fifty(A)
+**Descriptive expression (numeric)**: *hundred*, *thousand*, *fifty*(A)
 
 The words in each group partially overlap with the results of the collocation analysis, which on the one hand confirms the potential themes in the India-related content as concluded earlier, and on the other hand suggests that the textual collocates of "India" with a high evidence ranking may also serve as keywords in the target corpus.
 
@@ -491,7 +489,7 @@ Comparing the normalized frequency of these words in the target and reference co
 
 ```{r}
 #| label: tbl-kw_frequency_compare
-#| tbl-cap:  Comparison of overlapping keywords in India-related text sorted by absolute frequency and G signed with that of reference corpus
+#| tbl-cap:  Normalized frequency comparison of overlapping top 20 ranking keywords in India-related text sorted by absolute frequency and signed $G^2$ score in target and reference corpus
 flist_ref_df <- as_tibble(flist_ref)
 flist_target_df <- as_tibble(flist_target)
 
@@ -504,10 +502,9 @@ filtered_top_scores <- flist_target_df %>%
   filter(type %in% words_to_check)
 
 tar_nrm_freq_lookup <- setNames(flist_target_df$nrm_freq, flist_target_df$type)
-
 nrm_freq_lookup <- setNames(flist_ref_df$nrm_freq, flist_ref_df$type)
 
-results <- tibble(
+results_keyword <- tibble(
   Word = filtered_top_scores$type,
   Target_Nrm_Frequency = tar_nrm_freq_lookup[filtered_top_scores$type],
   Reference_Nrm_Frequency = nrm_freq_lookup[filtered_top_scores$type]
@@ -518,7 +515,7 @@ results <- tibble(
   scroll_box(height = "400px")
 
 
-results
+results_keyword
 
 ```
 
@@ -528,7 +525,7 @@ When checking the normalized frequency of the top 20 keywords with the most PMI 
 
 ```{r}
 #| label: tbl-kw_frequency_pmi
-#| tbl-cap:  Comparison of overlapping keywords in India-related text sorted by absolute frequency and G signed with that of reference corpus
+#| tbl-cap:  Normalized frequency comparison of top 20 ranking keywords in India-related text sorted by PMI in target and reference corpus
 
 words_to_check_pmi <- c("india", "ganges", "beryls", "indus", "taprobane",
                     "ichthyophagi", "megasthenes", "obsidian", "bdellium",
@@ -542,7 +539,7 @@ filtered_top_scores_pmi <- top_scores_kw_df %>%
   filter(type %in% words_to_check_pmi)
 
 
-results1 <- tibble(
+results_keyword_pmi <- tibble(
   Word = filtered_top_scores_pmi$type,
   Target_Nrm_Frequency = tar_nrm_freq_lookup[filtered_top_scores_pmi$type],
   Reference_Nrm_Frequency = nrm_freq_lookup[filtered_top_scores_pmi$type]
@@ -553,7 +550,7 @@ results1 <- tibble(
   scroll_box(height = "400px")
 
 
-results1
+results_keyword_pmi
 
 
 ```
@@ -574,7 +571,7 @@ keyword_PMI_list <- data.frame(
 keyword_PMI_list %>% 
   as_tibble() %>%
   select(Word, Exp, Category, Remark) %>%                        
-  kbl(col.names = c("Word", "Exp", "Category", "Remark")) %>% 
+  kbl(col.names = c("Word", "Explaination", "Category", "Remark")) %>% 
   kable_minimal()
 ```
 
@@ -588,7 +585,7 @@ tag_counts <- keyword_PMI_list %>%
   count(Category) %>%
   arrange(desc(n))
 
-# Plot the tag distribution
+# plot the tag distribution
 ggplot(tag_counts, aes(x = n, y = reorder(Category, -n), fill = Category)) +
   geom_bar(stat = "identity") +
   labs(x = "Count", y = "Category", fill = "Category") +
@@ -610,6 +607,6 @@ In conclusion, this paper investigates how Pliny the Elder describes India in hi
 
 The exploration of textual collocates to the word "India" reveals the geographical connections, trade networks, historical figures, and scholarly references associated with India in *Natural History*. The collocates also emphasize India's close relationship with neighboring regions such as Arabia and Ethiopia.
 
-Furthermore, the examination of keywords in India-related text aligns with the observations of the collocation analysis and highlights potential topics on stones and rivers about India in the work. These findings enhance the interpretation of the identified themes, such as geographical connectivity and merchandise trade, and also reflect Pliny's general geographical concern in the historical context of ancient Rome.
+Moreover, the examination of keywords in India-related text aligns with the observations of the collocation analysis and highlights potential topics on stones and rivers about India in the work. These findings enhance the interpretation of the identified themes, such as geographical connectivity and merchandise trade, and also reflect Pliny's general geographical concern in the historical context of ancient Rome.
 
-As this paper serves as a preliminary exploration, it encourages further in-depth investigations of the text. A comparative analysis of collocation and keywords centering other neighboring regions, and a closer examination of "stone" or "river" in the context, incorporating additional literature regarding the historical and cultural background may offer greater insights and enrich the discussion.
+As this paper serves as a preliminary exploration, it encourages further in-depth investigations of the text. A comparative analysis of collocation and keywords centering other neighboring regions to India, and a closer examination of "stone" or "river" in the context, incorporating additional literature regarding the historical and cultural background may offer greater insights and enrich the discussion.
